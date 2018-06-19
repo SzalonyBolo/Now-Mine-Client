@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="NowMineClient.MusicPiece"
+             Margin="1,1,0,0">
+  <ContentView.Content>
+        <Frame Padding="0,0,0,0" x:Name="MusicPieceFrame">
+      <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="11*"/>
+            <ColumnDefinition Width="39*"/>
+        </Grid.ColumnDefinitions>
+      
+        <!--<Rectangle Height="75" Grid.ColumnSpan="2" Width="360"  x:Name="recBackground"/> --><!--Fill="White"  Opacity="0"-->
+
+        <Grid Grid.Column="0">
+          <!--<Image x:Name ="imgMain" Height="75" Width="101"/> --><!--HorizontalAlignment="Left" VerticalAlignment="Top" -->
+          <Image x:Name="imgMain" />
+        </Grid>
+
+        <Grid Grid.Column="1">
+          <StackLayout>
+            <Label x:Name="lblTitle" Text="" />
+            <Label x:Name="lblChannelName" Text="" />
+            <Label x:Name="lbluserName" Text="" />
+          </StackLayout>
+        </Grid>
+
+        <!--<Border x:Name="border" BorderBrush="Black" BorderThickness="3" Height="75" VerticalAlignment="Top" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="360">
+          <Border.Effect>
+            <DropShadowEffect ShadowDepth="0" BlurRadius="20" x:Name="dropShadowEffect"/>
+          </Border.Effect>
+        </Border>-->
+      </Grid>
+    </Frame>
+  </ContentView.Content>
+</ContentView>
