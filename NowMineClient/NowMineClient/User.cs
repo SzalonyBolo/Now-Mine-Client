@@ -57,12 +57,23 @@ namespace NowMineClient
         {
             User user = new User();
             user.Id = id;
-            //Random rnd = new Random();
-            //for (int i = 3; i < 3; i++)
-            //{
-            //    user.UserColor[i] = (byte)rnd.Next(0, 255);
-            //}
-            user.Name = Device.Idiom.ToString();
+            if (Application.Current.Properties.ContainsKey("UserColor"))
+            {
+
+                var color = Application.Current.Properties["UserColor"] as byte[];
+                if (color.Length == 3)
+                    user.UserColor = color;
+            }
+            if (Application.Current.Properties.ContainsKey("UserName"))
+            {
+                var name = Application.Current.Properties["UserName"] as string;
+                if (!string.IsNullOrEmpty(name))
+                    user.Name = name;
+            }
+            else
+            {
+                user.Name = Device.Idiom.ToString();
+            }
             DeviceUser = user;
         }
     }

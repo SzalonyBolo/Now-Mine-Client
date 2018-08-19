@@ -61,8 +61,15 @@ namespace NowMineClient.Network
         {
             var messageString = "ChangeName " + newUserName;
 
-            byte[] answer = await tcpConnector.getData(messageString, serverAddress);
-            return BitConverter.ToBoolean(answer, 0);
+            byte[] bytes = await tcpConnector.getData(messageString, serverAddress);
+            bool answer = BitConverter.ToBoolean(bytes, 0);
+            if (answer)
+            {
+                Application.Current.Properties["UserName"] = newUserName;
+                await Application.Current.SavePropertiesAsync();
+            }
+
+            return answer;
         }
 
         internal async Task<bool> ChangeColor(byte[] NewColor)
@@ -79,6 +86,8 @@ namespace NowMineClient.Network
             if (isColorChanged)
             {
                 User.DeviceUser.UserColor = NewColor;
+                Application.Current.Properties["UserColor"] = NewColor;
+                await Application.Current.SavePropertiesAsync();
             }
             return isColorChanged;
         }
@@ -269,8 +278,8 @@ namespace NowMineClient.Network
             }
             serverAddress = ipAddressBuilder.ToString();
             //tutaj sprawdzanie czy to ip itd
-            int userID = BitConverter.ToInt32(args.Messege, 4);
-            User.InitializeDeviceUser(userID);
+            //int userID = BitConverter.ToInt32(args.Messege, 4);
+            //User.InitializeDeviceUser(userID);
             OnServerConnected();
             tcpConnector.MessegeReceived -= OnServerFound;
         }

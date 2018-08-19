@@ -27,7 +27,6 @@ namespace NowMineClient
         public ServerCheckPage()
         {
             InitializeComponent();
-
             if (serverConnection.isWifi())
             {
                 lblMain.Text = "Wyszukiwanie Serwera Now Mine!";

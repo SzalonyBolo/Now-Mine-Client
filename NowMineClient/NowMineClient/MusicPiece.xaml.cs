@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace NowMineClient
 {
-    public partial class MusicPiece : ContentView//, INotifyPropertyChanged
+    public partial class MusicPiece : ContentView, INotifyPropertyChanged
     {
 
         private DateTime created { get; set; }

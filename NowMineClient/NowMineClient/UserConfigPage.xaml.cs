@@ -82,7 +82,7 @@ namespace NowMineClient
             ColorsBytes[0] = (byte)(Color.R * 255);
             ColorsBytes[1] = (byte)(Color.G * 255);
             ColorsBytes[2] = (byte)(Color.B * 255);
-            var response = await serverConnection.ChangeColor(ColorsBytes);
+            var response = await serverConnection.ChangeColor(ColorsBytes);             
         }
 
         private async void Entry_Completed(object sender, EventArgs e)
@@ -107,6 +107,7 @@ namespace NowMineClient
         {
             base.OnAppearing();
             BoxColorPicker.Color = User.DeviceUser.getColor();
+            ChangeNameEntry.Text = User.DeviceUser.Name;
         }
     }
 }
