@@ -48,8 +48,8 @@ namespace NowMineClient
             }
             foreach (MusicPiece musicPiece in Queue)
             {
-                //var musicPieceUser= User.Users.Where(u => u.Id == musicPiece.Info.userId).First();
-                //musicPiece.FrameColor = musicPieceUser.getColor();
+                var musicPieceUser= User.Users.Where(u => u.Id == musicPiece.Info.userId).First();
+                musicPiece.FrameColor = musicPieceUser.getColor();
                 //Device.BeginInvokeOnMainThread(() => { sltQueue.Children.Add(musicPiece.copy()); });
                 Device.BeginInvokeOnMainThread(() => { sltQueue.Children.Add(musicPiece); });
             }

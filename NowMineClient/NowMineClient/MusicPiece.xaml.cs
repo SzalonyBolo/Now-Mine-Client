@@ -28,8 +28,12 @@ namespace NowMineClient
                 if (value != _frameColor)
                 {
                     _frameColor = value;
-                    //OnPropertyChanged("FrameColor");
                     this.MusicPieceFrame.BorderColor = _frameColor;
+                    //this.MusicPieceFrame.BackgroundColor = _frameColor;
+                    //this.MusicPieceFrame.OutlineColor = _frameColor;
+                    OnPropertyChanged("FrameColor");
+                    //OnPropertyChanged("MusicPieceFrame");
+                    //OnPropertyChanged("BorderColor");
                 }
             }
         }
