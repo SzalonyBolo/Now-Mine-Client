@@ -97,13 +97,19 @@ namespace NowMineClient
         {
             int qPos = e.EventData == -1 ? Queue.Count : e.EventData;
             //if (Queue.Count > 0)
-            {
-                Queue.RemoveAt(0);
-                MusicPiece playingNow = Queue.ElementAt(qPos);
-                Queue.Insert(0, playingNow);
-                Queue.RemoveAt(qPos);
-                renderQueue();
-            }
+            
+            Queue.RemoveAt(0);
+            MusicPiece playingNow = Queue.ElementAt(qPos);
+            Queue.Insert(0, playingNow);
+            Queue.RemoveAt(qPos);
+            renderQueue();
+            
+        }
+
+        internal void PlayedNext(object s, GenericEventArgs<int> e)
+        {
+            Queue.RemoveAt(0);  
+            renderQueue();            
         }
 
         internal void DeletePiece(object s, GenericEventArgs<int> e)

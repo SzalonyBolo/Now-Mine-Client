@@ -110,6 +110,8 @@ class MonoPackageManager_Resources {
 		"FormsViewGroup.dll",
 		"Newtonsoft.Json.dll",
 		"NowMineClient.dll",
+		"Plugin.Connectivity.Abstractions.dll",
+		"Plugin.Connectivity.dll",
 		"Sockets.Plugin.Abstractions.dll",
 		"Sockets.Plugin.dll",
 		"System.Net.Http.Extensions.dll",

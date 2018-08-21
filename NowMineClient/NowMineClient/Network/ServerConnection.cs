@@ -12,6 +12,8 @@ namespace NowMineClient.Network
 {
     public class ServerConnection
     {
+        public string serverAddress { get; set; }
+
         public delegate void ServerConnectedEventHandler(object s, EventArgs e);
         public event ServerConnectedEventHandler ServerConnected;
 
@@ -24,12 +26,7 @@ namespace NowMineClient.Network
         public delegate void PlayedNowEventHandler(object s, GenericEventArgs<int> e);
         public event PlayedNowEventHandler PlayedNow;
 
-        private string _serverAddress;
-        public string serverAddress
-        {
-            get { return _serverAddress; }
-            set { _serverAddress = value; }
-        }
+        //public event EventHandler PlayedNext;
 
         private UDPConnector _udpConnector;
         public UDPConnector udpConnector
@@ -92,20 +89,25 @@ namespace NowMineClient.Network
             return isColorChanged;
         }
 
-        protected virtual void OnServerConnected()
+        protected void OnServerConnected()
         {
             ServerConnected?.Invoke(this, EventArgs.Empty);
         }
 
-        protected virtual void OnDeletepiece(int qPos)
+        protected void OnDeletepiece(int qPos)
         {
             DeletePiece?.Invoke(this, new GenericEventArgs<int>(qPos));
         }
 
-        protected virtual void OnPlayedNow(int qPos)
+        protected void OnPlayedNow(int qPos)
         {
             PlayedNow?.Invoke(this, new GenericEventArgs<int>(qPos));
         }
+
+        //protected void OnPlayedNext()
+        //{
+        //    PlayedNext?.Invoke(this, EventArgs.Empty);
+        //}
 
         protected virtual void OnUDPQueued(MusicData piece)
         {
@@ -207,6 +209,10 @@ namespace NowMineClient.Network
                     //int qPosPlayedNow = int.Parse(msg.Substring(msg.IndexOf(':') + 1));
                     OnPlayedNow(qPosPlayedNow);
                     break;
+
+                //case "PlayedNext":
+                //    OnPlayedNext();
+                //    break;
 
                 default:
                     Debug.WriteLine("UDP/ Cannot interpret right...");

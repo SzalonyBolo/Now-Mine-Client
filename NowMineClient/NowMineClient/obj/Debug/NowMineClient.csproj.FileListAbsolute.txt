@@ -114,6 +114,8 @@ F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Debug\Microsoft.T
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Debug\Microsoft.Threading.Tasks.Extensions.dll
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Debug\Mono.Android.dll
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Debug\Newtonsoft.Json.dll
+F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Debug\Plugin.Connectivity.Abstractions.dll
+F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Debug\Plugin.Connectivity.dll
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Debug\Sockets.Plugin.Abstractions.dll
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Debug\Sockets.Plugin.dll
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Debug\System.Net.Http.dll
@@ -136,6 +138,10 @@ F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Debug\Microsoft.T
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Debug\Mono.Android.pdb
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Debug\Mono.Android.xml
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Debug\Newtonsoft.Json.xml
+F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Debug\Plugin.Connectivity.pdb
+F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Debug\Plugin.Connectivity.xml
+F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Debug\Plugin.Connectivity.Abstractions.pdb
+F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Debug\Plugin.Connectivity.Abstractions.xml
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Debug\Sockets.Plugin.pdb
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Debug\Sockets.Plugin.xml
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Debug\Sockets.Plugin.Abstractions.pdb

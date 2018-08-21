@@ -1,6 +1,8 @@
 FormsViewGroup
 Newtonsoft.Json
 NowMineClient
+Plugin.Connectivity.Abstractions
+Plugin.Connectivity
 Sockets.Plugin.Abstractions
 Sockets.Plugin
 System.Net.Http.Extensions

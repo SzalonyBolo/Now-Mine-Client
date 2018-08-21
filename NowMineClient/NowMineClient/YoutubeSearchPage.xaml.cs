@@ -55,6 +55,7 @@ namespace NowMineClient
             if (qPos != -2)
             {
                 OnSuccessfulQueued(musicPiece, qPos);
+                DependencyService.Get<IMessage>().LongAlert(String.Format("Zakolejkowano {0}", musicPiece.Info.title.Substring(0, 10)));
             }
             else
             {

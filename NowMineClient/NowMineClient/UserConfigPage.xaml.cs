@@ -82,7 +82,15 @@ namespace NowMineClient
             ColorsBytes[0] = (byte)(Color.R * 255);
             ColorsBytes[1] = (byte)(Color.G * 255);
             ColorsBytes[2] = (byte)(Color.B * 255);
-            var response = await serverConnection.ChangeColor(ColorsBytes);             
+            var response = await serverConnection.ChangeColor(ColorsBytes);
+            if (response)
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Zmieniono kolor");
+            }
+            else
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Nie udało sie zmienić koloru");
+            }
         }
 
         private async void Entry_Completed(object sender, EventArgs e)
@@ -95,11 +103,13 @@ namespace NowMineClient
             {
                 entry.TextColor = Xamarin.Forms.Color.Green;
                 User.DeviceUser.Name = newUserName;
+                DependencyService.Get<IMessage>().ShortAlert("Zmieniono nick");
             }
             else
             {
                 entry.Text = User.DeviceUser.Name;
                 entry.TextColor = Xamarin.Forms.Color.Red;
+                DependencyService.Get<IMessage>().ShortAlert("Nie udało się zmienić nick");
             }
         }
 

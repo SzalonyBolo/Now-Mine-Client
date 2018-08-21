@@ -6,6 +6,8 @@ F:\programowanie\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\Mon
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\mscorlib.dll
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Newtonsoft.Json.dll
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\NowMineClient.dll
+F:\programowanie\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Plugin.Connectivity.Abstractions.dll
+F:\programowanie\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Plugin.Connectivity.dll
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Sockets.Plugin.Abstractions.dll
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Sockets.Plugin.dll
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\System.Core.dll

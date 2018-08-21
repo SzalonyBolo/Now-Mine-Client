@@ -24,8 +24,15 @@ namespace NowMineClient.Network
 
             // Call the search.list method to retrieve results matching the specified query term.
 
-            //TRY!!! - przy braku neta się sypie
-            var searchListResponse = searchListRequest.Execute();
+            Google.Apis.YouTube.v3.Data.SearchListResponse searchListResponse = null;
+            try
+            {
+                searchListResponse = searchListRequest.Execute();
+            }
+            catch (Exception e)
+            {
+
+            }
 
             List<string> videos = new List<string>();
             //List<string> channels = new List<string>();

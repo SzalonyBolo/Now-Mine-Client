@@ -7,6 +7,7 @@ using NowMineClient.Network;
 using System.Diagnostics;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Plugin.Connectivity;
 
 namespace NowMineClient
 {
@@ -27,7 +28,10 @@ namespace NowMineClient
         public ServerCheckPage()
         {
             InitializeComponent();
-            if (serverConnection.isWifi())
+            //if (serverConnection.isWifi())
+            var wifi = Plugin.Connectivity.Abstractions.ConnectionType.WiFi;
+            var connectionTypes = CrossConnectivity.Current.ConnectionTypes;
+            if (connectionTypes.Contains(wifi))
             {
                 lblMain.Text = "Wyszukiwanie Serwera Now Mine!";
                 searchServer();
@@ -35,13 +39,33 @@ namespace NowMineClient
             else
             {
                 lblMain.Text = "Połącz się z siecią wifi w której działa Now Mine!";
+                CrossConnectivity.Current.ConnectivityChanged += Current_ConnectivityChanged;
+            }
+        }
+
+        private void Current_ConnectivityChanged(object sender, Plugin.Connectivity.Abstractions.ConnectivityChangedEventArgs e)
+        {
+            var wifi = Plugin.Connectivity.Abstractions.ConnectionType.WiFi;
+            var connectionTypes = CrossConnectivity.Current.ConnectionTypes;
+            if (connectionTypes.Contains(wifi))
+            {
+                CrossConnectivity.Current.ConnectivityChanged -= Current_ConnectivityChanged;
+                lblMain.Text = "Wyszukiwanie Serwera Now Mine!";
+                searchServer();
             }
         }
 
         private async void searchServer()
         {
-            serverConnection.ServerConnected += ServerConnected;
-            await serverConnection.ConnectToServer();
+            try
+            {
+                serverConnection.ServerConnected += ServerConnected;
+                await serverConnection.ConnectToServer();
+            }
+            catch(Exception e)
+            {
+                
+            }
         }
 
         private async void ServerConnected(object s, EventArgs e)
