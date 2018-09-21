@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Widget;
 using NowMineClient.Droid;
+using NowMineClient.OSSpecific;
 
 [assembly: Xamarin.Forms.Dependency(typeof(MessageAndroid))]
 namespace NowMineClient.Droid

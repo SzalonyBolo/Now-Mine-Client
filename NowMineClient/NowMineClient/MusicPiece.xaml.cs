@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NowMineClient.Models;
+using NowMineCommon.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -38,19 +40,32 @@ namespace NowMineClient
             }
         }
 
-        private YoutubeInfo _info;
-        public YoutubeInfo Info
+        private ClipQueued _info;
+        public ClipQueued Info
         {
             get { return _info; }
             set
             {
                 _info = value;
-                Title = _info.title;
-                ChannelName = _info.channelName;
-                //setImage = _info.thumbnail.url;
+                Title = _info.Title;
+                ChannelName = _info.ChannelName;
+                UserName = User.Users.Where(u => u.Id == _info.UserID).First().Name;
+
+
+                setImage = _info.Thumbnail.ToString();
                 //HeightRequest = 150;
             }
         }
+
+        private string userName;
+        public string UserName
+        {
+            get { return userName; }
+            set { userName = value;
+                lbluserName.Text = userName;
+            }
+        }
+
 
         private string _title;
         public string Title
@@ -80,6 +95,7 @@ namespace NowMineClient
             }
         }
 
+        //todo
         private string setImage
         {
             set
@@ -94,6 +110,18 @@ namespace NowMineClient
                     HeightRequest = 100;
             }
         }
+        private bool _deleteVisible = false;
+
+        public bool DeleteVisible
+        {
+            get { return _deleteVisible; }
+            set
+            {
+                _deleteVisible = value;
+                btnDelete.IsVisible = _deleteVisible;
+            }
+        }
+
 
         public MusicPiece()
         {
@@ -101,14 +129,15 @@ namespace NowMineClient
         }
 
         // to the SearchBar
-        public MusicPiece(YoutubeInfo inf)
+        public MusicPiece(ClipQueued inf)
         {
             InitializeComponent();
             this._info = inf;
-            lblTitle.Text = inf.title;
-            lblChannelName.Text = inf.channelName;
-            setImage = inf.thumbnail.Url;
-            lbluserName.Text = inf.userName;
+            lblTitle.Text = inf.Title;
+            lblChannelName.Text = inf.ChannelName;
+            setImage = inf.Thumbnail.ToString();
+            //lbluserName.Text = inf.userName;
+            lbluserName.Text = User.Users.Where(u => u.Id == inf.UserID).First().Name;
             this.MinimumHeightRequest = 100;
             //lbluserName.Text = Visibility.Hidden;
             created = DateTime.Now;
@@ -131,9 +160,9 @@ namespace NowMineClient
             MusicPiece musicPiece = new MusicPiece();
             musicPiece.InitializeComponent();
             musicPiece._info = this._info;
-            musicPiece.lblTitle.Text = _info.title;
-            musicPiece.lblChannelName.Text = _info.channelName;
-            musicPiece.setImage = _info.thumbnail.Url;
+            musicPiece.lblTitle.Text = _info.Title;
+            musicPiece.lblChannelName.Text = _info.ChannelName;
+            musicPiece.setImage = _info.Thumbnail.ToString();
             musicPiece.created = DateTime.Now;
             musicPiece.lbluserName.Text = lbluserName.Text;
             musicPiece.FrameColor = FrameColor;
@@ -167,5 +196,13 @@ namespace NowMineClient
         {
             this.played = DateTime.Now;
         }
+
+        private void btnDelete_Clicked(object sender, EventArgs e)
+        {
+            DeleteClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        public delegate void DeletePieceClicked(object o, EventArgs e);
+        public event DeletePieceClicked DeleteClicked;
     }
 }

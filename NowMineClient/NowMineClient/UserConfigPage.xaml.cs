@@ -1,6 +1,8 @@
 ﻿//using NControl.Abstractions;
 //using NGraphics;
+using NowMineClient.Models;
 using NowMineClient.Network;
+using NowMineClient.OSSpecific;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -70,7 +72,7 @@ namespace NowMineClient
             BtnSubmit.Text = "Wyślij";
             BtnSubmit.Clicked += BtnSubmit_Clicked;
 
-            BoxColorPicker.Color = User.DeviceUser.getColor();
+            BoxColorPicker.Color = User.DeviceUser.GetColor();
 
             sltConfigLayout.Children.Add(BtnSubmit);
         }
@@ -116,7 +118,7 @@ namespace NowMineClient
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            BoxColorPicker.Color = User.DeviceUser.getColor();
+            BoxColorPicker.Color = User.DeviceUser.GetColor();
             ChangeNameEntry.Text = User.DeviceUser.Name;
         }
     }

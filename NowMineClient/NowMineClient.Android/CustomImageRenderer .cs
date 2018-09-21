@@ -6,10 +6,12 @@ using NowMineClient.Droid;
 using Xamarin.Forms.Platform.Android;
 using Android.Graphics;
 using Android.Graphics.Drawables;
+using NowMineClient.Models;
 
 [assembly: ExportRenderer(typeof(CustomImage), typeof(CustomImageRenderer))]
 namespace NowMineClient.Droid
 {
+#pragma warning disable 0618
     public class CustomImageRenderer : ImageRenderer
     {
         protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Image> e)

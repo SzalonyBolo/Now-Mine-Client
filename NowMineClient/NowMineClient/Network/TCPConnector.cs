@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
+using NowMineClient.Models;
 using Sockets.Plugin;
 using System;
 using System.Collections.Generic;
@@ -122,26 +123,43 @@ namespace NowMineClient.Network
 
         public async Task<byte[]> getData(string message, string serverAddress)
         {
-            byte[] data = Encoding.UTF8.GetBytes(message);
+            try
+            {
+                byte[] data = Encoding.UTF8.GetBytes(message);
 
-            return await getData(data, serverAddress);
+                return await getData(data, serverAddress);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Exception in TCP/GetData {0}", e.Message);
+                return new byte[0];
+            }
         }
 
         public async Task<byte[]> getData(byte[] message, string serverAddress)
         {
-            Debug.WriteLine("Sending {0} to {1}!", message, serverAddress);
-            await tcpClient.ConnectAsync(serverAddress, 4444);
-            await tcpClient.WriteStream.WriteAsync(message, 0, message.Length);
-            int readByte = 0;
-            List<byte> queue = new List<byte>();
-            while (readByte != -1)
+            try
             {
-                readByte = tcpClient.ReadStream.ReadByte();
-                Debug.WriteLine("TCP/ Rec: {0}", readByte);
-                queue.Add((byte)readByte);
+                Debug.WriteLine("Sending {0} to {1}!", message, serverAddress);
+                await tcpClient.ConnectAsync(serverAddress, 4444);
+                await tcpClient.WriteStream.WriteAsync(message, 0, message.Length);
+                int readByte = 0;
+                List<byte> queue = new List<byte>();
+                while (readByte != -1)
+                {
+                    readByte = tcpClient.ReadStream.ReadByte();
+                    Debug.WriteLine("TCP/ Rec: {0}", readByte);
+                    queue.Add((byte)readByte);
+                }
+                await tcpClient.DisconnectAsync();
+                return queue.ToArray();
             }
-            await tcpClient.DisconnectAsync();
-            return queue.ToArray();
+            catch(Exception e)
+            {
+                Debug.WriteLine("Exception in TCP/GetData {0}", e.Message);
+                return new byte[0];
+            }
+            
         }
 
         public async Task<byte[]> SendQueueData(byte[] data, string serverAddress)

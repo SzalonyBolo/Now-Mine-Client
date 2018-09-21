@@ -8,10 +8,22 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="0.2*" />
             </Grid.RowDefinitions>
+            <StackLayout x:Name="sltDeletePopup"  IsVisible="False" Orientation="Vertical">
+                <Label Text="Czy napewno chcesz usunąć?" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Text="Tak" x:Name="btnYesPopupDelete" />
+                    <Button Grid.Column="1" Text="Nie" x:Name="btnNoPopupDelete" Clicked="btnNoPopupDelete_Clicked" />
+                </Grid>
+            </StackLayout>
             <StackLayout x:Name="sltQueue" Orientation="Vertical" VerticalOptions="FillAndExpand" Grid.Row="0" BackgroundColor="White" Margin="10">
                 <!--<Button x:Name="btnGetQueue" Text="Get Queue!"/>-->
             </StackLayout>
             <Button Text="Dawaj Dalej" x:Name="BtnPlayNext" Grid.Row="1" HeightRequest="75" IsVisible="False" Clicked="BtnPlayNext_Clicked"/>
+            
         </Grid>
     </ScrollView>
 </ContentPage>

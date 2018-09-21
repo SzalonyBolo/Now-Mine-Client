@@ -2,6 +2,69 @@
   "version": 3,
   "targets": {
     "UAP,Version=v10.0.10240": {
+      "Google.Apis/1.35.1": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.35.1",
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "10.0.2",
+          "System.Net.Http": "4.3.1",
+          "System.Reflection.TypeExtensions": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.dll": {}
+        }
+      },
+      "Google.Apis.Auth/1.35.1": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.35.1",
+          "Google.Apis.Core": "1.35.1",
+          "NETStandard.Library": "1.6.1",
+          "System.Diagnostics.Process": "4.3.0",
+          "System.Net.Requests": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.Auth.PlatformServices.dll": {},
+          "lib/netstandard1.3/Google.Apis.Auth.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.Auth.PlatformServices.dll": {},
+          "lib/netstandard1.3/Google.Apis.Auth.dll": {}
+        }
+      },
+      "Google.Apis.Core/1.35.1": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "10.0.2",
+          "System.Net.Http": "4.3.1",
+          "System.Reflection.TypeExtensions": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.Core.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.Core.dll": {}
+        }
+      },
+      "Google.Apis.YouTube.v3/1.35.1.1226": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.35.1",
+          "Google.Apis.Auth": "1.35.1",
+          "NETStandard.Library": "1.6.1"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.YouTube.v3.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.YouTube.v3.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.4.0": {
         "type": "package",
         "dependencies": {
@@ -751,6 +814,30 @@
           "lib/netstandard1.3/System.Diagnostics.DiagnosticSource.dll": {}
         }
       },
+      "System.Diagnostics.Process/4.3.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard1.4/System.Diagnostics.Process.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/linux/lib/netstandard1.4/System.Diagnostics.Process.dll": {
+            "assetType": "runtime",
+            "rid": "linux"
+          },
+          "runtimes/osx/lib/netstandard1.4/System.Diagnostics.Process.dll": {
+            "assetType": "runtime",
+            "rid": "osx"
+          },
+          "runtimes/win/lib/netstandard1.4/System.Diagnostics.Process.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          },
+          "runtimes/win7/lib/netcore50/_._": {
+            "assetType": "runtime",
+            "rid": "win7"
+          }
+        }
+      },
       "System.Diagnostics.StackTrace/4.0.2": {
         "type": "package",
         "dependencies": {
@@ -1100,7 +1187,7 @@
           "lib/netcore50/System.Linq.Queryable.dll": {}
         }
       },
-      "System.Net.Http/4.3.0": {
+      "System.Net.Http/4.3.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -1238,14 +1325,21 @@
           "lib/win8/_._": {}
         }
       },
-      "System.Net.Requests/4.0.11": {
+      "System.Net.Requests/4.3.0": {
         "type": "package",
         "dependencies": {
-          "System.IO": "4.1.0",
-          "System.Net.Primitives": "4.0.11",
-          "System.Net.WebHeaderCollection": "4.0.1",
-          "System.Runtime": "4.1.0",
-          "System.Threading.Tasks": "4.0.11"
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Diagnostics.Tracing": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Net.Http": "4.3.0",
+          "System.Net.Primitives": "4.3.0",
+          "System.Net.WebHeaderCollection": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Threading.Tasks": "4.3.0"
         },
         "compile": {
           "ref/netcore50/System.Net.Requests.dll": {}
@@ -1278,13 +1372,13 @@
           "ref/netstandard1.3/System.Net.Sockets.dll": {}
         }
       },
-      "System.Net.WebHeaderCollection/4.0.1": {
+      "System.Net.WebHeaderCollection/4.3.0": {
         "type": "package",
         "dependencies": {
-          "System.Collections": "4.0.11",
-          "System.Resources.ResourceManager": "4.0.1",
-          "System.Runtime": "4.1.0",
-          "System.Runtime.Extensions": "4.1.0"
+          "System.Collections": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0"
         },
         "compile": {
           "ref/netstandard1.3/System.Net.WebHeaderCollection.dll": {}
@@ -2468,10 +2562,84 @@
         }
       },
       "NowMineClient/1.0.0": {
-        "type": "project"
+        "type": "project",
+        "dependencies": {
+          "NowMineCommon": "1.0.0"
+        }
+      },
+      "NowMineCommon/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.3",
+        "dependencies": {
+          "Google.Apis.YouTube.v3": "1.35.1.1226",
+          "NETStandard.Library": "1.6.1"
+        }
       }
     },
     "UAP,Version=v10.0.10240/win10-arm": {
+      "Google.Apis/1.35.1": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.35.1",
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "10.0.2",
+          "System.Net.Http": "4.3.1",
+          "System.Reflection.TypeExtensions": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.dll": {}
+        }
+      },
+      "Google.Apis.Auth/1.35.1": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.35.1",
+          "Google.Apis.Core": "1.35.1",
+          "NETStandard.Library": "1.6.1",
+          "System.Diagnostics.Process": "4.3.0",
+          "System.Net.Requests": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.Auth.PlatformServices.dll": {},
+          "lib/netstandard1.3/Google.Apis.Auth.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.Auth.PlatformServices.dll": {},
+          "lib/netstandard1.3/Google.Apis.Auth.dll": {}
+        }
+      },
+      "Google.Apis.Core/1.35.1": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "10.0.2",
+          "System.Net.Http": "4.3.1",
+          "System.Reflection.TypeExtensions": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.Core.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.Core.dll": {}
+        }
+      },
+      "Google.Apis.YouTube.v3/1.35.1.1226": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.35.1",
+          "Google.Apis.Auth": "1.35.1",
+          "NETStandard.Library": "1.6.1"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.YouTube.v3.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.YouTube.v3.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.4.0": {
         "type": "package",
         "dependencies": {
@@ -3426,6 +3594,15 @@
           "lib/netstandard1.3/System.Diagnostics.DiagnosticSource.dll": {}
         }
       },
+      "System.Diagnostics.Process/4.3.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard1.4/System.Diagnostics.Process.dll": {}
+        },
+        "runtime": {
+          "runtimes/win7/lib/netcore50/_._": {}
+        }
+      },
       "System.Diagnostics.StackTrace/4.0.2": {
         "type": "package",
         "dependencies": {
@@ -3746,7 +3923,7 @@
           "lib/netcore50/System.Linq.Queryable.dll": {}
         }
       },
-      "System.Net.Http/4.3.0": {
+      "System.Net.Http/4.3.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -3852,14 +4029,21 @@
           "lib/win8/_._": {}
         }
       },
-      "System.Net.Requests/4.0.11": {
+      "System.Net.Requests/4.3.0": {
         "type": "package",
         "dependencies": {
-          "System.IO": "4.1.0",
-          "System.Net.Primitives": "4.0.11",
-          "System.Net.WebHeaderCollection": "4.0.1",
-          "System.Runtime": "4.1.0",
-          "System.Threading.Tasks": "4.0.11"
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Diagnostics.Tracing": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Net.Http": "4.3.0",
+          "System.Net.Primitives": "4.3.0",
+          "System.Net.WebHeaderCollection": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Threading.Tasks": "4.3.0"
         },
         "compile": {
           "ref/netcore50/System.Net.Requests.dll": {}
@@ -3883,13 +4067,13 @@
           "ref/netstandard1.3/System.Net.Sockets.dll": {}
         }
       },
-      "System.Net.WebHeaderCollection/4.0.1": {
+      "System.Net.WebHeaderCollection/4.3.0": {
         "type": "package",
         "dependencies": {
-          "System.Collections": "4.0.11",
-          "System.Resources.ResourceManager": "4.0.1",
-          "System.Runtime": "4.1.0",
-          "System.Runtime.Extensions": "4.1.0"
+          "System.Collections": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0"
         },
         "compile": {
           "ref/netstandard1.3/System.Net.WebHeaderCollection.dll": {}
@@ -4968,10 +5152,84 @@
         }
       },
       "NowMineClient/1.0.0": {
-        "type": "project"
+        "type": "project",
+        "dependencies": {
+          "NowMineCommon": "1.0.0"
+        }
+      },
+      "NowMineCommon/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.3",
+        "dependencies": {
+          "Google.Apis.YouTube.v3": "1.35.1.1226",
+          "NETStandard.Library": "1.6.1"
+        }
       }
     },
     "UAP,Version=v10.0.10240/win10-arm-aot": {
+      "Google.Apis/1.35.1": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.35.1",
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "10.0.2",
+          "System.Net.Http": "4.3.1",
+          "System.Reflection.TypeExtensions": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.dll": {}
+        }
+      },
+      "Google.Apis.Auth/1.35.1": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.35.1",
+          "Google.Apis.Core": "1.35.1",
+          "NETStandard.Library": "1.6.1",
+          "System.Diagnostics.Process": "4.3.0",
+          "System.Net.Requests": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.Auth.PlatformServices.dll": {},
+          "lib/netstandard1.3/Google.Apis.Auth.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.Auth.PlatformServices.dll": {},
+          "lib/netstandard1.3/Google.Apis.Auth.dll": {}
+        }
+      },
+      "Google.Apis.Core/1.35.1": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "10.0.2",
+          "System.Net.Http": "4.3.1",
+          "System.Reflection.TypeExtensions": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.Core.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.Core.dll": {}
+        }
+      },
+      "Google.Apis.YouTube.v3/1.35.1.1226": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.35.1",
+          "Google.Apis.Auth": "1.35.1",
+          "NETStandard.Library": "1.6.1"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.YouTube.v3.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.YouTube.v3.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.4.0": {
         "type": "package",
         "dependencies": {
@@ -5962,6 +6220,15 @@
           "lib/netstandard1.3/System.Diagnostics.DiagnosticSource.dll": {}
         }
       },
+      "System.Diagnostics.Process/4.3.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard1.4/System.Diagnostics.Process.dll": {}
+        },
+        "runtime": {
+          "runtimes/win7/lib/netcore50/_._": {}
+        }
+      },
       "System.Diagnostics.StackTrace/4.0.2": {
         "type": "package",
         "dependencies": {
@@ -6282,7 +6549,7 @@
           "lib/netcore50/System.Linq.Queryable.dll": {}
         }
       },
-      "System.Net.Http/4.3.0": {
+      "System.Net.Http/4.3.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -6388,14 +6655,21 @@
           "lib/win8/_._": {}
         }
       },
-      "System.Net.Requests/4.0.11": {
+      "System.Net.Requests/4.3.0": {
         "type": "package",
         "dependencies": {
-          "System.IO": "4.1.0",
-          "System.Net.Primitives": "4.0.11",
-          "System.Net.WebHeaderCollection": "4.0.1",
-          "System.Runtime": "4.1.0",
-          "System.Threading.Tasks": "4.0.11"
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Diagnostics.Tracing": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Net.Http": "4.3.0",
+          "System.Net.Primitives": "4.3.0",
+          "System.Net.WebHeaderCollection": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Threading.Tasks": "4.3.0"
         },
         "compile": {
           "ref/netcore50/System.Net.Requests.dll": {}
@@ -6419,13 +6693,13 @@
           "ref/netstandard1.3/System.Net.Sockets.dll": {}
         }
       },
-      "System.Net.WebHeaderCollection/4.0.1": {
+      "System.Net.WebHeaderCollection/4.3.0": {
         "type": "package",
         "dependencies": {
-          "System.Collections": "4.0.11",
-          "System.Resources.ResourceManager": "4.0.1",
-          "System.Runtime": "4.1.0",
-          "System.Runtime.Extensions": "4.1.0"
+          "System.Collections": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0"
         },
         "compile": {
           "ref/netstandard1.3/System.Net.WebHeaderCollection.dll": {}
@@ -7504,10 +7778,84 @@
         }
       },
       "NowMineClient/1.0.0": {
-        "type": "project"
+        "type": "project",
+        "dependencies": {
+          "NowMineCommon": "1.0.0"
+        }
+      },
+      "NowMineCommon/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.3",
+        "dependencies": {
+          "Google.Apis.YouTube.v3": "1.35.1.1226",
+          "NETStandard.Library": "1.6.1"
+        }
       }
     },
     "UAP,Version=v10.0.10240/win10-x64": {
+      "Google.Apis/1.35.1": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.35.1",
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "10.0.2",
+          "System.Net.Http": "4.3.1",
+          "System.Reflection.TypeExtensions": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.dll": {}
+        }
+      },
+      "Google.Apis.Auth/1.35.1": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.35.1",
+          "Google.Apis.Core": "1.35.1",
+          "NETStandard.Library": "1.6.1",
+          "System.Diagnostics.Process": "4.3.0",
+          "System.Net.Requests": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.Auth.PlatformServices.dll": {},
+          "lib/netstandard1.3/Google.Apis.Auth.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.Auth.PlatformServices.dll": {},
+          "lib/netstandard1.3/Google.Apis.Auth.dll": {}
+        }
+      },
+      "Google.Apis.Core/1.35.1": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "10.0.2",
+          "System.Net.Http": "4.3.1",
+          "System.Reflection.TypeExtensions": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.Core.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.Core.dll": {}
+        }
+      },
+      "Google.Apis.YouTube.v3/1.35.1.1226": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.35.1",
+          "Google.Apis.Auth": "1.35.1",
+          "NETStandard.Library": "1.6.1"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.YouTube.v3.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.YouTube.v3.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.4.0": {
         "type": "package",
         "dependencies": {
@@ -8471,6 +8819,15 @@
           "lib/netstandard1.3/System.Diagnostics.DiagnosticSource.dll": {}
         }
       },
+      "System.Diagnostics.Process/4.3.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard1.4/System.Diagnostics.Process.dll": {}
+        },
+        "runtime": {
+          "runtimes/win7/lib/netcore50/_._": {}
+        }
+      },
       "System.Diagnostics.StackTrace/4.0.2": {
         "type": "package",
         "dependencies": {
@@ -8791,7 +9148,7 @@
           "lib/netcore50/System.Linq.Queryable.dll": {}
         }
       },
-      "System.Net.Http/4.3.0": {
+      "System.Net.Http/4.3.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -8897,14 +9254,21 @@
           "lib/win8/_._": {}
         }
       },
-      "System.Net.Requests/4.0.11": {
+      "System.Net.Requests/4.3.0": {
         "type": "package",
         "dependencies": {
-          "System.IO": "4.1.0",
-          "System.Net.Primitives": "4.0.11",
-          "System.Net.WebHeaderCollection": "4.0.1",
-          "System.Runtime": "4.1.0",
-          "System.Threading.Tasks": "4.0.11"
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Diagnostics.Tracing": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Net.Http": "4.3.0",
+          "System.Net.Primitives": "4.3.0",
+          "System.Net.WebHeaderCollection": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Threading.Tasks": "4.3.0"
         },
         "compile": {
           "ref/netcore50/System.Net.Requests.dll": {}
@@ -8928,13 +9292,13 @@
           "ref/netstandard1.3/System.Net.Sockets.dll": {}
         }
       },
-      "System.Net.WebHeaderCollection/4.0.1": {
+      "System.Net.WebHeaderCollection/4.3.0": {
         "type": "package",
         "dependencies": {
-          "System.Collections": "4.0.11",
-          "System.Resources.ResourceManager": "4.0.1",
-          "System.Runtime": "4.1.0",
-          "System.Runtime.Extensions": "4.1.0"
+          "System.Collections": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0"
         },
         "compile": {
           "ref/netstandard1.3/System.Net.WebHeaderCollection.dll": {}
@@ -10013,10 +10377,84 @@
         }
       },
       "NowMineClient/1.0.0": {
-        "type": "project"
+        "type": "project",
+        "dependencies": {
+          "NowMineCommon": "1.0.0"
+        }
+      },
+      "NowMineCommon/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.3",
+        "dependencies": {
+          "Google.Apis.YouTube.v3": "1.35.1.1226",
+          "NETStandard.Library": "1.6.1"
+        }
       }
     },
     "UAP,Version=v10.0.10240/win10-x64-aot": {
+      "Google.Apis/1.35.1": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.35.1",
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "10.0.2",
+          "System.Net.Http": "4.3.1",
+          "System.Reflection.TypeExtensions": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.dll": {}
+        }
+      },
+      "Google.Apis.Auth/1.35.1": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.35.1",
+          "Google.Apis.Core": "1.35.1",
+          "NETStandard.Library": "1.6.1",
+          "System.Diagnostics.Process": "4.3.0",
+          "System.Net.Requests": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.Auth.PlatformServices.dll": {},
+          "lib/netstandard1.3/Google.Apis.Auth.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.Auth.PlatformServices.dll": {},
+          "lib/netstandard1.3/Google.Apis.Auth.dll": {}
+        }
+      },
+      "Google.Apis.Core/1.35.1": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "10.0.2",
+          "System.Net.Http": "4.3.1",
+          "System.Reflection.TypeExtensions": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.Core.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.Core.dll": {}
+        }
+      },
+      "Google.Apis.YouTube.v3/1.35.1.1226": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.35.1",
+          "Google.Apis.Auth": "1.35.1",
+          "NETStandard.Library": "1.6.1"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.YouTube.v3.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.YouTube.v3.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.4.0": {
         "type": "package",
         "dependencies": {
@@ -11016,6 +11454,15 @@
           "lib/netstandard1.3/System.Diagnostics.DiagnosticSource.dll": {}
         }
       },
+      "System.Diagnostics.Process/4.3.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard1.4/System.Diagnostics.Process.dll": {}
+        },
+        "runtime": {
+          "runtimes/win7/lib/netcore50/_._": {}
+        }
+      },
       "System.Diagnostics.StackTrace/4.0.2": {
         "type": "package",
         "dependencies": {
@@ -11336,7 +11783,7 @@
           "lib/netcore50/System.Linq.Queryable.dll": {}
         }
       },
-      "System.Net.Http/4.3.0": {
+      "System.Net.Http/4.3.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -11442,14 +11889,21 @@
           "lib/win8/_._": {}
         }
       },
-      "System.Net.Requests/4.0.11": {
+      "System.Net.Requests/4.3.0": {
         "type": "package",
         "dependencies": {
-          "System.IO": "4.1.0",
-          "System.Net.Primitives": "4.0.11",
-          "System.Net.WebHeaderCollection": "4.0.1",
-          "System.Runtime": "4.1.0",
-          "System.Threading.Tasks": "4.0.11"
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Diagnostics.Tracing": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Net.Http": "4.3.0",
+          "System.Net.Primitives": "4.3.0",
+          "System.Net.WebHeaderCollection": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Threading.Tasks": "4.3.0"
         },
         "compile": {
           "ref/netcore50/System.Net.Requests.dll": {}
@@ -11473,13 +11927,13 @@
           "ref/netstandard1.3/System.Net.Sockets.dll": {}
         }
       },
-      "System.Net.WebHeaderCollection/4.0.1": {
+      "System.Net.WebHeaderCollection/4.3.0": {
         "type": "package",
         "dependencies": {
-          "System.Collections": "4.0.11",
-          "System.Resources.ResourceManager": "4.0.1",
-          "System.Runtime": "4.1.0",
-          "System.Runtime.Extensions": "4.1.0"
+          "System.Collections": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0"
         },
         "compile": {
           "ref/netstandard1.3/System.Net.WebHeaderCollection.dll": {}
@@ -12558,10 +13012,84 @@
         }
       },
       "NowMineClient/1.0.0": {
-        "type": "project"
+        "type": "project",
+        "dependencies": {
+          "NowMineCommon": "1.0.0"
+        }
+      },
+      "NowMineCommon/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.3",
+        "dependencies": {
+          "Google.Apis.YouTube.v3": "1.35.1.1226",
+          "NETStandard.Library": "1.6.1"
+        }
       }
     },
     "UAP,Version=v10.0.10240/win10-x86": {
+      "Google.Apis/1.35.1": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.35.1",
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "10.0.2",
+          "System.Net.Http": "4.3.1",
+          "System.Reflection.TypeExtensions": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.dll": {}
+        }
+      },
+      "Google.Apis.Auth/1.35.1": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.35.1",
+          "Google.Apis.Core": "1.35.1",
+          "NETStandard.Library": "1.6.1",
+          "System.Diagnostics.Process": "4.3.0",
+          "System.Net.Requests": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.Auth.PlatformServices.dll": {},
+          "lib/netstandard1.3/Google.Apis.Auth.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.Auth.PlatformServices.dll": {},
+          "lib/netstandard1.3/Google.Apis.Auth.dll": {}
+        }
+      },
+      "Google.Apis.Core/1.35.1": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "10.0.2",
+          "System.Net.Http": "4.3.1",
+          "System.Reflection.TypeExtensions": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.Core.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.Core.dll": {}
+        }
+      },
+      "Google.Apis.YouTube.v3/1.35.1.1226": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.35.1",
+          "Google.Apis.Auth": "1.35.1",
+          "NETStandard.Library": "1.6.1"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.YouTube.v3.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.YouTube.v3.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.4.0": {
         "type": "package",
         "dependencies": {
@@ -13525,6 +14053,15 @@
           "lib/netstandard1.3/System.Diagnostics.DiagnosticSource.dll": {}
         }
       },
+      "System.Diagnostics.Process/4.3.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard1.4/System.Diagnostics.Process.dll": {}
+        },
+        "runtime": {
+          "runtimes/win7/lib/netcore50/_._": {}
+        }
+      },
       "System.Diagnostics.StackTrace/4.0.2": {
         "type": "package",
         "dependencies": {
@@ -13845,7 +14382,7 @@
           "lib/netcore50/System.Linq.Queryable.dll": {}
         }
       },
-      "System.Net.Http/4.3.0": {
+      "System.Net.Http/4.3.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -13951,14 +14488,21 @@
           "lib/win8/_._": {}
         }
       },
-      "System.Net.Requests/4.0.11": {
+      "System.Net.Requests/4.3.0": {
         "type": "package",
         "dependencies": {
-          "System.IO": "4.1.0",
-          "System.Net.Primitives": "4.0.11",
-          "System.Net.WebHeaderCollection": "4.0.1",
-          "System.Runtime": "4.1.0",
-          "System.Threading.Tasks": "4.0.11"
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Diagnostics.Tracing": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Net.Http": "4.3.0",
+          "System.Net.Primitives": "4.3.0",
+          "System.Net.WebHeaderCollection": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Threading.Tasks": "4.3.0"
         },
         "compile": {
           "ref/netcore50/System.Net.Requests.dll": {}
@@ -13982,13 +14526,13 @@
           "ref/netstandard1.3/System.Net.Sockets.dll": {}
         }
       },
-      "System.Net.WebHeaderCollection/4.0.1": {
+      "System.Net.WebHeaderCollection/4.3.0": {
         "type": "package",
         "dependencies": {
-          "System.Collections": "4.0.11",
-          "System.Resources.ResourceManager": "4.0.1",
-          "System.Runtime": "4.1.0",
-          "System.Runtime.Extensions": "4.1.0"
+          "System.Collections": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0"
         },
         "compile": {
           "ref/netstandard1.3/System.Net.WebHeaderCollection.dll": {}
@@ -15067,10 +15611,84 @@
         }
       },
       "NowMineClient/1.0.0": {
-        "type": "project"
+        "type": "project",
+        "dependencies": {
+          "NowMineCommon": "1.0.0"
+        }
+      },
+      "NowMineCommon/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.3",
+        "dependencies": {
+          "Google.Apis.YouTube.v3": "1.35.1.1226",
+          "NETStandard.Library": "1.6.1"
+        }
       }
     },
     "UAP,Version=v10.0.10240/win10-x86-aot": {
+      "Google.Apis/1.35.1": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.35.1",
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "10.0.2",
+          "System.Net.Http": "4.3.1",
+          "System.Reflection.TypeExtensions": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.dll": {}
+        }
+      },
+      "Google.Apis.Auth/1.35.1": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.35.1",
+          "Google.Apis.Core": "1.35.1",
+          "NETStandard.Library": "1.6.1",
+          "System.Diagnostics.Process": "4.3.0",
+          "System.Net.Requests": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.Auth.PlatformServices.dll": {},
+          "lib/netstandard1.3/Google.Apis.Auth.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.Auth.PlatformServices.dll": {},
+          "lib/netstandard1.3/Google.Apis.Auth.dll": {}
+        }
+      },
+      "Google.Apis.Core/1.35.1": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "10.0.2",
+          "System.Net.Http": "4.3.1",
+          "System.Reflection.TypeExtensions": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.Core.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.Core.dll": {}
+        }
+      },
+      "Google.Apis.YouTube.v3/1.35.1.1226": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.35.1",
+          "Google.Apis.Auth": "1.35.1",
+          "NETStandard.Library": "1.6.1"
+        },
+        "compile": {
+          "lib/netstandard1.3/Google.Apis.YouTube.v3.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Google.Apis.YouTube.v3.dll": {}
+        }
+      },
       "Microsoft.CSharp/4.4.0": {
         "type": "package",
         "dependencies": {
@@ -16070,6 +16688,15 @@
           "lib/netstandard1.3/System.Diagnostics.DiagnosticSource.dll": {}
         }
       },
+      "System.Diagnostics.Process/4.3.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard1.4/System.Diagnostics.Process.dll": {}
+        },
+        "runtime": {
+          "runtimes/win7/lib/netcore50/_._": {}
+        }
+      },
       "System.Diagnostics.StackTrace/4.0.2": {
         "type": "package",
         "dependencies": {
@@ -16390,7 +17017,7 @@
           "lib/netcore50/System.Linq.Queryable.dll": {}
         }
       },
-      "System.Net.Http/4.3.0": {
+      "System.Net.Http/4.3.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -16496,14 +17123,21 @@
           "lib/win8/_._": {}
         }
       },
-      "System.Net.Requests/4.0.11": {
+      "System.Net.Requests/4.3.0": {
         "type": "package",
         "dependencies": {
-          "System.IO": "4.1.0",
-          "System.Net.Primitives": "4.0.11",
-          "System.Net.WebHeaderCollection": "4.0.1",
-          "System.Runtime": "4.1.0",
-          "System.Threading.Tasks": "4.0.11"
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Diagnostics.Tracing": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Net.Http": "4.3.0",
+          "System.Net.Primitives": "4.3.0",
+          "System.Net.WebHeaderCollection": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Threading.Tasks": "4.3.0"
         },
         "compile": {
           "ref/netcore50/System.Net.Requests.dll": {}
@@ -16527,13 +17161,13 @@
           "ref/netstandard1.3/System.Net.Sockets.dll": {}
         }
       },
-      "System.Net.WebHeaderCollection/4.0.1": {
+      "System.Net.WebHeaderCollection/4.3.0": {
         "type": "package",
         "dependencies": {
-          "System.Collections": "4.0.11",
-          "System.Resources.ResourceManager": "4.0.1",
-          "System.Runtime": "4.1.0",
-          "System.Runtime.Extensions": "4.1.0"
+          "System.Collections": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0"
         },
         "compile": {
           "ref/netstandard1.3/System.Net.WebHeaderCollection.dll": {}
@@ -17612,11 +18246,105 @@
         }
       },
       "NowMineClient/1.0.0": {
-        "type": "project"
+        "type": "project",
+        "dependencies": {
+          "NowMineCommon": "1.0.0"
+        }
+      },
+      "NowMineCommon/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.3",
+        "dependencies": {
+          "Google.Apis.YouTube.v3": "1.35.1.1226",
+          "NETStandard.Library": "1.6.1"
+        }
       }
     }
   },
   "libraries": {
+    "Google.Apis/1.35.1": {
+      "sha512": "ZBWKDuj7qznEaNYHFRYcwbDfdDltqfeUrpVL8ijahy7KGG8DdHBY86uA2bpiKTAmgbOO7TKNkvaURAVJur98eQ==",
+      "type": "package",
+      "path": "google.apis/1.35.1",
+      "files": [
+        "google.apis.1.35.1.nupkg.sha512",
+        "google.apis.nuspec",
+        "lib/net45/Google.Apis.PlatformServices.dll",
+        "lib/net45/Google.Apis.dll",
+        "lib/net45/Google.Apis.pdb",
+        "lib/net45/Google.Apis.xml",
+        "lib/netstandard1.3/Google.Apis.dll",
+        "lib/netstandard1.3/Google.Apis.pdb",
+        "lib/netstandard1.3/Google.Apis.xml",
+        "lib/netstandard2.0/Google.Apis.dll",
+        "lib/netstandard2.0/Google.Apis.pdb",
+        "lib/netstandard2.0/Google.Apis.xml"
+      ]
+    },
+    "Google.Apis.Auth/1.35.1": {
+      "sha512": "GklaB+R3yiC13T/duEW10uqvugSr1zgPcn1P3O4hOPcMoS4Z/NvGYns2IoEywVKXuFg4kGH/VUCZ7xSUdcAV6g==",
+      "type": "package",
+      "path": "google.apis.auth/1.35.1",
+      "files": [
+        "google.apis.auth.1.35.1.nupkg.sha512",
+        "google.apis.auth.nuspec",
+        "lib/net45/Google.Apis.Auth.PlatformServices.dll",
+        "lib/net45/Google.Apis.Auth.dll",
+        "lib/net45/Google.Apis.Auth.pdb",
+        "lib/net45/Google.Apis.Auth.xml",
+        "lib/netstandard1.3/Google.Apis.Auth.PlatformServices.dll",
+        "lib/netstandard1.3/Google.Apis.Auth.dll",
+        "lib/netstandard1.3/Google.Apis.Auth.pdb",
+        "lib/netstandard1.3/Google.Apis.Auth.xml",
+        "lib/netstandard2.0/Google.Apis.Auth.PlatformServices.dll",
+        "lib/netstandard2.0/Google.Apis.Auth.dll",
+        "lib/netstandard2.0/Google.Apis.Auth.pdb",
+        "lib/netstandard2.0/Google.Apis.Auth.xml"
+      ]
+    },
+    "Google.Apis.Core/1.35.1": {
+      "sha512": "xVzrkplgHMOCqFQHIfy9HvJBKNLQaRV+orWFHjpUAtGZe0GghHdQKG5dzLNnYjLQXICBftlK5FWk9AoAotYbYw==",
+      "type": "package",
+      "path": "google.apis.core/1.35.1",
+      "files": [
+        "google.apis.core.1.35.1.nupkg.sha512",
+        "google.apis.core.nuspec",
+        "lib/net45/Google.Apis.Core.dll",
+        "lib/net45/Google.Apis.Core.pdb",
+        "lib/net45/Google.Apis.Core.xml",
+        "lib/netstandard1.3/Google.Apis.Core.dll",
+        "lib/netstandard1.3/Google.Apis.Core.pdb",
+        "lib/netstandard1.3/Google.Apis.Core.xml",
+        "lib/netstandard2.0/Google.Apis.Core.dll",
+        "lib/netstandard2.0/Google.Apis.Core.pdb",
+        "lib/netstandard2.0/Google.Apis.Core.xml"
+      ]
+    },
+    "Google.Apis.YouTube.v3/1.35.1.1226": {
+      "sha512": "YSNJKwjoPIv9lzBtfsy2trsjDOlDk3d10lKRsJeMxRd6gbIV80HxE9LjdQogjxQIoKG5xOXiWEuy/9sH8FnR7Q==",
+      "type": "package",
+      "path": "google.apis.youtube.v3/1.35.1.1226",
+      "files": [
+        ".signature.p7s",
+        "google.apis.youtube.v3.1.35.1.1226.nupkg.sha512",
+        "google.apis.youtube.v3.nuspec",
+        "lib/net40/Google.Apis.YouTube.v3.dll",
+        "lib/net40/Google.Apis.YouTube.v3.pdb",
+        "lib/net40/Google.Apis.YouTube.v3.xml",
+        "lib/net45/Google.Apis.YouTube.v3.dll",
+        "lib/net45/Google.Apis.YouTube.v3.pdb",
+        "lib/net45/Google.Apis.YouTube.v3.xml",
+        "lib/netstandard1.0/Google.Apis.YouTube.v3.dll",
+        "lib/netstandard1.0/Google.Apis.YouTube.v3.pdb",
+        "lib/netstandard1.0/Google.Apis.YouTube.v3.xml",
+        "lib/netstandard1.3/Google.Apis.YouTube.v3.dll",
+        "lib/netstandard1.3/Google.Apis.YouTube.v3.pdb",
+        "lib/netstandard1.3/Google.Apis.YouTube.v3.xml",
+        "lib/netstandard2.0/Google.Apis.YouTube.v3.dll",
+        "lib/netstandard2.0/Google.Apis.YouTube.v3.pdb",
+        "lib/netstandard2.0/Google.Apis.YouTube.v3.xml"
+      ]
+    },
     "Microsoft.CSharp/4.4.0": {
       "sha512": "vvVR/B08YVghQ4jHEloxqw2ZWzEGE1AOA5E0DioUM3ujbXz6FD3AfB/0Jl2ohJPd0nXYGwmPe1En6HTsSriq1A==",
       "type": "package",
@@ -20030,7 +20758,7 @@
       ]
     },
     "Newtonsoft.Json/10.0.3": {
-      "sha512": "wBM7i7i3U2WX0ecor4zdVGvgrwFUjuigBoHKiL+nH39fCOpCPjBY3RDqJM32edvdyTAVdjzlccHsg41+/+zpSA==",
+      "sha512": "hSXaFmh7hNCuEoC4XNY5DrRkLDzYHqPx/Ik23R4J86Z7PE/Y6YidhG602dFVdLBRSdG6xp9NabH3dXpcoxWvww==",
       "type": "package",
       "path": "newtonsoft.json/10.0.3",
       "files": [
@@ -20057,7 +20785,7 @@
       ]
     },
     "rda.SocketsForPCL/2.0.2": {
-      "sha512": "b37lna72IEvK7JQmRZ6LCIvS7vSS+AjZfKy+KcdVTj88r+lMoLHxT7LXrPcjotrYD3Re40AZudomdaA8zK5+7Q==",
+      "sha512": "1Snu1FSfs2TK9i6eh7Ibw5tGDMj7gLpew2agJnAyz57YGTHO6lo4Gwq2TetP2F1C7iOyli2mqD0yVrQb/IJAjA==",
       "type": "package",
       "path": "rda.socketsforpcl/2.0.2",
       "files": [
@@ -22018,6 +22746,61 @@
         "system.diagnostics.diagnosticsource.nuspec"
       ]
     },
+    "System.Diagnostics.Process/4.3.0": {
+      "sha512": "J0wOX07+QASQblsfxmIMFc9Iq7KTXYL3zs2G/Xc704Ylv3NpuVdo6gij6V3PGiptTxqsK0K7CdXenRvKUnkA2g==",
+      "type": "package",
+      "path": "system.diagnostics.process/4.3.0",
+      "files": [
+        "ThirdPartyNotices.txt",
+        "dotnet_library_license.txt",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net46/System.Diagnostics.Process.dll",
+        "lib/net461/System.Diagnostics.Process.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net46/System.Diagnostics.Process.dll",
+        "ref/net461/System.Diagnostics.Process.dll",
+        "ref/netstandard1.3/System.Diagnostics.Process.dll",
+        "ref/netstandard1.3/System.Diagnostics.Process.xml",
+        "ref/netstandard1.3/de/System.Diagnostics.Process.xml",
+        "ref/netstandard1.3/es/System.Diagnostics.Process.xml",
+        "ref/netstandard1.3/fr/System.Diagnostics.Process.xml",
+        "ref/netstandard1.3/it/System.Diagnostics.Process.xml",
+        "ref/netstandard1.3/ja/System.Diagnostics.Process.xml",
+        "ref/netstandard1.3/ko/System.Diagnostics.Process.xml",
+        "ref/netstandard1.3/ru/System.Diagnostics.Process.xml",
+        "ref/netstandard1.3/zh-hans/System.Diagnostics.Process.xml",
+        "ref/netstandard1.3/zh-hant/System.Diagnostics.Process.xml",
+        "ref/netstandard1.4/System.Diagnostics.Process.dll",
+        "ref/netstandard1.4/System.Diagnostics.Process.xml",
+        "ref/netstandard1.4/de/System.Diagnostics.Process.xml",
+        "ref/netstandard1.4/es/System.Diagnostics.Process.xml",
+        "ref/netstandard1.4/fr/System.Diagnostics.Process.xml",
+        "ref/netstandard1.4/it/System.Diagnostics.Process.xml",
+        "ref/netstandard1.4/ja/System.Diagnostics.Process.xml",
+        "ref/netstandard1.4/ko/System.Diagnostics.Process.xml",
+        "ref/netstandard1.4/ru/System.Diagnostics.Process.xml",
+        "ref/netstandard1.4/zh-hans/System.Diagnostics.Process.xml",
+        "ref/netstandard1.4/zh-hant/System.Diagnostics.Process.xml",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "runtimes/linux/lib/netstandard1.4/System.Diagnostics.Process.dll",
+        "runtimes/osx/lib/netstandard1.4/System.Diagnostics.Process.dll",
+        "runtimes/win/lib/net46/System.Diagnostics.Process.dll",
+        "runtimes/win/lib/net461/System.Diagnostics.Process.dll",
+        "runtimes/win/lib/netstandard1.4/System.Diagnostics.Process.dll",
+        "runtimes/win7/lib/netcore50/_._",
+        "system.diagnostics.process.4.3.0.nupkg.sha512",
+        "system.diagnostics.process.nuspec"
+      ]
+    },
     "System.Diagnostics.StackTrace/4.0.2": {
       "sha512": "MmP424iVWLyeW7XGtwC5NyfzsIwodFKwhW6yns3d+Sh8WFsFoPWq2cUlJJDAteapIm2qoJ8fc3VwIUroolbsEA==",
       "type": "package",
@@ -23003,10 +23786,10 @@
         "system.linq.queryable.nuspec"
       ]
     },
-    "System.Net.Http/4.3.0": {
-      "sha512": "sYg+FtILtRQuYWSIAuNOELwVuVsxVyJGWQyOnlAzhV4xvhyFnON1bAzYYC+jjRW8JREM45R0R5Dgi8MTC5sEwA==",
+    "System.Net.Http/4.3.1": {
+      "sha512": "UrTyRczM3ZvNk6oetBuwlu67MFKKRva+r7bw4JDVZ6Y2IukyZ24td5ppsieu/4yZlogVAIuZul9GIQ3hoiz0yA==",
       "type": "package",
-      "path": "system.net.http/4.3.0",
+      "path": "system.net.http/4.3.1",
       "files": [
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
@@ -23079,7 +23862,7 @@
         "runtimes/win/lib/net46/System.Net.Http.dll",
         "runtimes/win/lib/netcore50/System.Net.Http.dll",
         "runtimes/win/lib/netstandard1.3/System.Net.Http.dll",
-        "system.net.http.4.3.0.nupkg.sha512",
+        "system.net.http.4.3.1.nupkg.sha512",
         "system.net.http.nuspec"
       ]
     },
@@ -23349,10 +24132,10 @@
         "system.net.primitives.nuspec"
       ]
     },
-    "System.Net.Requests/4.0.11": {
-      "sha512": "vxGt7C0cZixN+VqoSW4Yakc1Y9WknmxauDqzxgpw/FnBdz4kQNN51l4wxdXX5VY1xjqy//+G+4CvJWp1+f+y6Q==",
+    "System.Net.Requests/4.3.0": {
+      "sha512": "OZNUuAs0kDXUzm7U5NZ1ojVta5YFZmgT2yxBqsQ7Eseq5Ahz88LInGRuNLJ/NP2F8W1q7tse1pKDthj3reF5QA==",
       "type": "package",
-      "path": "system.net.requests/4.0.11",
+      "path": "system.net.requests/4.3.0",
       "files": [
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
@@ -23426,7 +24209,7 @@
         "runtimes/unix/lib/netstandard1.3/System.Net.Requests.dll",
         "runtimes/win/lib/net46/_._",
         "runtimes/win/lib/netstandard1.3/System.Net.Requests.dll",
-        "system.net.requests.4.0.11.nupkg.sha512",
+        "system.net.requests.4.3.0.nupkg.sha512",
         "system.net.requests.nuspec"
       ]
     },
@@ -23466,10 +24249,10 @@
         "system.net.sockets.nuspec"
       ]
     },
-    "System.Net.WebHeaderCollection/4.0.1": {
-      "sha512": "XX2TIAN+wBSAIV51BU2FvvXMdstUa8b0FBSZmDWjZdwUMmggQSifpTOZ5fNH20z9ZCg2fkV1L5SsZnpO2RQDRQ==",
+    "System.Net.WebHeaderCollection/4.3.0": {
+      "sha512": "XZrXYG3c7QV/GpWeoaRC02rM6LH2JJetfVYskf35wdC/w2fFDFMphec4gmVH2dkll6abtW14u9Rt96pxd9YH2A==",
       "type": "package",
-      "path": "system.net.webheadercollection/4.0.1",
+      "path": "system.net.webheadercollection/4.3.0",
       "files": [
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
@@ -23499,7 +24282,7 @@
         "ref/xamarinmac20/_._",
         "ref/xamarintvos10/_._",
         "ref/xamarinwatchos10/_._",
-        "system.net.webheadercollection.4.0.1.nupkg.sha512",
+        "system.net.webheadercollection.4.3.0.nupkg.sha512",
         "system.net.webheadercollection.nuspec"
       ]
     },
@@ -26589,6 +27372,11 @@
       "type": "project",
       "path": "../NowMineClient/NowMineClient.csproj",
       "msbuildProject": "../NowMineClient/NowMineClient.csproj"
+    },
+    "NowMineCommon/1.0.0": {
+      "type": "project",
+      "path": "../../../NowMineCommon/NowMineCommon.csproj",
+      "msbuildProject": "../../../NowMineCommon/NowMineCommon.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -26602,19 +27390,19 @@
     "UAP,Version=v10.0.10240": []
   },
   "packageFolders": {
-    "C:\\Users\\8oL0\\.nuget\\packages\\": {}
+    "C:\\Users\\admin\\.nuget\\packages\\": {}
   },
   "project": {
     "restore": {
-      "projectUniqueName": "E:\\programowanie\\NowMineClient\\NowMineClient\\NowMineClient.UWP\\NowMineClient.UWP.csproj",
+      "projectUniqueName": "C:\\NowMineProjects\\NowMineClient\\NowMineClient\\NowMineClient.UWP\\NowMineClient.UWP.csproj",
       "projectName": "NowMineClient.UWP",
-      "projectPath": "E:\\programowanie\\NowMineClient\\NowMineClient\\NowMineClient.UWP\\NowMineClient.UWP.csproj",
-      "projectJsonPath": "E:\\programowanie\\NowMineClient\\NowMineClient\\NowMineClient.UWP\\project.json",
-      "packagesPath": "C:\\Users\\8oL0\\.nuget\\packages\\",
-      "outputPath": "E:\\programowanie\\NowMineClient\\NowMineClient\\NowMineClient.UWP\\obj\\",
+      "projectPath": "C:\\NowMineProjects\\NowMineClient\\NowMineClient\\NowMineClient.UWP\\NowMineClient.UWP.csproj",
+      "projectJsonPath": "C:\\NowMineProjects\\NowMineClient\\NowMineClient\\NowMineClient.UWP\\project.json",
+      "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
+      "outputPath": "C:\\NowMineProjects\\NowMineClient\\NowMineClient\\NowMineClient.UWP\\obj\\",
       "projectStyle": "ProjectJson",
       "configFilePaths": [
-        "C:\\Users\\8oL0\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "sources": {
@@ -26624,19 +27412,19 @@
       "frameworks": {
         "uap10.0.10240": {
           "projectReferences": {
-            "E:\\programowanie\\NowMineClient\\NowMineClient\\NowMineClient\\NowMineClient.csproj": {
-              "projectPath": "E:\\programowanie\\NowMineClient\\NowMineClient\\NowMineClient\\NowMineClient.csproj"
+            "C:\\NowMineProjects\\NowMineClient\\NowMineClient\\NowMineClient\\NowMineClient.csproj": {
+              "projectPath": "C:\\NowMineProjects\\NowMineClient\\NowMineClient\\NowMineClient\\NowMineClient.csproj"
             }
           }
         }
       }
     },
     "dependencies": {
-      "Microsoft.CSharp": "4.4.0",
-      "Microsoft.NETCore.UniversalWindowsPlatform": "5.4.0",
-      "Newtonsoft.Json": "10.0.3",
-      "rda.SocketsForPCL": "2.0.2",
-      "Xamarin.Forms": "2.4.0.280"
+      "Microsoft.CSharp": "[4.4.0, )",
+      "Microsoft.NETCore.UniversalWindowsPlatform": "[5.4.0, )",
+      "Newtonsoft.Json": "[10.0.3, )",
+      "Xamarin.Forms": "[2.4.0.280, )",
+      "rda.SocketsForPCL": "[2.0.2, )"
     },
     "frameworks": {
       "uap10.0.10240": {}
@@ -26661,5 +27449,61 @@
         "#import": []
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1203",
+      "level": "Error",
+      "message": "System.Diagnostics.Process 4.3.0 provides a compile-time reference assembly for System.Diagnostics.Process on UAP,Version=v10.0.10240, but there is no run-time assembly compatible with win10-arm.",
+      "libraryId": "System.Diagnostics.Process",
+      "targetGraphs": [
+        "UAP,Version=v10.0.10240/win10-arm"
+      ]
+    },
+    {
+      "code": "NU1203",
+      "level": "Error",
+      "message": "System.Diagnostics.Process 4.3.0 provides a compile-time reference assembly for System.Diagnostics.Process on UAP,Version=v10.0.10240, but there is no run-time assembly compatible with win10-arm-aot.",
+      "libraryId": "System.Diagnostics.Process",
+      "targetGraphs": [
+        "UAP,Version=v10.0.10240/win10-arm-aot"
+      ]
+    },
+    {
+      "code": "NU1203",
+      "level": "Error",
+      "message": "System.Diagnostics.Process 4.3.0 provides a compile-time reference assembly for System.Diagnostics.Process on UAP,Version=v10.0.10240, but there is no run-time assembly compatible with win10-x64.",
+      "libraryId": "System.Diagnostics.Process",
+      "targetGraphs": [
+        "UAP,Version=v10.0.10240/win10-x64"
+      ]
+    },
+    {
+      "code": "NU1203",
+      "level": "Error",
+      "message": "System.Diagnostics.Process 4.3.0 provides a compile-time reference assembly for System.Diagnostics.Process on UAP,Version=v10.0.10240, but there is no run-time assembly compatible with win10-x64-aot.",
+      "libraryId": "System.Diagnostics.Process",
+      "targetGraphs": [
+        "UAP,Version=v10.0.10240/win10-x64-aot"
+      ]
+    },
+    {
+      "code": "NU1203",
+      "level": "Error",
+      "message": "System.Diagnostics.Process 4.3.0 provides a compile-time reference assembly for System.Diagnostics.Process on UAP,Version=v10.0.10240, but there is no run-time assembly compatible with win10-x86.",
+      "libraryId": "System.Diagnostics.Process",
+      "targetGraphs": [
+        "UAP,Version=v10.0.10240/win10-x86"
+      ]
+    },
+    {
+      "code": "NU1203",
+      "level": "Error",
+      "message": "System.Diagnostics.Process 4.3.0 provides a compile-time reference assembly for System.Diagnostics.Process on UAP,Version=v10.0.10240, but there is no run-time assembly compatible with win10-x86-aot.",
+      "libraryId": "System.Diagnostics.Process",
+      "targetGraphs": [
+        "UAP,Version=v10.0.10240/win10-x86-aot"
+      ]
+    }
+  ]
 }

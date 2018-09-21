@@ -55,14 +55,6 @@ E:\programowanie\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineCl
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.csproj.App.config
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.csprojAssemblyReference.cache
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.csproj.CoreCompileInputs.cache
-F:\programowanie\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.App.xaml.g.cs
-F:\programowanie\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.ServerCheckPage.xaml.g.cs
-F:\programowanie\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.MusicPiece.xaml.g.cs
-F:\programowanie\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.QueuePage.xaml.g.cs
-F:\programowanie\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.UserConfigPage.xaml.g.cs
-F:\programowanie\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.YoutubeSearchPage.xaml.g.cs
-F:\programowanie\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.dll
-F:\programowanie\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.pdb
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\NowMineClient.dll.config
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\NowMineClient.dll
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\NowMineClient.pdb
@@ -72,7 +64,11 @@ F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Ap
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.YouTube.v3.dll
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Microsoft.Threading.Tasks.dll
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Microsoft.Threading.Tasks.Extensions.dll
+F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Mono.Android.dll
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Newtonsoft.Json.dll
+F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\NowMineCommon.dll
+F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Plugin.Connectivity.Abstractions.dll
+F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Plugin.Connectivity.dll
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Sockets.Plugin.Abstractions.dll
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Sockets.Plugin.dll
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\System.Net.Http.dll
@@ -82,6 +78,7 @@ F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.F
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.Forms.Platform.dll
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.Forms.Xaml.dll
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Zlib.Portable.dll
+F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\NowMineCommon.pdb
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.pdb
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.xml
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.Auth.pdb
@@ -92,7 +89,13 @@ F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Ap
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.YouTube.v3.xml
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Microsoft.Threading.Tasks.xml
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Microsoft.Threading.Tasks.Extensions.xml
+F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Mono.Android.pdb
+F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Mono.Android.xml
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Newtonsoft.Json.xml
+F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Plugin.Connectivity.pdb
+F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Plugin.Connectivity.xml
+F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Plugin.Connectivity.Abstractions.pdb
+F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Plugin.Connectivity.Abstractions.xml
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Sockets.Plugin.pdb
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Sockets.Plugin.xml
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Sockets.Plugin.Abstractions.pdb
@@ -102,8 +105,127 @@ F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\System.Ne
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\System.Net.Http.Primitives.xml
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.Forms.Core.pdb
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.Forms.Core.xml
-F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.Forms.Platform.pdb
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.Forms.Xaml.pdb
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.Forms.Xaml.xml
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\bin\Release\Zlib.Portable.xml
 F:\programowanie\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.csproj.CopyComplete
+F:\programowanie\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.dll
+F:\programowanie\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.pdb
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\NowMineClient.dll.config
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\NowMineClient.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\NowMineClient.pdb
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.Auth.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.Core.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.YouTube.v3.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Microsoft.Threading.Tasks.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Microsoft.Threading.Tasks.Extensions.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Mono.Android.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Newtonsoft.Json.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\NowMineCommon.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Plugin.Connectivity.Abstractions.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Plugin.Connectivity.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Sockets.Plugin.Abstractions.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Sockets.Plugin.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\System.Net.Http.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\System.Net.Http.Extensions.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\System.Net.Http.Primitives.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.Forms.Core.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.Forms.Platform.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.Forms.Xaml.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Zlib.Portable.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\NowMineCommon.pdb
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.pdb
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.xml
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.Auth.pdb
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.Auth.xml
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.Core.pdb
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.Core.xml
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.YouTube.v3.pdb
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.YouTube.v3.xml
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Microsoft.Threading.Tasks.xml
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Microsoft.Threading.Tasks.Extensions.xml
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Mono.Android.pdb
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Mono.Android.xml
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Newtonsoft.Json.xml
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Plugin.Connectivity.pdb
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Plugin.Connectivity.xml
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Plugin.Connectivity.Abstractions.pdb
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Plugin.Connectivity.Abstractions.xml
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Sockets.Plugin.pdb
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Sockets.Plugin.xml
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Sockets.Plugin.Abstractions.pdb
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Sockets.Plugin.Abstractions.xml
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\System.Net.Http.xml
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\System.Net.Http.Extensions.xml
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\System.Net.Http.Primitives.xml
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.Forms.Core.pdb
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.Forms.Core.xml
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.Forms.Xaml.pdb
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.Forms.Xaml.xml
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Zlib.Portable.xml
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.csproj.App.config
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.csprojAssemblyReference.cache
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.csproj.CoreCompileInputs.cache
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.csproj.CopyComplete
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.dll
+C:\Users\admin\Documents\Visual Studio 2017\Projects\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.pdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\NowMineClient.dll.config
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\NowMineClient.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\NowMineClient.pdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.Auth.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.Core.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.YouTube.v3.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Microsoft.Threading.Tasks.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Microsoft.Threading.Tasks.Extensions.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Mono.Android.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Newtonsoft.Json.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\NowMineCommon.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Plugin.Connectivity.Abstractions.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Plugin.Connectivity.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Sockets.Plugin.Abstractions.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Sockets.Plugin.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\System.Net.Http.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\System.Net.Http.Extensions.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\System.Net.Http.Primitives.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.Forms.Core.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.Forms.Platform.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.Forms.Xaml.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Zlib.Portable.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\NowMineCommon.pdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.pdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.xml
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.Auth.pdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.Auth.xml
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.Core.pdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.Core.xml
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.YouTube.v3.pdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Google.Apis.YouTube.v3.xml
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Microsoft.Threading.Tasks.xml
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Microsoft.Threading.Tasks.Extensions.xml
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Mono.Android.pdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Mono.Android.xml
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Newtonsoft.Json.xml
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Plugin.Connectivity.pdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Plugin.Connectivity.xml
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Plugin.Connectivity.Abstractions.pdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Plugin.Connectivity.Abstractions.xml
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Sockets.Plugin.pdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Sockets.Plugin.xml
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Sockets.Plugin.Abstractions.pdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Sockets.Plugin.Abstractions.xml
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\System.Net.Http.xml
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\System.Net.Http.Extensions.xml
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\System.Net.Http.Primitives.xml
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.Forms.Core.pdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.Forms.Core.xml
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.Forms.Xaml.pdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Xamarin.Forms.Xaml.xml
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\bin\Release\Zlib.Portable.xml
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.csproj.App.config
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.csprojAssemblyReference.cache
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.csproj.CoreCompileInputs.cache
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.csproj.CopyComplete
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient\obj\Release\NowMineClient.pdb

@@ -30,9 +30,4 @@ Xamarin.Forms.Platform.Android
 Xamarin.Forms.Platform
 Xamarin.Forms.Xaml
 System.Diagnostics.Tools
-Google.Apis.YouTube.v3
-Google.Apis
-Google.Apis.Core
-Microsoft.Threading.Tasks
-Zlib.Portable
-Microsoft.Threading.Tasks.Extensions
+NowMineCommon

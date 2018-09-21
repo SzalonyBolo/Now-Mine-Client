@@ -7,6 +7,8 @@ using NowMineClient.Network;
 using Xamarin.Forms;
 using System.Diagnostics;
 using System.ComponentModel;
+using NowMineCommon.Models;
+using NowMineClient.Models;
 
 namespace NowMineClient
 {
@@ -35,10 +37,10 @@ namespace NowMineClient
             this.Title = "Kolejka";
         }
 
-        private void renderQueue()
+        private void RenderQueue()
         {
             Device.BeginInvokeOnMainThread(() => { sltQueue.Children.Clear(); }); 
-            if (Queue.Count > 0 && Queue.First().Info.userId == User.DeviceUser.Id)
+            if (Queue.Count > 0 && Queue.First().Info.UserID == User.DeviceUser.Id)
             {
                 Device.BeginInvokeOnMainThread(() => { BtnPlayNext.IsVisible = true; BtnPlayNext.IsEnabled = true; });
             }
@@ -48,31 +50,70 @@ namespace NowMineClient
             }
             foreach (MusicPiece musicPiece in Queue)
             {
-                var musicPieceUser= User.Users.Where(u => u.Id == musicPiece.Info.userId).First();
-                musicPiece.FrameColor = musicPieceUser.getColor();
+                var musicPieceUser= User.Users.Where(u => u.Id == musicPiece.Info.UserID).First();
+                musicPiece.FrameColor = musicPieceUser.GetColor();
                 //Device.BeginInvokeOnMainThread(() => { sltQueue.Children.Add(musicPiece.copy()); });
+                if (musicPiece.Info.UserID == User.DeviceUser.Id)
+                {
+                    musicPiece.DeleteVisible = true;
+                    musicPiece.DeleteClicked += ShowDeleteComfromtation;
+                }
                 Device.BeginInvokeOnMainThread(() => { sltQueue.Children.Add(musicPiece); });
             }
 
         }
+        #region PopupAbomination
+        private void ShowDeleteComfromtation(object o, EventArgs e)
+        {
+            MusicPiece musicPiece = o as MusicPiece;
+            if (musicPiece == null)
+                return;
+            sltQueue.IsVisible = false;
+            sltDeletePopup.IsVisible = true;
+            _toDelete = musicPiece;
+            btnYesPopupDelete.Clicked += BtnYesPopupDelete_Clicked;
+        }
+
+        MusicPiece _toDelete;
+
+        private async void BtnYesPopupDelete_Clicked(object sender, EventArgs e)
+        {
+            if (_toDelete == null)
+                return;
+            bool responde = await serverConnection.SendDeletePiece(_toDelete);
+            if (responde)
+            {
+                Queue.Remove(_toDelete);
+                RenderQueue();
+            }
+            sltDeletePopup.IsVisible = false;
+            sltQueue.IsVisible = true;
+        }
+
+        private void btnNoPopupDelete_Clicked(object sender, EventArgs e)
+        {
+            sltDeletePopup.IsVisible = false;
+            sltQueue.IsVisible = true;
+        }
+        #endregion
 
         public async Task getQueue()
         {
             Debug.WriteLine("Get Queue!");
-            IList<YoutubeInfo> infos = await serverConnection.getQueueTCP();
+            IList<ClipQueued> infos = await serverConnection.getQueueTCP();
             if (infos == null)
             {
                 sltQueue.Children.Add(new Label() { Text = "Nie dogadałem się z serwerem :/" } );
             }
             else
             {
-                foreach (YoutubeInfo info in infos)
+                foreach (ClipQueued info in infos)
                 {
                     var musicPiece = new MusicPiece(info);
                     //musicPiece.FrameColor = User.Users.Where(u => u.Id == info.userId).First().getColor();
                     Queue.Add(musicPiece);
                 }
-                renderQueue();
+                RenderQueue();
             }
         }
 
@@ -84,13 +125,20 @@ namespace NowMineClient
 
         public async void SuccessfulQueued(object s, PiecePosArgs e)
         {
-            //await getQueue();
-            int qPos = e.QPos == -1 ? Queue.Count : e.QPos;
-            if (qPos <= Queue.Count)
-                Queue.Insert(qPos, e.MusicPiece);
-            else
-                await getQueue();
-            renderQueue();
+            try
+            {
+                //await getQueue();
+                int qPos = e.QPos == -1 ? Queue.Count : e.QPos;
+                if (qPos <= Queue.Count)
+                    Queue.Insert(qPos, e.MusicPiece);
+                else
+                    await getQueue();
+                RenderQueue();
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine("Error on Successful Queue: ", ex.Message);
+            }
         }
 
         internal void PlayedNow(object s, GenericEventArgs<int> e)
@@ -102,27 +150,27 @@ namespace NowMineClient
             MusicPiece playingNow = Queue.ElementAt(qPos);
             Queue.Insert(0, playingNow);
             Queue.RemoveAt(qPos);
-            renderQueue();
+            RenderQueue();
             
         }
 
         internal void PlayedNext(object s, GenericEventArgs<int> e)
         {
             Queue.RemoveAt(0);  
-            renderQueue();            
+            RenderQueue();            
         }
 
         internal void DeletePiece(object s, GenericEventArgs<int> e)
         {
             Queue.RemoveAt(e.EventData);
-            Device.BeginInvokeOnMainThread(() => { renderQueue(); });
+            Device.BeginInvokeOnMainThread(() => { RenderQueue(); });
         }
 
         internal void QueueReveiced(object s, PiecePosArgs e)
         {
             int qPos = e.QPos == -1 ? Queue.Count : e.QPos;
             Queue.Insert(qPos, e.MusicPiece);
-            renderQueue();
+            RenderQueue();
         }
 
         private async void BtnPlayNext_Clicked(object sender, EventArgs e)

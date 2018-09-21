@@ -7,14 +7,18 @@ using NowMineClient.Network;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Diagnostics;
+using NowMineCommon.Models;
+using NowMineClient.Models;
+using NowMineClient.OSSpecific;
+using NowMine.APIProviders;
 
 namespace NowMineClient
 {
     //[XamlCompilation (XamlCompilationOptions.Compile)]
     public partial class YoutubeSearchPage : ContentPage
     {
-        YoutubeProvider youtubeProvider;
-        ServerConnection serverConnection;
+        private readonly YouTubeProvider youtubeProvider;
+        private readonly ServerConnection serverConnection;
 
         public delegate void SuccessfulQueuedEventHandler(object s, PiecePosArgs e);
         public event SuccessfulQueuedEventHandler SuccessfulQueued;
@@ -22,7 +26,7 @@ namespace NowMineClient
         public YoutubeSearchPage(ServerConnection serverConnection)
         {
             InitializeComponent();
-            youtubeProvider = new YoutubeProvider();
+            youtubeProvider = new YouTubeProvider();
             this.serverConnection = serverConnection;
             //searchButton.Clicked += searchButton_Click;
             this.Title = "Kolejkuj";
@@ -33,15 +37,16 @@ namespace NowMineClient
         public void entSearch_Completed(object s, EventArgs e)
         {
             var entSearch = (Entry)s;
-            string text = entSearch.Text;
-            var infos = youtubeProvider.LoadVideosKey(text);
+            string searchString = entSearch.Text;
+            var infos = youtubeProvider.GetSearchClipInfos(searchString);
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += AddToQueue_Tapped;
             searchBoard.Children.Clear();
-            foreach (YoutubeInfo yi in infos)
+            foreach (var yi in infos)
             {
-                var musicPiece = new MusicPiece(yi);
-                musicPiece.FrameColor = User.DeviceUser.getColor();
+                var musicPiece = new MusicPiece();
+                musicPiece.Info = new ClipQueued(yi, 0, User.DeviceUser.Id);
+                musicPiece.FrameColor = User.DeviceUser.GetColor();
                 musicPiece.GestureRecognizers.Add(tapGestureRecognizer);
                 searchBoard.Children.Add(musicPiece);
             }
@@ -55,7 +60,7 @@ namespace NowMineClient
             if (qPos != -2)
             {
                 OnSuccessfulQueued(musicPiece, qPos);
-                DependencyService.Get<IMessage>().LongAlert(String.Format("Zakolejkowano {0}", musicPiece.Info.title.Substring(0, 10)));
+                DependencyService.Get<IMessage>().LongAlert(String.Format("Zakolejkowano {0}", musicPiece.Info.Title.Substring(0, 20)));
             }
             else
             {

@@ -45,6 +45,8 @@ namespace NowMineClient
 
         private void Current_ConnectivityChanged(object sender, Plugin.Connectivity.Abstractions.ConnectivityChangedEventArgs e)
         {
+            //todo
+            //updejtować property i tyle kurwa
             var wifi = Plugin.Connectivity.Abstractions.ConnectionType.WiFi;
             var connectionTypes = CrossConnectivity.Current.ConnectionTypes;
             if (connectionTypes.Contains(wifi))

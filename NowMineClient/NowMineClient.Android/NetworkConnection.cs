@@ -15,7 +15,7 @@ using NowMineClient.Droid;
 using Android.Util;
 using Android.Net.Wifi;
 using Java.Net;
-
+using NowMineClient.OSSpecific;
 
 [assembly: Dependency(typeof(NetworkConnection))]
 namespace NowMineClient.Droid

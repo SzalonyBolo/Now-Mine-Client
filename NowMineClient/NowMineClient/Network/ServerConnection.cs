@@ -1,5 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
+using NowMineClient.Models;
+using NowMineClient.OSSpecific;
+using NowMineCommon.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -89,6 +92,16 @@ namespace NowMineClient.Network
             return isColorChanged;
         }
 
+        internal async Task<bool> SendDeletePiece(MusicPiece musicPiece)
+        {
+            var messageString = "DeletePiece " + musicPiece.Info.ID;
+
+            byte[] bytes = await tcpConnector.getData(messageString, serverAddress);
+            bool answer = BitConverter.ToBoolean(bytes, 0);
+
+            return answer;
+        }
+
         protected void OnServerConnected()
         {
             ServerConnected?.Invoke(this, EventArgs.Empty);
@@ -109,10 +122,10 @@ namespace NowMineClient.Network
         //    PlayedNext?.Invoke(this, EventArgs.Empty);
         //}
 
-        protected virtual void OnUDPQueued(MusicData piece)
+        protected virtual void OnUDPQueued(ClipQueued piece)
         {
             MusicPiece mPiece = new MusicPiece(piece);
-            UDPQueued?.Invoke(this, new PiecePosArgs(mPiece, piece.qPos));
+            UDPQueued?.Invoke(this, new PiecePosArgs(mPiece, piece.QPos));
         }
 
         internal async Task<IList<User>> getUsers()
@@ -188,12 +201,12 @@ namespace NowMineClient.Network
                     {
                         //reader.ReadRootValueAsArray = true;
                         JsonSerializer serializer = new JsonSerializer();
-                        MusicData musidData = serializer.Deserialize<MusicData>(reader);
-                        if (musidData.userId == User.DeviceUser.Id)
+                        ClipQueued musidData = serializer.Deserialize<ClipQueued>(reader);
+                        if (musidData.UserID == User.DeviceUser.Id)
                         {
                             return;
                         }
-                        Debug.WriteLine("UDP/ Adding to Queue {0}", musidData.title);
+                        Debug.WriteLine("UDP/ Adding to Queue {0}", musidData.Title);
                         OnUDPQueued(musidData); 
                     }
                     break;
@@ -221,13 +234,13 @@ namespace NowMineClient.Network
                 
         }
 
-        internal async Task<int> SendToQueue(YoutubeInfo info)
+        internal async Task<int> SendToQueue(ClipInfo info)
         {
             using (var ms = new MemoryStream())
             using (var writer = new BsonWriter(ms))
             {
                 var serializer = new JsonSerializer();
-                serializer.Serialize(writer, info, typeof(YoutubeInfo));
+                serializer.Serialize(writer, info, typeof(ClipInfo));
                 Debug.WriteLine("Sending to Queue: {0}", Convert.ToBase64String(ms.ToArray()));
                 byte[] response = await tcpConnector.SendQueueData(ms.ToArray(), serverAddress);
 
@@ -242,7 +255,7 @@ namespace NowMineClient.Network
         }
 
 
-        public async Task<IList<YoutubeInfo>> getQueueTCP()
+        public async Task<IList<ClipQueued>> getQueueTCP()
         {
             //tcpConnector.MessegeReceived += OnQueueReceived;
             try
@@ -255,7 +268,7 @@ namespace NowMineClient.Network
                     {
                         reader.ReadRootValueAsArray = true;
                         JsonSerializer serializer = new JsonSerializer();
-                        IList<YoutubeInfo> ytInfos = serializer.Deserialize<IList<YoutubeInfo>>(reader);
+                        IList<ClipQueued> ytInfos = serializer.Deserialize<IList<ClipQueued>>(reader);
                         Debug.WriteLine("Got Queue with {0} items", ytInfos.Count);
                         return ytInfos;
                     }
@@ -263,7 +276,7 @@ namespace NowMineClient.Network
                     //await tcpConnector.receiveTCP();
                 }
                 else
-                    return new List<YoutubeInfo>();
+                    return new List<ClipQueued>();
             }
             catch (Exception e)
             {

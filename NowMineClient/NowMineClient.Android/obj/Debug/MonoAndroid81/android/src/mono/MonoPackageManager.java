@@ -136,6 +136,7 @@ class MonoPackageManager_Resources {
 		"Xamarin.Forms.Platform.Android.dll",
 		"Xamarin.Forms.Platform.dll",
 		"Xamarin.Forms.Xaml.dll",
+		"NowMineCommon.dll",
 		"Google.Apis.YouTube.v3.dll",
 		"Google.Apis.dll",
 		"Google.Apis.Core.dll",
