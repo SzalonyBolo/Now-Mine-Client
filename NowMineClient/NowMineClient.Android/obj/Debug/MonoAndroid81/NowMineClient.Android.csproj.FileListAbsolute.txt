@@ -1,3 +1,4 @@
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\NowMineClient.Android.csprojAssemblyReference.cache
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\NowMineClient.Android.dll.config
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\NowMineClient.Android.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\NowMineClient.Android.pdb
@@ -8,6 +9,8 @@ C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\N
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\NowMineClient.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Plugin.Connectivity.Abstractions.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Plugin.Connectivity.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Rg.Plugins.Popup.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Rg.Plugins.Popup.Droid.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Sockets.Plugin.Abstractions.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Sockets.Plugin.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\System.Net.Http.Extensions.dll
@@ -43,6 +46,9 @@ C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\P
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Plugin.Connectivity.dll.mdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Plugin.Connectivity.Abstractions.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Plugin.Connectivity.Abstractions.xml
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Rg.Plugins.Popup.pdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Rg.Plugins.Popup.Droid.pdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Rg.Plugins.Popup.Droid.dll.mdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Sockets.Plugin.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Sockets.Plugin.xml
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Sockets.Plugin.dll.mdb
@@ -58,7 +64,6 @@ C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\X
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Xamarin.Forms.Xaml.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Xamarin.Forms.Xaml.xml
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\NowMineCommon.pdb
-C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\NowMineClient.Android.csprojAssemblyReference.cache
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\res.flag
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\NowMineClient.Android.csproj.CoreCompileInputs.cache
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\NowMineClient.Android.csproj.CopyComplete
@@ -113,6 +118,7 @@ C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\M
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\mscorlib.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\NowMineClient.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\Plugin.Connectivity.Abstractions.pdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\Rg.Plugins.Popup.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\System.Core.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\System.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\System.IO.Compression.pdb
@@ -135,6 +141,7 @@ C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\M
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\NowMineClient.Android.dll.mdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\FormsViewGroup.dll.mdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\Plugin.Connectivity.dll.mdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\Rg.Plugins.Popup.Droid.dll.mdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\Sockets.Plugin.Abstractions.dll.mdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\Sockets.Plugin.dll.mdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\Xamarin.Forms.Platform.Android.dll.mdb
@@ -148,6 +155,7 @@ C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\M
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Google.Apis.YouTube.v3.dll.mdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\NowMineClient.Android.dll.mdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Plugin.Connectivity.dll.mdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Rg.Plugins.Popup.Droid.dll.mdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Sockets.Plugin.Abstractions.dll.mdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Sockets.Plugin.dll.mdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Xamarin.Forms.Platform.Android.dll.mdb
@@ -158,6 +166,7 @@ C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\M
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\NowMineClient.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\NowMineCommon.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Plugin.Connectivity.Abstractions.pdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Rg.Plugins.Popup.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\System.ComponentModel.Composition.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\System.Core.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\System.Data.pdb
@@ -178,6 +187,7 @@ C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\M
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\NowMineClient.Android.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\Microsoft.CSharp.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\mscorlib.pdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\NowMineClient.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\System.Core.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\System.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\System.IO.Compression.pdb
@@ -197,6 +207,7 @@ C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\M
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\NowMineClient.Android.dll.mdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\FormsViewGroup.dll.mdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\Plugin.Connectivity.dll.mdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\Rg.Plugins.Popup.Droid.dll.mdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\Sockets.Plugin.Abstractions.dll.mdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\Sockets.Plugin.dll.mdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\Xamarin.Forms.Platform.Android.dll.mdb

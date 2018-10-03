@@ -19,6 +19,8 @@ namespace NowMineClient.Droid
 
             base.OnCreate(bundle);
 
+            Rg.Plugins.Popup.Popup.Init(this, bundle);
+
             global::Xamarin.Forms.Forms.Init(this, bundle);
             int statusBarHeight = 0, totalHeight = 0, contentHeight = 0;
             int resourceId = Resources.GetIdentifier("status_bar_height", "dimen", "android");
@@ -30,6 +32,19 @@ namespace NowMineClient.Droid
                 contentHeight = totalHeight - statusBarHeight;
             }
             LoadApplication(new App());
+        }
+
+        public override void OnBackPressed()
+        {
+            if (Rg.Plugins.Popup.Popup.SendBackPressed(base.OnBackPressed))
+            {
+                // Do something if there are some pages in the `PopupStack`
+
+            }
+            else
+            {
+                // Do something if there are not any pages in the `PopupStack`
+            }
         }
     }
 }

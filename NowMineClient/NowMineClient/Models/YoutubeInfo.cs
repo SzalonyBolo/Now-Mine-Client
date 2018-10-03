@@ -18,7 +18,7 @@ namespace NowMineClient.Models
     //    //public string color;
     //}
 
-    //public class MusicData : YoutubeInfo
+    //public class ClipData : YoutubeInfo
     //{
     //    public int qPos;
     //}
@@ -35,12 +35,12 @@ namespace NowMineClient.Models
 
     public class PiecePosArgs : EventArgs
     {
-        public MusicPiece MusicPiece { get; set; }
+        public ClipData ClipData { get; set; }
         public int QPos { get; set; }
-        public PiecePosArgs(MusicPiece musicPiece, int qPos)
+        public PiecePosArgs(ClipData clipData, int qPos)
         {
-            this.MusicPiece = musicPiece;
-            MusicPiece.GestureRecognizers.Clear();
+            this.ClipData = clipData;
+            //ClipData.GestureRecognizers.Clear();
             this.QPos = qPos;
         }
     }

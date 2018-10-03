@@ -92,9 +92,9 @@ namespace NowMineClient.Network
             return isColorChanged;
         }
 
-        internal async Task<bool> SendDeletePiece(MusicPiece musicPiece)
+        internal async Task<bool> SendDeletePiece(ClipData clipData)
         {
-            var messageString = "DeletePiece " + musicPiece.Info.ID;
+            var messageString = "DeletePiece " + clipData.ClipInfo.ID;
 
             byte[] bytes = await tcpConnector.getData(messageString, serverAddress);
             bool answer = BitConverter.ToBoolean(bytes, 0);
@@ -124,7 +124,8 @@ namespace NowMineClient.Network
 
         protected virtual void OnUDPQueued(ClipQueued piece)
         {
-            MusicPiece mPiece = new MusicPiece(piece);
+
+            ClipData mPiece = new ClipData(piece);
             UDPQueued?.Invoke(this, new PiecePosArgs(mPiece, piece.QPos));
         }
 

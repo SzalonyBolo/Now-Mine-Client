@@ -8,6 +8,8 @@ C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\M
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\NowMineClient.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Plugin.Connectivity.Abstractions.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Plugin.Connectivity.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Rg.Plugins.Popup.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Rg.Plugins.Popup.Droid.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Sockets.Plugin.Abstractions.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Sockets.Plugin.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\System.Core.dll
@@ -79,6 +81,7 @@ C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\M
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Microsoft.Threading.Tasks.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Zlib.Portable.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Microsoft.Threading.Tasks.Extensions.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\System.ComponentModel.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\Mono.Security.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\System.Net.Primitives.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\android\assets\netstandard.dll

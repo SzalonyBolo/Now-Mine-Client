@@ -3,6 +3,8 @@ Newtonsoft.Json
 NowMineClient
 Plugin.Connectivity.Abstractions
 Plugin.Connectivity
+Rg.Plugins.Popup
+Rg.Plugins.Popup.Droid
 Sockets.Plugin.Abstractions
 Sockets.Plugin
 System.Net.Http.Extensions
@@ -31,3 +33,4 @@ Xamarin.Forms.Platform
 Xamarin.Forms.Xaml
 System.Diagnostics.Tools
 NowMineCommon
+System.ComponentModel

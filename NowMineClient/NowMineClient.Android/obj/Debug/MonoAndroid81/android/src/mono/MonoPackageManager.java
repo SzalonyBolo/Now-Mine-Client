@@ -112,6 +112,8 @@ class MonoPackageManager_Resources {
 		"NowMineClient.dll",
 		"Plugin.Connectivity.Abstractions.dll",
 		"Plugin.Connectivity.dll",
+		"Rg.Plugins.Popup.dll",
+		"Rg.Plugins.Popup.Droid.dll",
 		"Sockets.Plugin.Abstractions.dll",
 		"Sockets.Plugin.dll",
 		"System.Net.Http.Extensions.dll",
