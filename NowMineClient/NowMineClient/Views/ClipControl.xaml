@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:font="clr-namespace:NowMineClient.OSSpecific"
              x:Class="NowMineClient.Views.ClipControl"
              Margin="1,1,0,0">
   <ContentView.Content>
@@ -26,7 +27,13 @@
                             <Label x:Name="lblChannelName" Text="{Binding Path=ChannelName}" />
                             <Label x:Name="lbluserName" Text="{Binding Path=UserName}" />
                         </StackLayout>
-                        <Button x:Name="btnDelete" Text="Usuń" IsVisible="{Binding Path=DeleteVisibility}" Grid.Column="1" Command="{Binding RemoveCommand}" />
+                        <!--<Button x:Name="btnDelete" Text="Usuń" IsVisible="{Binding Path=DeleteVisibility}" Grid.Column="1" Command="{Binding RemoveCommand}" />-->
+                        <font:FontAwesomeIcon Grid.Column="1" Text="{x:Static font:Icon.Trash}" IsVisible="{Binding Path=DeleteVisibility}" FontSize="Large" VerticalTextAlignment="End">
+                            <font:FontAwesomeIcon.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Tapped="OnDeleteClicked"/>
+                            </font:FontAwesomeIcon.GestureRecognizers>
+                        </font:FontAwesomeIcon>
                         <!--Clicked="btnDelete_Clicked"-->
                     </Grid>
                 </Grid>

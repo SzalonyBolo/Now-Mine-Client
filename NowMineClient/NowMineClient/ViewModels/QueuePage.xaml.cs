@@ -57,22 +57,25 @@ namespace NowMineClient.ViewModels
                 //var musicPieceUser= User.Users.Where(u => u.Id == musicData.UserID).First();
                 //musicData.FrameColor = musicPieceUser.GetColor();
                 //Device.BeginInvokeOnMainThread(() => { sltQueue.Children.Add(musicPiece.copy()); });
+                
                 if (musicData.UserID== User.DeviceUser.Id)
                 {
                     musicData.DeleteVisibility = true;
                     //musicData.DeleteClicked += ShowDeleteComfromtation;
-                    
                 }
                 ClipControl musicControl = new ClipControl();
                 musicControl.BindingContext = musicData;
-                musicData.DeleteClicked += ShowDeletePopup;
+                //musicData.ClearSubscriptions();
+                musicControl.DeleteClicked += ShowDeletePopup;
                 Device.BeginInvokeOnMainThread(() => { sltQueue.Children.Add(musicControl); });
             }
         }
 
         private async void ShowDeletePopup(object o, EventArgs e)
         {
-            var clipData = o as ClipData;
+            //var clipData = o as ClipData;
+            var clipView = o as ClipControl;
+            var clipData = clipView.BindingContext as ClipData;
             var deletePopup = new DeletePopup(clipData);
             //await Navigation.PushModalAsync(new DeletePopup());
             deletePopup.YesClickedEvent += DeletePopupYesClicked;
@@ -88,33 +91,41 @@ namespace NowMineClient.ViewModels
             await Navigation.PopPopupAsync();
             if (response)
             {
+                DependencyService.Get<IMessage>().LongAlert(String.Format("Usunięto {0}", clipData.Title));
                 Queue.Remove(clipData);
                 RenderQueue();
-                DependencyService.Get<IMessage>().LongAlert(String.Format("Usunięto {0}", clipData.Title.Substring(0, 20)));
             }
             else
             {
                 DependencyService.Get<IMessage>().ShortAlert(String.Format("Nie udało się usunąć kawałka z kolejki"));
+                await getQueue();
             }
         }
 
         public async Task getQueue()
         {
-            Debug.WriteLine("Get Queue!");
-            IList<ClipQueued> infos = await serverConnection.getQueueTCP();
-            if (infos == null)
+            try
             {
-                sltQueue.Children.Add(new Label() { Text = "Nie dogadałem się z serwerem :/" } );
-            }
-            else
-            {
-                foreach (ClipQueued info in infos)
+                Debug.WriteLine("Get Queue!");
+                IList<ClipQueued> infos = await serverConnection.GetQueue();
+                if (infos == null)
                 {
-                    var musicPiece = new ClipData(info);
-                    //musicPiece.FrameColor = User.Users.Where(u => u.Id == info.userId).First().getColor();
-                    Queue.Add(musicPiece);
+                    sltQueue.Children.Add(new Label() { Text = "Nie dogadałem się z serwerem :/" });
                 }
-                RenderQueue();
+                else
+                {
+                    foreach (ClipQueued info in infos)
+                    {
+                        var musicPiece = new ClipData(info);
+                        //musicPiece.FrameColor = User.Users.Where(u => u.Id == info.userId).First().getColor();
+                        Queue.Add(musicPiece);
+                    }
+                    RenderQueue();
+                }
+            }
+            catch(Exception e)
+            {
+                Debug.WriteLine(String.Format("Exception in GetQueue {0}", e.Message));
             }
         }
 

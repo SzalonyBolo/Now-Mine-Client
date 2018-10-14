@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Plugin.Connectivity;
 using Plugin.Connectivity.Abstractions;
+using NowMineClient.OSSpecific;
 
 namespace NowMineClient.ViewModels
 {
@@ -30,6 +31,9 @@ namespace NowMineClient.ViewModels
         public ServerCheckPage()
         {
             InitializeComponent();
+            
+            //var coolLabel = new FontAwesomeIcon(FontAwesomeIcon.Icon.Gear);
+            //sltMain.Children.Add(coolLabel);
             var wifi = ConnectionType.WiFi;
             if (connectionTypes.Contains(wifi))
             {
@@ -102,9 +106,10 @@ namespace NowMineClient.ViewModels
             Device.BeginInvokeOnMainThread(() => { App.Current.MainPage = tabbedPage; });
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
-        {
+        //private void DeleteOnTap(object sender, EventArgs e)
+        //{
+        //    DependencyService.Get<IMessage>().ShortAlert("Trash Clicked!");
+        //}
 
-        }
     }
 }

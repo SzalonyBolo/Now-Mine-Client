@@ -57,18 +57,25 @@ namespace NowMineClient.ViewModels
 
         private async void AddToQueue_Tapped(object sender, EventArgs e)
         {
-            var musicPiece = (ClipControl)sender;
-            var clipData = musicPiece.BindingContext as ClipData;
-            int qPos = await serverConnection.SendToQueue(clipData.ClipInfo);
-            Debug.WriteLine("Sended to server {0}; Position on queue {1}", clipData.Title, qPos);
-            if (qPos != -2)
+            try
             {
-                OnSuccessfulQueued(clipData, qPos);
-                DependencyService.Get<IMessage>().LongAlert(String.Format("Zakolejkowano {0}", clipData.Title.Substring(0, 20)));
+                var musicPiece = (ClipControl)sender;
+                var clipData = musicPiece.BindingContext as ClipData;
+                int qPos = await serverConnection.SendToQueue(clipData);
+                Debug.WriteLine("Sended to server {0}; Position on queue {1}", clipData.Title, qPos);
+                if (qPos != -2)
+                {
+                    OnSuccessfulQueued(clipData, qPos);
+                    DependencyService.Get<IMessage>().LongAlert(String.Format("Zakolejkowano {0}", clipData.Title));
+                }
+                else
+                {
+                    Debug.WriteLine("Something gone wronge with queue");
+                }
             }
-            else
+            catch(Exception ex)
             {
-                Debug.WriteLine("Something gone wronge with queue");
+                Debug.WriteLine("Exception in AddToQueue_Tapped {0}", ex.Message);
             }
         }
 

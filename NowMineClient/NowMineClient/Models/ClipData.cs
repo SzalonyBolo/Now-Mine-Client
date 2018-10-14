@@ -15,7 +15,7 @@ namespace NowMineClient.Models
 
         public ClipInfo ClipInfo;
         readonly User User;
-        public ICommand RemoveCommand { get; set; }
+        //public ICommand RemoveCommand { get; set; }
 
         //ClipData(User user)
         //{
@@ -28,7 +28,7 @@ namespace NowMineClient.Models
             this.User = user;
             ClipInfo = clipQueued;
             QueueID = clipQueued.QueueID;
-            RemoveCommand = new Command(OnDeleteClicked);
+            //RemoveCommand = new Command(OnDeleteClicked);
             OnPropertyChanged("RemoveCommand");
             //OnPropertyChanged("FrameColor");
         }
@@ -112,13 +112,13 @@ namespace NowMineClient.Models
         //    DeleteClicked?.Invoke(this, EventArgs.Empty);
         //}
 
-        private void OnDeleteClicked()
-        {
-            DeleteClicked?.Invoke(this, EventArgs.Empty);
-        }
+        //private void OnDeleteClicked()
+        //{
+        //    DeleteClicked?.Invoke(this, EventArgs.Empty);
+        //}
 
-        public delegate void DeletePieceClicked(object o, EventArgs e);
-        public event DeletePieceClicked DeleteClicked;
+        //public delegate void DeletePieceClicked(object o, EventArgs e);
+        //public event DeletePieceClicked DeleteClicked;
 
         public uint QueueID { get; set; }
 
@@ -127,6 +127,16 @@ namespace NowMineClient.Models
             var handler = PropertyChanged;
             if (handler != null)
                 handler(null, new PropertyChangedEventArgs(propertyName));
+        }
+
+        //public void ClearSubscriptions()
+        //{
+        //    DeleteClicked = null;
+        //}
+
+        public void DeleteOnTap(object sender, EventArgs e)
+        {
+
         }
     }
 }

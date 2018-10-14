@@ -25,5 +25,13 @@ namespace NowMineClient.Views
         //{
         //    Console.WriteLine("asdfasdf");
         //}
+
+        public void OnDeleteClicked(object o, EventArgs e)
+        {
+            DeleteClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        public delegate void DeletePieceClicked(object o, EventArgs e);
+        public event DeletePieceClicked DeleteClicked;
     }
 }

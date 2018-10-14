@@ -52,22 +52,6 @@ namespace NowMineClient.Network
             Debug.WriteLine("TCP/ Host connected!");
             var messageBuffer = new byte[8];
             await e.SocketClient.ReadStream.ReadAsync(messageBuffer, 0, 8);
-
-            //var client = e.SocketClient;
-            //var bytesRead = -1;
-            //var buf = new byte[1];
-            //string message = "";
-            //List<byte> bytes = new List<byte>();
-            //while (bytesRead != 0)
-            //{
-            //    bytesRead = await e.SocketClient.ReadStream.ReadAsync(buf, 0, 1);
-            //    if (bytesRead > 0)
-            //    {
-            //        Debug.WriteLine(buf[0]);
-            //        message += System.Text.Encoding.UTF8.GetString(buf, 0, 1);
-            //        bytes.Add(buf[0]);
-            //    }
-            //}
             //Checking if te first 4 bytes are the host address
             var connectedAddress = e.SocketClient.RemoteAddress.Split('.');
             for (int i = 0; i < 4; i++)

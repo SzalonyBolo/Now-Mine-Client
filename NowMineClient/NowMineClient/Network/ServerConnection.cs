@@ -94,9 +94,14 @@ namespace NowMineClient.Network
 
         internal async Task<bool> SendDeletePiece(ClipData clipData)
         {
-            var messageString = "DeletePiece " + clipData.ClipInfo.ID;
+            var messageStringBytes = Encoding.UTF8.GetBytes("DeletePiece "); //+ clipData.ClipInfo.ID;
+            var queueIDBytes = BitConverter.GetBytes(clipData.QueueID);
+            byte[] messageBytes = new byte[messageStringBytes.Length + queueIDBytes.Length];
+            Buffer.BlockCopy(messageStringBytes, 0, messageBytes, 0, messageStringBytes.Length);
+            Buffer.BlockCopy(queueIDBytes, 0, messageBytes, messageStringBytes.Length, queueIDBytes.Length);
 
-            byte[] bytes = await tcpConnector.getData(messageString, serverAddress);
+            byte[] bytes = await tcpConnector.getData(messageBytes, serverAddress);
+            //byte[] bytes = await tcpConnector.getData(messageString, serverAddress);
             bool answer = BitConverter.ToBoolean(bytes, 0);
 
             return answer;
@@ -235,16 +240,18 @@ namespace NowMineClient.Network
                 
         }
 
-        internal async Task<int> SendToQueue(ClipInfo info)
+        internal async Task<int> SendToQueue(ClipData data)
         {
             using (var ms = new MemoryStream())
             using (var writer = new BsonWriter(ms))
             {
                 var serializer = new JsonSerializer();
-                serializer.Serialize(writer, info, typeof(ClipInfo));
+                serializer.Serialize(writer, data.ClipInfo, typeof(ClipInfo));
                 Debug.WriteLine("Sending to Queue: {0}", Convert.ToBase64String(ms.ToArray()));
                 byte[] response = await tcpConnector.SendQueueData(ms.ToArray(), serverAddress);
 
+                var queueIDBytes = BitConverter.ToUInt32(response, 4);
+                data.QueueID = queueIDBytes;
                 return BitConverter.ToInt32(response, 0);
             }
         }
@@ -256,7 +263,7 @@ namespace NowMineClient.Network
         }
 
 
-        public async Task<IList<ClipQueued>> getQueueTCP()
+        public async Task<IList<ClipQueued>> GetQueue()
         {
             //tcpConnector.MessegeReceived += OnQueueReceived;
             try
