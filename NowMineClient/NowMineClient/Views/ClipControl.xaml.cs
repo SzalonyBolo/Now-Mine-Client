@@ -1,30 +1,16 @@
-﻿using NowMineClient.Models;
-using NowMineCommon.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace NowMineClient.Views
 {
+    //[XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ClipControl : ContentView, INotifyPropertyChanged
     {
-        //ICommand RemoveCommand;
-
         public ClipControl()
         {
             InitializeComponent();
-            //RemoveCommand = new Command(asdf);
         }
-
-        //public void asdf()
-        //{
-        //    Console.WriteLine("asdfasdf");
-        //}
 
         public void OnDeleteClicked(object o, EventArgs e)
         {

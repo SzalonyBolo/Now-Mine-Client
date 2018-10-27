@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace NowMineClient.Network
@@ -105,18 +106,20 @@ namespace NowMineClient.Network
             await tcpListener.StartListeningAsync(4444);
         }
 
-        public async Task<byte[]> getData(string message, string serverAddress)
+        public async Task<string> getData(string message, string serverAddress)
         {
             try
             {
-                byte[] data = Encoding.UTF8.GetBytes(message);
+                byte[] request = Encoding.UTF8.GetBytes(message);
 
-                return await getData(data, serverAddress);
+                var response = await getData(request, serverAddress);
+                var data = Encoding.UTF8.GetString(response);
+                return Regex.Replace(data, @"[^\u0020-\u007E]", string.Empty);
             }
             catch (Exception e)
             {
                 Debug.WriteLine("Exception in TCP/GetData {0}", e.Message);
-                return new byte[0];
+                return string.Empty;
             }
         }
 
@@ -141,48 +144,9 @@ namespace NowMineClient.Network
             catch(Exception e)
             {
                 Debug.WriteLine("Exception in TCP/GetData {0}", e.Message);
-                return new byte[0];
+                return new byte[3];
             }
             
-        }
-
-        public async Task<byte[]> SendQueueData(byte[] data, string serverAddress)
-        {
-            if (isSending)
-            {
-                return null;
-            }
-            try
-            {
-                isSending = true;
-                Debug.WriteLine("Sending {0} to {1}!", Encoding.UTF8.GetString(data, 0, data.Length), serverAddress);
-                byte[] queueString = Encoding.UTF8.GetBytes("Queue: ");
-                byte[] message = new byte[queueString.Length + data.Length];
-                System.Buffer.BlockCopy(queueString, 0, message, 0, queueString.Length);
-                System.Buffer.BlockCopy(data, 0, message, queueString.Length, data.Length);
-                await tcpClient.ConnectAsync(serverAddress, 4444);
-                Debug.WriteLine("Connected!");
-                await tcpClient.WriteStream.WriteAsync(message, 0, message.Length);
-                //await tcpClient.WriteStream.WriteAsync(data, 0, data.Length);
-                await tcpClient.WriteStream.FlushAsync();
-                int readByte = 0;
-                List<byte> response = new List<byte>();
-                while (readByte != -1)
-                {
-                    readByte = tcpClient.ReadStream.ReadByte();
-                    Debug.WriteLine("TCP/ Rec: {0}", readByte);
-                    response.Add((byte)readByte);
-                }
-                isSending = false;
-                await tcpClient.DisconnectAsync();
-                return response.ToArray();
-            }
-            catch (Exception ex)
-            {
-                isSending = false;
-                Debug.WriteLine("Message:{0} Data:{1} Source:{2}", ex.Message, ex.Data, ex.Source);
-                return null;
-            }
         }
 
 

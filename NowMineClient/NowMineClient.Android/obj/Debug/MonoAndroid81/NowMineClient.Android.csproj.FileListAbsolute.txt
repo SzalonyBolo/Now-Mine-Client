@@ -14,6 +14,9 @@ C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\S
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Sockets.Plugin.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\System.Net.Http.Extensions.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\System.Net.Http.Primitives.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Xamarin.Android.Arch.Core.Common.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Xamarin.Android.Arch.Lifecycle.Common.dll
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Xamarin.Android.Arch.Lifecycle.Runtime.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Xamarin.Android.Support.Animated.Vector.Drawable.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Xamarin.Android.Support.Annotations.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\Xamarin.Android.Support.Compat.dll
@@ -66,6 +69,7 @@ C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\N
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\NowMineClient.Android.csprojAssemblyReference.cache
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\res.flag
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\NowMineClient.Android.csproj.CoreCompileInputs.cache
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\XamlC.stamp
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\NowMineClient.Android.csproj.CopyComplete
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\NowMineClient.Android.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\NowMineClient.Android.pdb

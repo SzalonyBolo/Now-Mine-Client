@@ -13,6 +13,7 @@ using NowMineClient.OSSpecific;
 
 namespace NowMineClient.ViewModels
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ServerCheckPage : ContentPage
     {
         private ServerConnection _serverConnection { set; get; }
@@ -105,11 +106,5 @@ namespace NowMineClient.ViewModels
             
             Device.BeginInvokeOnMainThread(() => { App.Current.MainPage = tabbedPage; });
         }
-
-        //private void DeleteOnTap(object sender, EventArgs e)
-        //{
-        //    DependencyService.Get<IMessage>().ShortAlert("Trash Clicked!");
-        //}
-
     }
 }

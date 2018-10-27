@@ -15,7 +15,7 @@ using NowMineClient.Views;
 
 namespace NowMineClient.ViewModels
 {
-    //[XamlCompilation (XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class YoutubeSearchPage : ContentPage
     {
         private readonly YouTubeProvider youtubeProvider;

@@ -14,7 +14,7 @@ using Xamarin.Forms.Xaml;
 
 namespace NowMineClient.ViewModels
 {
-    //[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class UserConfigPage : ContentPage
     {
         ServerConnection serverConnection;
@@ -87,6 +87,8 @@ namespace NowMineClient.ViewModels
             var response = await serverConnection.ChangeColor(ColorsBytes);
             if (response)
             {
+                Application.Current.Properties["UserColor"] = ColorsBytes;
+                await Application.Current.SavePropertiesAsync();
                 DependencyService.Get<IMessage>().ShortAlert("Zmieniono kolor");
             }
             else
@@ -105,6 +107,8 @@ namespace NowMineClient.ViewModels
             {
                 entry.TextColor = Xamarin.Forms.Color.Green;
                 User.DeviceUser.Name = newUserName;
+                Application.Current.Properties["UserName"] = newUserName;
+                await Application.Current.SavePropertiesAsync();
                 DependencyService.Get<IMessage>().ShortAlert("Zmieniono nick");
             }
             else

@@ -13,9 +13,11 @@ using NowMineClient.ViewModels;
 using Rg.Plugins.Popup.Extensions;
 using NowMineClient.OSSpecific;
 using NowMineClient.Views;
+using Xamarin.Forms.Xaml;
 
 namespace NowMineClient.ViewModels
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class QueuePage : ContentPage
     {
         //Network network;

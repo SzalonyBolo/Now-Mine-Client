@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
+using NowMineClient.Helpers;
 using NowMineClient.Models;
 using NowMineClient.OSSpecific;
+using NowMineCommon.Enums;
 using NowMineCommon.Models;
 using System;
 using System.Collections.Generic;
@@ -59,52 +61,28 @@ namespace NowMineClient.Network
 
         internal async Task<bool> ChangeName(string newUserName)
         {
-            var messageString = "ChangeName " + newUserName;
 
-            byte[] bytes = await tcpConnector.getData(messageString, serverAddress);
-            bool answer = BitConverter.ToBoolean(bytes, 0);
-            if (answer)
-            {
-                Application.Current.Properties["UserName"] = newUserName;
-                await Application.Current.SavePropertiesAsync();
-            }
+            string request = JsonMessageBuilder.GetDataCommandRequest(CommandType.ChangeName, newUserName);
+            var response = await tcpConnector.getData(request, serverAddress);
 
-            return answer;
+            return JsonMessageBuilder.GetSuccess(response);
         }
 
-        internal async Task<bool> ChangeColor(byte[] NewColor)
+        internal async Task<bool> ChangeColor(byte[] newColor)
         {
-            //var messageString = "ChangeColor ";
-            var CommandString = Encoding.UTF8.GetBytes("ChangeColor ");
-            var Message = new byte[CommandString.Length + NewColor.Length];
+            string newColorString = System.Convert.ToBase64String(newColor);
+            string request = JsonMessageBuilder.GetDataCommandRequest(CommandType.ChangeColor, newColorString);
+            var response = await tcpConnector.getData(request, serverAddress);
 
-            System.Buffer.BlockCopy(CommandString, 0, Message, 0, CommandString.Length);
-            System.Buffer.BlockCopy(NewColor, 0, Message, CommandString.Length, NewColor.Length);
-
-            byte[] answer = await tcpConnector.getData(Message, serverAddress);
-            bool isColorChanged = BitConverter.ToBoolean(answer, 0);
-            if (isColorChanged)
-            {
-                User.DeviceUser.UserColor = NewColor;
-                Application.Current.Properties["UserColor"] = NewColor;
-                await Application.Current.SavePropertiesAsync();
-            }
-            return isColorChanged;
+            return JsonMessageBuilder.GetSuccess(response);
         }
 
         internal async Task<bool> SendDeletePiece(ClipData clipData)
         {
-            var messageStringBytes = Encoding.UTF8.GetBytes("DeletePiece "); //+ clipData.ClipInfo.ID;
-            var queueIDBytes = BitConverter.GetBytes(clipData.QueueID);
-            byte[] messageBytes = new byte[messageStringBytes.Length + queueIDBytes.Length];
-            Buffer.BlockCopy(messageStringBytes, 0, messageBytes, 0, messageStringBytes.Length);
-            Buffer.BlockCopy(queueIDBytes, 0, messageBytes, messageStringBytes.Length, queueIDBytes.Length);
+            string request = JsonMessageBuilder.GetDataCommandRequest(CommandType.DeleteClip, clipData.QueueID);
+            var response = await tcpConnector.getData(request, serverAddress);
 
-            byte[] bytes = await tcpConnector.getData(messageBytes, serverAddress);
-            //byte[] bytes = await tcpConnector.getData(messageString, serverAddress);
-            bool answer = BitConverter.ToBoolean(bytes, 0);
-
-            return answer;
+            return JsonMessageBuilder.GetSuccess(response);
         }
 
         protected void OnServerConnected()
@@ -122,10 +100,6 @@ namespace NowMineClient.Network
             PlayedNow?.Invoke(this, new GenericEventArgs<int>(qPos));
         }
 
-        //protected void OnPlayedNext()
-        //{
-        //    PlayedNext?.Invoke(this, EventArgs.Empty);
-        //}
 
         protected virtual void OnUDPQueued(ClipQueued piece)
         {
@@ -138,24 +112,16 @@ namespace NowMineClient.Network
         {
             try
             {
-                byte[] bQueue = await tcpConnector.getData("GetUsers", serverAddress);
-                using (MemoryStream ms = new MemoryStream(bQueue))
-                using (BsonReader reader = new BsonReader(ms))
-                {
-                    reader.ReadRootValueAsArray = true;
-                    JsonSerializer serializer = new JsonSerializer();
-                    IList<User> users = serializer.Deserialize<IList<User>>(reader);
-                    Debug.WriteLine("Got User list with {0} items", users.Count);
-                    return users;
-                }
-                //await tcpConnector.receiveTCP();
-
-
+                var request = JsonMessageBuilder.GetStandardCommandRequest(CommandType.GetUsers);
+                var response = await tcpConnector.getData(request, serverAddress);
+                List<User> users = JsonMessageBuilder.GetStandardResponseData<List<User>>(response, CommandType.GetUsers);
+                Debug.WriteLine("Got User list with {0} items", users.Count);
+                return users;
             }
             catch (Exception e)
             {
                 Debug.WriteLine("Data: {0}; message: {1}", e.Data, e.Message);
-                return null;
+                return new List<User>();
             }
         }
 
@@ -242,24 +208,23 @@ namespace NowMineClient.Network
 
         internal async Task<int> SendToQueue(ClipData data)
         {
-            using (var ms = new MemoryStream())
-            using (var writer = new BsonWriter(ms))
-            {
-                var serializer = new JsonSerializer();
-                serializer.Serialize(writer, data.ClipInfo, typeof(ClipInfo));
-                Debug.WriteLine("Sending to Queue: {0}", Convert.ToBase64String(ms.ToArray()));
-                byte[] response = await tcpConnector.SendQueueData(ms.ToArray(), serverAddress);
+            var QueueRequest = JsonMessageBuilder.GetDataCommandRequest(CommandType.QueueClip, data.ClipInfo);
+            var response = await tcpConnector.getData(QueueRequest, serverAddress);
 
-                var queueIDBytes = BitConverter.ToUInt32(response, 4);
-                data.QueueID = queueIDBytes;
-                return BitConverter.ToInt32(response, 0);
-            }
+            uint queueID;
+            int qPos;
+            bool success = JsonMessageBuilder.GetQueueClipResponseData(response, out queueID, out qPos);
+            data.QueueID = queueID;
+            return qPos;
+            //}
         }
 
         internal async Task<bool> SendPlayNext()
         {
-            byte[] answer = await tcpConnector.getData("PlayNext", serverAddress);
-            return BitConverter.ToBoolean(answer, 0);
+            var Request = JsonMessageBuilder.GetStandardCommandRequest(CommandType.PlayNext);
+            var answer = await tcpConnector.getData(Request, serverAddress);
+            return JsonMessageBuilder.GetSuccess(answer);
+            //return BitConverter.ToBoolean(answer, 0);
         }
 
 
@@ -268,23 +233,11 @@ namespace NowMineClient.Network
             //tcpConnector.MessegeReceived += OnQueueReceived;
             try
             {
-                byte[] bQueue = await tcpConnector.getData("GetQueue", serverAddress);
-                if (0 != BitConverter.ToInt32(bQueue, 0))
-                {
-                    using (MemoryStream ms = new MemoryStream(bQueue))
-                    using (BsonReader reader = new BsonReader(ms))
-                    {
-                        reader.ReadRootValueAsArray = true;
-                        JsonSerializer serializer = new JsonSerializer();
-                        IList<ClipQueued> ytInfos = serializer.Deserialize<IList<ClipQueued>>(reader);
-                        Debug.WriteLine("Got Queue with {0} items", ytInfos.Count);
-                        return ytInfos;
-                    }
-                    //todo sending back if its work
-                    //await tcpConnector.receiveTCP();
-                }
-                else
-                    return new List<ClipQueued>();
+                var request = JsonMessageBuilder.GetStandardCommandRequest(CommandType.GetQueue);
+                var response = await tcpConnector.getData(request, serverAddress);
+                List<ClipQueued> clips = JsonMessageBuilder.GetStandardResponseData<List<ClipQueued>>(response, CommandType.GetQueue);
+                Debug.WriteLine("Got User list with {0} items", clips.Count);
+                return clips;
             }
             catch (Exception e)
             {
