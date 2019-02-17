@@ -15,12 +15,6 @@ namespace NowMineClient.Models
 
         public ClipInfo ClipInfo;
         readonly User User;
-        //public ICommand RemoveCommand { get; set; }
-
-        //ClipData(User user)
-        //{
-        //    this.User = user;
-        //}
 
         public ClipData(ClipQueued clipQueued)
         {
@@ -28,9 +22,7 @@ namespace NowMineClient.Models
             this.User = user;
             ClipInfo = clipQueued;
             QueueID = clipQueued.QueueID;
-            //RemoveCommand = new Command(OnDeleteClicked);
             OnPropertyChanged("RemoveCommand");
-            //OnPropertyChanged("FrameColor");
         }
 
         public ClipData(ClipInfo info, User user)
@@ -79,46 +71,14 @@ namespace NowMineClient.Models
             }
         }
 
-        //private Color _frameColor;
         public Color FrameColor
         {
             get
             {
-                //if (_frameColor == null)
-                //{
-                //    _frameColor = Color.Black;
-                //}
                 return User.GetColor();
-                //return _frameColor;
             }
-            //set
-            //{
-            //    if (value != _frameColor)
-            //    {
-            //        _frameColor = value;
-            //        //this.MusicPieceFrame.BorderColor = _frameColor;
-            //        //this.MusicPieceFrame.BackgroundColor = _frameColor;
-            //        //this.MusicPieceFrame.OutlineColor = _frameColor;
-            //        //PropertyChanged?.Invoke(this, "FrameColor");
-            //        //OnPropertyChanged("MusicPieceFrame");
-            //        //OnPropertyChanged("BorderColor");
-            //    }
-            //}
         }
         public bool DeleteVisibility { get; set; } = false;
-
-        //private void btnDelete_Clicked(object sender, EventArgs e)
-        //{
-        //    DeleteClicked?.Invoke(this, EventArgs.Empty);
-        //}
-
-        //private void OnDeleteClicked()
-        //{
-        //    DeleteClicked?.Invoke(this, EventArgs.Empty);
-        //}
-
-        //public delegate void DeletePieceClicked(object o, EventArgs e);
-        //public event DeletePieceClicked DeleteClicked;
 
         public uint QueueID { get; set; }
 
@@ -129,14 +89,19 @@ namespace NowMineClient.Models
                 handler(null, new PropertyChangedEventArgs(propertyName));
         }
 
-        //public void ClearSubscriptions()
-        //{
-        //    DeleteClicked = null;
-        //}
-
-        public void DeleteOnTap(object sender, EventArgs e)
+        public override bool Equals(object obj)
         {
+            var item = obj as ClipData;
 
+            if (item == null)
+                return false;
+
+            return this.QueueID == item.QueueID;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.QueueID.GetHashCode();
         }
     }
 }

@@ -23,25 +23,25 @@ namespace NowMineClient.Models
     //    public int qPos;
     //}
 
-    public class GenericEventArgs<T> : EventArgs
-    {
-        public T EventData { get; private set; }
+    //public class GenericEventArgs<T> : EventArgs
+    //{
+    //    public T EventData { get; private set; }
 
-        public GenericEventArgs(T EventData)
-        {
-            this.EventData = EventData;
-        }
-    }
+    //    public GenericEventArgs(T EventData)
+    //    {
+    //        this.EventData = EventData;
+    //    }
+    //}
 
-    public class PiecePosArgs : EventArgs
-    {
-        public ClipData ClipData { get; set; }
-        public int QPos { get; set; }
-        public PiecePosArgs(ClipData clipData, int qPos)
-        {
-            this.ClipData = clipData;
-            //ClipData.GestureRecognizers.Clear();
-            this.QPos = qPos;
-        }
-    }
+    //public class PiecePosArgs : EventArgs
+    //{
+    //    public ClipData ClipData { get; set; }
+    //    public int QPos { get; set; }
+    //    public PiecePosArgs(ClipData clipData, int qPos)
+    //    {
+    //        this.ClipData = clipData;
+    //        //ClipData.GestureRecognizers.Clear();
+    //        this.QPos = qPos;
+    //    }
+    //}
 }

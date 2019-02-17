@@ -9,6 +9,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace NowMineClient.Network
 {
@@ -46,7 +47,10 @@ namespace NowMineClient.Network
             }
         }
 
-        private bool isSending = false;
+        private SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1);
+
+        //private object _lock = new object();
+        //private bool isSending = false;
 
         private async void FirstConnection(object sender, Sockets.Plugin.Abstractions.TcpSocketListenerConnectEventArgs e)
         {
@@ -127,28 +131,31 @@ namespace NowMineClient.Network
         {
             try
             {
-                Debug.WriteLine("Sending {0} to {1}!", message, serverAddress);
+                await _semaphoreSlim.WaitAsync();
+                //isSending = true;
+                Debug.WriteLine("Sending {0} to {1}!", Convert.ToBase64String(message), serverAddress);
                 await tcpClient.ConnectAsync(serverAddress, 4444);
                 await tcpClient.WriteStream.WriteAsync(message, 0, message.Length);
+
                 int readByte = 0;
-                List<byte> queue = new List<byte>();
+                List<byte> answer = new List<byte>();
                 while (readByte != -1)
                 {
                     readByte = tcpClient.ReadStream.ReadByte();
-                    Debug.WriteLine("TCP/ Rec: {0}", readByte);
-                    queue.Add((byte)readByte);
+                    //Debug.WriteLine("TCP/ Rec: {0}", readByte);
+                    answer.Add((byte)readByte);
                 }
                 await tcpClient.DisconnectAsync();
-                return queue.ToArray();
+                //isSending = false;
+                _semaphoreSlim.Release();
+                return answer.ToArray();
             }
             catch(Exception e)
             {
                 Debug.WriteLine("Exception in TCP/GetData {0}", e.Message);
-                return new byte[3];
+                throw e;
             }
-            
         }
-
 
         public async Task stopWaitingForFirstConnection()
         {

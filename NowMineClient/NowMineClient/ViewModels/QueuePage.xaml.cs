@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using NowMineClient.Network;
 using Xamarin.Forms;
 using System.Diagnostics;
-using System.ComponentModel;
 using NowMineCommon.Models;
 using NowMineClient.Models;
-using NowMineClient.ViewModels;
 using Rg.Plugins.Popup.Extensions;
 using NowMineClient.OSSpecific;
 using NowMineClient.Views;
@@ -54,7 +51,7 @@ namespace NowMineClient.ViewModels
             {
                 Device.BeginInvokeOnMainThread(() => { BtnPlayNext.IsVisible = false; BtnPlayNext.IsEnabled = false; });
             }
-            foreach (var musicData in Queue)
+            foreach (var musicData in Queue.ToList())
             {
                 //var musicPieceUser= User.Users.Where(u => u.Id == musicData.UserID).First();
                 //musicData.FrameColor = musicPieceUser.GetColor();
@@ -94,12 +91,12 @@ namespace NowMineClient.ViewModels
             if (response)
             {
                 DependencyService.Get<IMessage>().LongAlert(String.Format("Usunięto {0}", clipData.Title));
-                Queue.Remove(clipData);
-                RenderQueue();
+                //Queue.Remove(clipData); - UDP recived
+                //RenderQueue();
             }
             else
             {
-                DependencyService.Get<IMessage>().ShortAlert(String.Format("Nie udało się usunąć kawałka z kolejki"));
+                DependencyService.Get<IMessage>().LongAlert(String.Format("Nie udało się usunąć kawałka z kolejki"));
                 await getQueue();
             }
         }
@@ -116,6 +113,7 @@ namespace NowMineClient.ViewModels
                 }
                 else
                 {
+                    Queue.Clear();
                     foreach (ClipQueued info in infos)
                     {
                         var musicPiece = new ClipData(info);
@@ -137,14 +135,14 @@ namespace NowMineClient.ViewModels
             User.Users = new List<User>(await serverConnection.getUsers());
         }
 
-        public async void SuccessfulQueued(object s, PiecePosArgs e)
+        public async void SuccessfulQueued(ClipData clip, int qPos)
         {
             try
             {
                 //await getQueue();
-                int qPos = e.QPos == -1 ? Queue.Count : e.QPos;
+                //int qPos = e.QPos == -1 ? Queue.Count : qPos
                 if (qPos <= Queue.Count)
-                    Queue.Insert(qPos, e.ClipData);
+                    Queue.Insert(qPos, clip);
                 else
                     await getQueue();
                 RenderQueue();
@@ -155,41 +153,64 @@ namespace NowMineClient.ViewModels
             }
         }
 
-        internal void PlayedNow(object s, GenericEventArgs<int> e)
+        internal async void PlayedNow(int qPos)
         {
-            int qPos = e.EventData == -1 ? Queue.Count : e.EventData;
+            //int qPos = e.EventData == -1 ? Queue.Count : e.EventData;
             //if (Queue.Count > 0)
-            
-            Queue.RemoveAt(0);
-            var playingNow = Queue.ElementAt(qPos);
-            Queue.Insert(0, playingNow);
-            Queue.RemoveAt(qPos);
+            if (Queue.Count > 0)
+                Queue.RemoveAt(0);
+            else
+                await getQueue();
+            if (Queue.Count > 0 && qPos != 0)
+            {
+                var playingNow = Queue.ElementAt(qPos);
+                Queue.Insert(0, playingNow);
+                Queue.RemoveAt(qPos);
+            }
+            else
+                await getQueue();
             RenderQueue();
             
         }
 
-        internal void PlayedNext(object s, GenericEventArgs<int> e)
+        internal async void PlayedNext()
         {
-            Queue.RemoveAt(0);  
+            if (Queue.Count > 0)
+                Queue.RemoveAt(0);
+            else
+                await getQueue();
             RenderQueue();            
         }
 
-        internal void DeletePiece(object s, GenericEventArgs<int> e)
+        internal void DeletePiece(uint queueID)
         {
-            Queue.RemoveAt(e.EventData);
+            //Queue.RemoveAt(e.EventData);
+            foreach (var q in Queue)
+            {
+                if (q.QueueID == queueID)
+                {
+                    Queue.Remove(q);
+                    break;
+                }
+            }
             Device.BeginInvokeOnMainThread(() => { RenderQueue(); });
         }
 
-        internal void QueueReveiced(object s, PiecePosArgs e)
+        internal void QueueReveiced(ClipData clip, int qPos)
         {
-            int qPos = e.QPos == -1 ? Queue.Count : e.QPos;
-            Queue.Insert(qPos, e.ClipData);
+            //int qPos = e.QPos == -1 ? Queue.Count : e.QPos;
+            Queue.Insert(qPos, clip);
             RenderQueue();
         }
 
         private async void BtnPlayNext_Clicked(object sender, EventArgs e)
         {
             bool answer = await serverConnection.SendPlayNext();
+        }
+
+        public void OnRenderQueue(object s, EventArgs e)
+        {
+            RenderQueue();
         }
     }
 }

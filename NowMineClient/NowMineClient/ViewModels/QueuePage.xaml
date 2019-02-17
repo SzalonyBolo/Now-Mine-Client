@@ -8,9 +8,9 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="0.2*" />
             </Grid.RowDefinitions>
-            <StackLayout x:Name="sltQueue" Orientation="Vertical" VerticalOptions="FillAndExpand" Grid.Row="0" BackgroundColor="White" Margin="10">
-                <!--<Button x:Name="btnGetQueue" Text="Get Queue!"/>-->
-            </StackLayout>
+            <StackLayout x:Name="sltQueue" Orientation="Vertical" VerticalOptions="FillAndExpand" Grid.Row="0" BackgroundColor="White" Margin="10"/>
+            <!--<ListView x:Name="sltQueue" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Row="0" BackgroundColor="White" Margin="10"
+                      IsPullToRefreshEnabled="True" RefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}"/>-->
             <Button Text="Dawaj Dalej" x:Name="BtnPlayNext" Grid.Row="1" HeightRequest="75" IsVisible="False" Clicked="BtnPlayNext_Clicked"/>
             
         </Grid>

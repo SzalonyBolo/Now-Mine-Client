@@ -32,6 +32,12 @@
         <member name="P:Google.Apis.YouTube.v3.YouTubeService.BasePath">
             <summary>Gets the service base path.</summary>
         </member>
+        <member name="P:Google.Apis.YouTube.v3.YouTubeService.BatchUri">
+            <summary>Gets the batch base URI; <c>null</c> if unspecified.</summary>
+        </member>
+        <member name="P:Google.Apis.YouTube.v3.YouTubeService.BatchPath">
+            <summary>Gets the batch base path; <c>null</c> if unspecified.</summary>
+        </member>
         <member name="T:Google.Apis.YouTube.v3.YouTubeService.Scope">
             <summary>Available OAuth 2.0 scopes for use with the YouTube Data API.</summary>
         </member>
@@ -74,9 +80,6 @@
         </member>
         <member name="P:Google.Apis.YouTube.v3.YouTubeService.Comments">
             <summary>Gets the Comments resource.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.YouTubeService.FanFundingEvents">
-            <summary>Gets the FanFundingEvents resource.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.YouTubeService.GuideCategories">
             <summary>Gets the GuideCategories resource.</summary>
@@ -166,12 +169,11 @@
             [default: true]
         </member>
         <member name="P:Google.Apis.YouTube.v3.YouTubeBaseServiceRequest`1.QuotaUser">
-            <summary>Available to use for quota purposes for server-side applications. Can be any arbitrary string
-            assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.</summary>
+            <summary>An opaque string that represents a user for quota purposes. Must not exceed 40
+            characters.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.YouTubeBaseServiceRequest`1.UserIp">
-            <summary>IP address of the site where the request originates. Use this if you want to enforce per-user
-            limits.</summary>
+            <summary>Deprecated. Please use quotaUser instead.</summary>
         </member>
         <member name="M:Google.Apis.YouTube.v3.YouTubeBaseServiceRequest`1.InitParameters">
             <summary>Initializes YouTube parameter list.</summary>
@@ -440,13 +442,26 @@
             <summary>Gets the media downloader.</summary>
         </member>
         <member name="M:Google.Apis.YouTube.v3.CaptionsResource.DownloadRequest.Download(System.IO.Stream)">
+            <summary>
+            <para>Synchronously download the media into the given stream.</para>
+            <para>Warning: This method hides download errors; use <see cref="M:Google.Apis.YouTube.v3.CaptionsResource.DownloadRequest.DownloadWithStatus(System.IO.Stream)"/> instead.</para>
+            </summary>
+        </member>
+        <member name="M:Google.Apis.YouTube.v3.CaptionsResource.DownloadRequest.DownloadWithStatus(System.IO.Stream)">
             <summary>Synchronously download the media into the given stream.</summary>
+            <returns>The final status of the download; including whether the download succeeded or failed.</returns>
         </member>
         <member name="M:Google.Apis.YouTube.v3.CaptionsResource.DownloadRequest.DownloadAsync(System.IO.Stream)">
             <summary>Asynchronously download the media into the given stream.</summary>
         </member>
         <member name="M:Google.Apis.YouTube.v3.CaptionsResource.DownloadRequest.DownloadAsync(System.IO.Stream,System.Threading.CancellationToken)">
             <summary>Asynchronously download the media into the given stream.</summary>
+        </member>
+        <member name="M:Google.Apis.YouTube.v3.CaptionsResource.DownloadRequest.DownloadRange(System.IO.Stream,System.Net.Http.Headers.RangeHeaderValue)">
+            <summary>Synchronously download a range of the media into the given stream.</summary>
+        </member>
+        <member name="M:Google.Apis.YouTube.v3.CaptionsResource.DownloadRequest.DownloadRangeAsync(System.IO.Stream,System.Net.Http.Headers.RangeHeaderValue,System.Threading.CancellationToken)">
+            <summary>Asynchronously download a range of the media into the given stream.</summary>
         </member>
         <member name="M:Google.Apis.YouTube.v3.CaptionsResource.Insert(Google.Apis.YouTube.v3.Data.Caption,System.String)">
             <summary>Uploads a caption track.</summary>
@@ -539,13 +554,11 @@
             [default: true]
         </member>
         <member name="P:Google.Apis.YouTube.v3.CaptionsResource.InsertMediaUpload.QuotaUser">
-            <summary>Available to use for quota purposes for server-side applications. Can be any arbitrary string
-            assigned to a user, but should not exceed 40 characters. Overrides userIp if both are
-            provided.</summary>
+            <summary>An opaque string that represents a user for quota purposes. Must not exceed 40
+            characters.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.CaptionsResource.InsertMediaUpload.UserIp">
-            <summary>IP address of the site where the request originates. Use this if you want to enforce per-user
-            limits.</summary>
+            <summary>Deprecated. Please use quotaUser instead.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.CaptionsResource.InsertMediaUpload.Part">
             <summary>The part parameter specifies the caption resource parts that the API response will include. Set
@@ -730,13 +743,11 @@
             [default: true]
         </member>
         <member name="P:Google.Apis.YouTube.v3.CaptionsResource.UpdateMediaUpload.QuotaUser">
-            <summary>Available to use for quota purposes for server-side applications. Can be any arbitrary string
-            assigned to a user, but should not exceed 40 characters. Overrides userIp if both are
-            provided.</summary>
+            <summary>An opaque string that represents a user for quota purposes. Must not exceed 40
+            characters.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.CaptionsResource.UpdateMediaUpload.UserIp">
-            <summary>IP address of the site where the request originates. Use this if you want to enforce per-user
-            limits.</summary>
+            <summary>Deprecated. Please use quotaUser instead.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.CaptionsResource.UpdateMediaUpload.Part">
             <summary>The part parameter serves two purposes in this operation. It identifies the properties that the
@@ -800,6 +811,14 @@
         </member>
         <member name="M:Google.Apis.YouTube.v3.ChannelBannersResource.InsertRequest.#ctor(Google.Apis.Services.IClientService,Google.Apis.YouTube.v3.Data.ChannelBannerResource)">
             <summary>Constructs a new Insert request.</summary>
+        </member>
+        <member name="P:Google.Apis.YouTube.v3.ChannelBannersResource.InsertRequest.ChannelId">
+            <summary>The channelId parameter identifies the YouTube channel to which the banner is uploaded. The
+            channelId parameter was introduced as a required parameter in May 2017. As this was a backward-
+            incompatible change, channelBanners.insert requests that do not specify this parameter will not return
+            an error until six months have passed from the time that the parameter was introduced. Please see the
+            API Terms of Service for the official policy regarding backward incompatible changes and the API
+            revision history for the exact date that the parameter was introduced.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.ChannelBannersResource.InsertRequest.OnBehalfOfContentOwner">
              <summary>Note: This parameter is intended exclusively for YouTube content partners.
@@ -870,13 +889,19 @@
             [default: true]
         </member>
         <member name="P:Google.Apis.YouTube.v3.ChannelBannersResource.InsertMediaUpload.QuotaUser">
-            <summary>Available to use for quota purposes for server-side applications. Can be any arbitrary string
-            assigned to a user, but should not exceed 40 characters. Overrides userIp if both are
-            provided.</summary>
+            <summary>An opaque string that represents a user for quota purposes. Must not exceed 40
+            characters.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.ChannelBannersResource.InsertMediaUpload.UserIp">
-            <summary>IP address of the site where the request originates. Use this if you want to enforce per-user
-            limits.</summary>
+            <summary>Deprecated. Please use quotaUser instead.</summary>
+        </member>
+        <member name="P:Google.Apis.YouTube.v3.ChannelBannersResource.InsertMediaUpload.ChannelId">
+            <summary>The channelId parameter identifies the YouTube channel to which the banner is uploaded. The
+            channelId parameter was introduced as a required parameter in May 2017. As this was a backward-
+            incompatible change, channelBanners.insert requests that do not specify this parameter will not return
+            an error until six months have passed from the time that the parameter was introduced. Please see the
+            API Terms of Service for the official policy regarding backward incompatible changes and the API
+            revision history for the exact date that the parameter was introduced.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.ChannelBannersResource.InsertMediaUpload.OnBehalfOfContentOwner">
              <summary>Note: This parameter is intended exclusively for YouTube content partners.
@@ -1743,63 +1768,6 @@
         </member>
         <member name="M:Google.Apis.YouTube.v3.CommentsResource.UpdateRequest.InitParameters">
             <summary>Initializes Update parameter list.</summary>
-        </member>
-        <member name="T:Google.Apis.YouTube.v3.FanFundingEventsResource">
-            <summary>The "fanFundingEvents" collection of methods.</summary>
-        </member>
-        <member name="F:Google.Apis.YouTube.v3.FanFundingEventsResource.service">
-            <summary>The service which this resource belongs to.</summary>
-        </member>
-        <member name="M:Google.Apis.YouTube.v3.FanFundingEventsResource.#ctor(Google.Apis.Services.IClientService)">
-            <summary>Constructs a new resource.</summary>
-        </member>
-        <member name="M:Google.Apis.YouTube.v3.FanFundingEventsResource.List(System.String)">
-            <summary>Lists fan funding events for a channel.</summary>
-            <param name="part">The part parameter specifies the fanFundingEvent resource parts that the API response will
-            include. Supported values are id and snippet.</param>
-        </member>
-        <member name="T:Google.Apis.YouTube.v3.FanFundingEventsResource.ListRequest">
-            <summary>Lists fan funding events for a channel.</summary>
-        </member>
-        <member name="M:Google.Apis.YouTube.v3.FanFundingEventsResource.ListRequest.#ctor(Google.Apis.Services.IClientService,System.String)">
-            <summary>Constructs a new List request.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.FanFundingEventsResource.ListRequest.Part">
-            <summary>The part parameter specifies the fanFundingEvent resource parts that the API response will
-            include. Supported values are id and snippet.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.FanFundingEventsResource.ListRequest.Hl">
-             <summary>The hl parameter instructs the API to retrieve localized resource metadata for a specific
-             application language that the YouTube website supports. The parameter value must be a language code
-             included in the list returned by the i18nLanguages.list method.
-            
-             If localized resource details are available in that language, the resource's snippet.localized object
-             will contain the localized values. However, if localized details are not available, the
-             snippet.localized object will contain resource details in the resource's default language.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.FanFundingEventsResource.ListRequest.MaxResults">
-            <summary>The maxResults parameter specifies the maximum number of items that should be returned in the
-            result set.</summary>
-            [default: 5]
-            [minimum: 0]
-            [maximum: 50]
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.FanFundingEventsResource.ListRequest.PageToken">
-            <summary>The pageToken parameter identifies a specific page in the result set that should be returned.
-            In an API response, the nextPageToken and prevPageToken properties identify other pages that could be
-            retrieved.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.FanFundingEventsResource.ListRequest.MethodName">
-            <summary>Gets the method name.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.FanFundingEventsResource.ListRequest.HttpMethod">
-            <summary>Gets the HTTP method.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.FanFundingEventsResource.ListRequest.RestPath">
-            <summary>Gets the REST path.</summary>
-        </member>
-        <member name="M:Google.Apis.YouTube.v3.FanFundingEventsResource.ListRequest.InitParameters">
-            <summary>Initializes List parameter list.</summary>
         </member>
         <member name="T:Google.Apis.YouTube.v3.GuideCategoriesResource">
             <summary>The "guideCategories" collection of methods.</summary>
@@ -4270,7 +4238,7 @@
             <summary>The maxResults parameter specifies the maximum number of items that should be returned in the
             result set.</summary>
             [default: 5]
-            [minimum: 0]
+            [minimum: 1]
             [maximum: 50]
         </member>
         <member name="P:Google.Apis.YouTube.v3.SuperChatEventsResource.ListRequest.PageToken">
@@ -4371,13 +4339,11 @@
             [default: true]
         </member>
         <member name="P:Google.Apis.YouTube.v3.ThumbnailsResource.SetMediaUpload.QuotaUser">
-            <summary>Available to use for quota purposes for server-side applications. Can be any arbitrary string
-            assigned to a user, but should not exceed 40 characters. Overrides userIp if both are
-            provided.</summary>
+            <summary>An opaque string that represents a user for quota purposes. Must not exceed 40
+            characters.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.ThumbnailsResource.SetMediaUpload.UserIp">
-            <summary>IP address of the site where the request originates. Use this if you want to enforce per-user
-            limits.</summary>
+            <summary>Deprecated. Please use quotaUser instead.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.ThumbnailsResource.SetMediaUpload.VideoId">
             <summary>The videoId parameter specifies a YouTube video ID for which the custom video thumbnail is
@@ -4699,13 +4665,11 @@
             [default: true]
         </member>
         <member name="P:Google.Apis.YouTube.v3.VideosResource.InsertMediaUpload.QuotaUser">
-            <summary>Available to use for quota purposes for server-side applications. Can be any arbitrary string
-            assigned to a user, but should not exceed 40 characters. Overrides userIp if both are
-            provided.</summary>
+            <summary>An opaque string that represents a user for quota purposes. Must not exceed 40
+            characters.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.VideosResource.InsertMediaUpload.UserIp">
-            <summary>IP address of the site where the request originates. Use this if you want to enforce per-user
-            limits.</summary>
+            <summary>Deprecated. Please use quotaUser instead.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.VideosResource.InsertMediaUpload.Part">
              <summary>The part parameter serves two purposes in this operation. It identifies the properties that the
@@ -5129,13 +5093,11 @@
             [default: true]
         </member>
         <member name="P:Google.Apis.YouTube.v3.WatermarksResource.SetMediaUpload.QuotaUser">
-            <summary>Available to use for quota purposes for server-side applications. Can be any arbitrary string
-            assigned to a user, but should not exceed 40 characters. Overrides userIp if both are
-            provided.</summary>
+            <summary>An opaque string that represents a user for quota purposes. Must not exceed 40
+            characters.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.WatermarksResource.SetMediaUpload.UserIp">
-            <summary>IP address of the site where the request originates. Use this if you want to enforce per-user
-            limits.</summary>
+            <summary>Deprecated. Please use quotaUser instead.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.WatermarksResource.SetMediaUpload.ChannelId">
             <summary>The channelId parameter specifies the YouTube channel ID for which the watermark is being
@@ -5999,8 +5961,7 @@
             <summary>The ETag of the item.</summary>
         </member>
         <member name="T:Google.Apis.YouTube.v3.Data.ChannelSnippet">
-            <summary>Basic details about a channel, including title, description and thumbnails. Next available id:
-            15.</summary>
+            <summary>Basic details about a channel, including title, description and thumbnails.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.Data.ChannelSnippet.Country">
             <summary>The country of the channel.</summary>
@@ -6266,7 +6227,7 @@
             <summary>The ETag of the item.</summary>
         </member>
         <member name="T:Google.Apis.YouTube.v3.Data.ContentRating">
-            <summary>Ratings schemes. The country-specific ratings are mostly for movies and shows. NEXT_ID: 69</summary>
+            <summary>Ratings schemes. The country-specific ratings are mostly for movies and shows. NEXT_ID: 71</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.Data.ContentRating.AcbRating">
             <summary>The video's Australian Classification Board (ACB) or Australian Communications and Media Authority
@@ -6424,6 +6385,9 @@
             <summary>The video's rating from Finland's Kansallinen Audiovisuaalinen Instituutti (National Audiovisual
             Institute).</summary>
         </member>
+        <member name="P:Google.Apis.YouTube.v3.Data.ContentRating.MenaMpaaRating">
+            <summary>The rating system for MENA countries, a clone of MPAA. It is needed to</summary>
+        </member>
         <member name="P:Google.Apis.YouTube.v3.Data.ContentRating.MibacRating">
             <summary>The video's rating from the Ministero dei Beni e delle Attività Culturali e del Turismo
             (Italy).</summary>
@@ -6436,6 +6400,10 @@
         </member>
         <member name="P:Google.Apis.YouTube.v3.Data.ContentRating.MpaaRating">
             <summary>The video's Motion Picture Association of America (MPAA) rating.</summary>
+        </member>
+        <member name="P:Google.Apis.YouTube.v3.Data.ContentRating.MpaatRating">
+            <summary>The rating system for trailer, DVD, and Ad in the US. See
+            http://movielabs.com/md/ratings/v2.3/html/US_MPAAT_Ratings.html.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.Data.ContentRating.MtrcbRating">
             <summary>The video's rating from the Movie and Television Review and Classification Board
@@ -6494,72 +6462,6 @@
             <summary>A rating that YouTube uses to identify age-restricted content.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.Data.ContentRating.ETag">
-            <summary>The ETag of the item.</summary>
-        </member>
-        <member name="T:Google.Apis.YouTube.v3.Data.FanFundingEvent">
-            <summary>A fanFundingEvent resource represents a fan funding event on a YouTube channel. Fan funding events
-            occur when a user gives one-time monetary support to the channel owner.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.FanFundingEvent.ETag">
-            <summary>Etag of this resource.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.FanFundingEvent.Id">
-            <summary>The ID that YouTube assigns to uniquely identify the fan funding event.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.FanFundingEvent.Kind">
-            <summary>Identifies what kind of resource this is. Value: the fixed string
-            "youtube#fanFundingEvent".</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.FanFundingEvent.Snippet">
-            <summary>The snippet object contains basic details about the fan funding event.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.FanFundingEventListResponse.ETag">
-            <summary>Etag of this resource.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.FanFundingEventListResponse.EventId">
-            <summary>Serialized EventId of the request which produced this response.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.FanFundingEventListResponse.Items">
-            <summary>A list of fan funding events that match the request criteria.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.FanFundingEventListResponse.Kind">
-            <summary>Identifies what kind of resource this is. Value: the fixed string
-            "youtube#fanFundingEventListResponse".</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.FanFundingEventListResponse.NextPageToken">
-            <summary>The token that can be used as the value of the pageToken parameter to retrieve the next page in the
-            result set.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.FanFundingEventListResponse.VisitorId">
-            <summary>The visitorId identifies the visitor.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.FanFundingEventSnippet.AmountMicros">
-            <summary>The amount of funding in micros of fund_currency. e.g., 1 is represented</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.FanFundingEventSnippet.ChannelId">
-            <summary>Channel id where the funding event occurred.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.FanFundingEventSnippet.CommentText">
-            <summary>The text contents of the comment left by the user.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.FanFundingEventSnippet.CreatedAtRaw">
-            <summary>The date and time when the funding occurred. The value is specified in ISO 8601 (YYYY-MM-
-            DDThh:mm:ss.sZ) format.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.FanFundingEventSnippet.CreatedAt">
-            <summary><seealso cref="T:System.DateTime"/> representation of <see cref="P:Google.Apis.YouTube.v3.Data.FanFundingEventSnippet.CreatedAtRaw"/>.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.FanFundingEventSnippet.Currency">
-            <summary>The currency in which the fund was made. ISO 4217.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.FanFundingEventSnippet.DisplayString">
-            <summary>A rendered string that displays the fund amount and currency (e.g., "$1.00"). The string is
-            rendered for the given language.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.FanFundingEventSnippet.SupporterDetails">
-            <summary>Details about the supporter. Only filled if the event was made public by the user.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.FanFundingEventSnippet.ETag">
             <summary>The ETag of the item.</summary>
         </member>
         <member name="T:Google.Apis.YouTube.v3.Data.GeoPoint">
@@ -6924,6 +6826,9 @@
         <member name="P:Google.Apis.YouTube.v3.Data.LiveBroadcastContentDetails.BoundStreamLastUpdateTimeMs">
             <summary><seealso cref="T:System.DateTime"/> representation of <see cref="P:Google.Apis.YouTube.v3.Data.LiveBroadcastContentDetails.BoundStreamLastUpdateTimeMsRaw"/>.</summary>
         </member>
+        <member name="P:Google.Apis.YouTube.v3.Data.LiveBroadcastContentDetails.EnableAutoStart">
+            <summary>This setting indicates whether auto start is enabled for this broadcast.</summary>
+        </member>
         <member name="P:Google.Apis.YouTube.v3.Data.LiveBroadcastContentDetails.EnableClosedCaptions">
             <summary>This setting indicates whether HTTP POST closed captioning is enabled for this broadcast. The
             ingestion URL of the closed captions is returned through the liveStreams API. This is mutually exclusive
@@ -6949,6 +6854,11 @@
         </member>
         <member name="P:Google.Apis.YouTube.v3.Data.LiveBroadcastContentDetails.EnableLowLatency">
             <summary>Indicates whether this broadcast has low latency enabled.</summary>
+        </member>
+        <member name="P:Google.Apis.YouTube.v3.Data.LiveBroadcastContentDetails.LatencyPreference">
+            <summary>If both this and enable_low_latency are set, they must match. LATENCY_NORMAL should match
+            enable_low_latency=false LATENCY_LOW should match enable_low_latency=true LATENCY_ULTRA_LOW should have
+            enable_low_latency omitted.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.Data.LiveBroadcastContentDetails.MonitorStream">
             <summary>The monitorStream object contains information about the monitor stream, which the broadcaster can
@@ -7095,31 +7005,6 @@
             <summary>The broadcast's recording status.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.Data.LiveBroadcastStatus.ETag">
-            <summary>The ETag of the item.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.LiveBroadcastTopic.Snippet">
-            <summary>Information about the topic matched.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.LiveBroadcastTopic.Type">
-            <summary>The type of the topic.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.LiveBroadcastTopic.Unmatched">
-            <summary>If this flag is set it means that we have not been able to match the topic title and type provided
-            to a known entity.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.LiveBroadcastTopic.ETag">
-            <summary>The ETag of the item.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.LiveBroadcastTopicDetails.ETag">
-            <summary>The ETag of the item.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.LiveBroadcastTopicSnippet.Name">
-            <summary>The name of the topic.</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.LiveBroadcastTopicSnippet.ReleaseDate">
-            <summary>The date at which the topic was released. Filled for types: videoGame</summary>
-        </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.LiveBroadcastTopicSnippet.ETag">
             <summary>The ETag of the item.</summary>
         </member>
         <member name="T:Google.Apis.YouTube.v3.Data.LiveChatBan">
@@ -7555,6 +7440,21 @@
              Note: This property cannot be updated once the broadcast is in the testing or live state.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.Data.MonitorStreamInfo.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="T:Google.Apis.YouTube.v3.Data.Nonprofit">
+            <summary>Nonprofit information.</summary>
+        </member>
+        <member name="P:Google.Apis.YouTube.v3.Data.Nonprofit.NonprofitId">
+            <summary>Id of the nonprofit.</summary>
+        </member>
+        <member name="P:Google.Apis.YouTube.v3.Data.Nonprofit.NonprofitLegalName">
+            <summary>Legal name of the nonprofit.</summary>
+        </member>
+        <member name="P:Google.Apis.YouTube.v3.Data.Nonprofit.ETag">
+            <summary>The ETag of the item.</summary>
+        </member>
+        <member name="P:Google.Apis.YouTube.v3.Data.NonprofitId.ETag">
             <summary>The ETag of the item.</summary>
         </member>
         <member name="T:Google.Apis.YouTube.v3.Data.PageInfo">
@@ -8005,9 +7905,6 @@
         <member name="P:Google.Apis.YouTube.v3.Data.Sponsor.ETag">
             <summary>Etag of this resource.</summary>
         </member>
-        <member name="P:Google.Apis.YouTube.v3.Data.Sponsor.Id">
-            <summary>The ID that YouTube assigns to uniquely identify the sponsor.</summary>
-        </member>
         <member name="P:Google.Apis.YouTube.v3.Data.Sponsor.Kind">
             <summary>Identifies what kind of resource this is. Value: the fixed string "youtube#sponsor".</summary>
         </member>
@@ -8036,6 +7933,9 @@
         </member>
         <member name="P:Google.Apis.YouTube.v3.Data.SponsorSnippet.ChannelId">
             <summary>The id of the channel being sponsored.</summary>
+        </member>
+        <member name="P:Google.Apis.YouTube.v3.Data.SponsorSnippet.CumulativeDurationMonths">
+            <summary>The cumulative time a user has been a sponsor in months.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.Data.SponsorSnippet.SponsorDetails">
             <summary>Details about the sponsor.</summary>
@@ -8226,9 +8126,16 @@
             <summary>A rendered string that displays the purchase amount and currency (e.g., "$1.00"). The string is
             rendered for the given language.</summary>
         </member>
+        <member name="P:Google.Apis.YouTube.v3.Data.SuperChatEventSnippet.IsSuperChatForGood">
+            <summary>True if this event is a Super Chat for Good purchase.</summary>
+        </member>
         <member name="P:Google.Apis.YouTube.v3.Data.SuperChatEventSnippet.MessageType">
             <summary>The tier for the paid message, which is based on the amount of money spent to purchase the
             message.</summary>
+        </member>
+        <member name="P:Google.Apis.YouTube.v3.Data.SuperChatEventSnippet.Nonprofit">
+            <summary>If this event is a Super Chat for Good purchase, this field will contain information about the
+            charity the purchase is donated to.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.Data.SuperChatEventSnippet.SupporterDetails">
             <summary>Details about the supporter.</summary>
@@ -8336,7 +8243,7 @@
             player.</summary>
         </member>
         <member name="P:Google.Apis.YouTube.v3.Data.Video.ProcessingDetails">
-             <summary>The processingProgress object encapsulates information about YouTube's progress in processing the
+             <summary>The processingDetails object encapsulates information about YouTube's progress in processing the
              uploaded video file. The properties in the object identify the current processing status and an estimate of
              the time remaining until YouTube finishes processing the video. This part also indicates whether different
              types of data or content, such as file details or thumbnail images, are available for the video.

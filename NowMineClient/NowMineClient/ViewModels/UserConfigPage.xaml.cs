@@ -30,7 +30,7 @@ namespace NowMineClient.ViewModels
             //BoxColorPicker.WidthRequest = this.Width - 40;
             var colorPickerImage = new CustomImage
             {
-                Source = "colorpicker.png",
+                Source = "Resources/colorpicker.png",
                 HorizontalOptions = LayoutOptions.StartAndExpand,
                 VerticalOptions = LayoutOptions.StartAndExpand
             };
@@ -89,11 +89,11 @@ namespace NowMineClient.ViewModels
             {
                 Application.Current.Properties["UserColor"] = ColorsBytes;
                 await Application.Current.SavePropertiesAsync();
-                DependencyService.Get<IMessage>().ShortAlert("Zmieniono kolor");
+                DependencyService.Get<IMessage>().LongAlert("Zmieniono kolor");
             }
             else
             {
-                DependencyService.Get<IMessage>().ShortAlert("Nie udało sie zmienić koloru");
+                DependencyService.Get<IMessage>().LongAlert("Nie udało sie zmienić koloru");
             }
         }
 
@@ -109,13 +109,13 @@ namespace NowMineClient.ViewModels
                 User.DeviceUser.Name = newUserName;
                 Application.Current.Properties["UserName"] = newUserName;
                 await Application.Current.SavePropertiesAsync();
-                DependencyService.Get<IMessage>().ShortAlert("Zmieniono nick");
+                DependencyService.Get<IMessage>().LongAlert("Zmieniono nick");
             }
             else
             {
                 entry.Text = User.DeviceUser.Name;
                 entry.TextColor = Xamarin.Forms.Color.Red;
-                DependencyService.Get<IMessage>().ShortAlert("Nie udało się zmienić nick");
+                DependencyService.Get<IMessage>().LongAlert("Nie udało się zmienić nick");
             }
         }
 

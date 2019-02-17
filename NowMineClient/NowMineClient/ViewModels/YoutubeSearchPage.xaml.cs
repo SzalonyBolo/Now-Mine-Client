@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NowMineClient.Network;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Diagnostics;
-using NowMineCommon.Models;
 using NowMineClient.Models;
 using NowMineClient.OSSpecific;
 using NowMine.APIProviders;
@@ -21,7 +16,7 @@ namespace NowMineClient.ViewModels
         private readonly YouTubeProvider youtubeProvider;
         private readonly ServerConnection serverConnection;
 
-        public delegate void SuccessfulQueuedEventHandler(object s, PiecePosArgs e);
+        public delegate void SuccessfulQueuedEventHandler(ClipData clip, int qPos);
         public event SuccessfulQueuedEventHandler SuccessfulQueued;
 
         public YoutubeSearchPage(ServerConnection serverConnection)
@@ -35,14 +30,18 @@ namespace NowMineClient.ViewModels
             this.BackgroundColor = Color.White;
         }
 
-        public void entSearch_Completed(object s, EventArgs e)
+        public async void entSearch_Completed(object s, EventArgs e)
         {
             var entSearch = (Entry)s;
             string searchString = entSearch.Text;
-            var infos = youtubeProvider.GetSearchClipInfos(searchString);
+            if (string.IsNullOrEmpty(searchString))
+                return;
+            searchBoard.Children.Clear();
+            loadingLogo.IsVisible = true;
+            var infos = await youtubeProvider.GetSearchClipInfos(searchString);
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += AddToQueue_Tapped;
-            searchBoard.Children.Clear();
+            loadingLogo.IsVisible = false;
             foreach (var yi in infos)
             {
                 //new ClipQueued(yi, 0, User.DeviceUser.Id);
@@ -81,7 +80,7 @@ namespace NowMineClient.ViewModels
 
         protected virtual void OnSuccessfulQueued(ClipData clipData, int qPos)
         {
-            SuccessfulQueued?.Invoke(this, new PiecePosArgs(clipData, qPos));
+            SuccessfulQueued?.Invoke(clipData, qPos);
         }
     }
 }

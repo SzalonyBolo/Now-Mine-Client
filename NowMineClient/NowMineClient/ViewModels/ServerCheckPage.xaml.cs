@@ -10,6 +10,7 @@ using Xamarin.Forms.Xaml;
 using Plugin.Connectivity;
 using Plugin.Connectivity.Abstractions;
 using NowMineClient.OSSpecific;
+using NowMineClient.Helpers;
 
 namespace NowMineClient.ViewModels
 {
@@ -66,8 +67,12 @@ namespace NowMineClient.ViewModels
         {
             try
             {
+                bool serverFound = false;
                 serverConnection.ServerConnected += ServerConnected;
-                await serverConnection.ConnectToServer();
+                //while (!serverFound)
+                //{
+                    await serverConnection.ConnectToServer();
+                //}
             }
             catch(Exception e)
             {
@@ -85,13 +90,18 @@ namespace NowMineClient.ViewModels
             await queuePage.getUsers();
             await queuePage.getQueue();
             
-
             var ytSearchPage = new YoutubeSearchPage(serverConnection);
             ytSearchPage.SuccessfulQueued += queuePage.SuccessfulQueued;
 
             serverConnection.UDPQueued += queuePage.SuccessfulQueued;
             serverConnection.DeletePiece += queuePage.DeletePiece;
             serverConnection.PlayedNow += queuePage.PlayedNow;
+            serverConnection.RenderQueue += queuePage.OnRenderQueue;
+
+            EventManager.QueuedPiece += queuePage.SuccessfulQueued;
+            EventManager.DeletedPiece += queuePage.DeletePiece;
+            EventManager.PlayedNow += queuePage.PlayedNow;
+
             serverConnection.startListeningUDP();
 
             var userConfigPage = new UserConfigPage(serverConnection);

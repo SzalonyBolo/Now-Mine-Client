@@ -191,6 +191,7 @@ C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\M
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\bin\Debug\NowMineClient.Android.dll
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\Microsoft.CSharp.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\mscorlib.pdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\NowMineClient.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\System.Core.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\System.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\System.IO.Compression.pdb
@@ -201,6 +202,7 @@ C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\M
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\System.Runtime.Serialization.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\System.ServiceModel.Internals.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\System.Numerics.pdb
+C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\NowMineCommon.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\System.Net.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\Mono.Security.pdb
 C:\NowMineProjects\NowMineClient\NowMineClient\NowMineClient.Android\obj\Debug\MonoAndroid81\linksrc\System.Data.pdb
