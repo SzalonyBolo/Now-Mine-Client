@@ -7,7 +7,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace NowMineClient.Network
 {
@@ -45,29 +47,16 @@ namespace NowMineClient.Network
             }
         }
 
-        private bool isSending = false;
+        private SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1);
+
+        //private object _lock = new object();
+        //private bool isSending = false;
 
         private async void FirstConnection(object sender, Sockets.Plugin.Abstractions.TcpSocketListenerConnectEventArgs e)
         {
             Debug.WriteLine("TCP/ Host connected!");
             var messageBuffer = new byte[8];
             await e.SocketClient.ReadStream.ReadAsync(messageBuffer, 0, 8);
-
-            //var client = e.SocketClient;
-            //var bytesRead = -1;
-            //var buf = new byte[1];
-            //string message = "";
-            //List<byte> bytes = new List<byte>();
-            //while (bytesRead != 0)
-            //{
-            //    bytesRead = await e.SocketClient.ReadStream.ReadAsync(buf, 0, 1);
-            //    if (bytesRead > 0)
-            //    {
-            //        Debug.WriteLine(buf[0]);
-            //        message += System.Text.Encoding.UTF8.GetString(buf, 0, 1);
-            //        bytes.Add(buf[0]);
-            //    }
-            //}
             //Checking if te first 4 bytes are the host address
             var connectedAddress = e.SocketClient.RemoteAddress.Split('.');
             for (int i = 0; i < 4; i++)
@@ -121,18 +110,20 @@ namespace NowMineClient.Network
             await tcpListener.StartListeningAsync(4444);
         }
 
-        public async Task<byte[]> getData(string message, string serverAddress)
+        public async Task<string> getData(string message, string serverAddress)
         {
             try
             {
-                byte[] data = Encoding.UTF8.GetBytes(message);
+                byte[] request = Encoding.UTF8.GetBytes(message);
 
-                return await getData(data, serverAddress);
+                var response = await getData(request, serverAddress);
+                var data = Encoding.UTF8.GetString(response);
+                return Regex.Replace(data, @"[^\u0020-\u007E]", string.Empty);
             }
             catch (Exception e)
             {
                 Debug.WriteLine("Exception in TCP/GetData {0}", e.Message);
-                return new byte[0];
+                return string.Empty;
             }
         }
 
@@ -140,67 +131,31 @@ namespace NowMineClient.Network
         {
             try
             {
-                Debug.WriteLine("Sending {0} to {1}!", message, serverAddress);
+                await _semaphoreSlim.WaitAsync();
+                //isSending = true;
+                Debug.WriteLine("Sending {0} to {1}!", Convert.ToBase64String(message), serverAddress);
                 await tcpClient.ConnectAsync(serverAddress, 4444);
                 await tcpClient.WriteStream.WriteAsync(message, 0, message.Length);
+
                 int readByte = 0;
-                List<byte> queue = new List<byte>();
+                List<byte> answer = new List<byte>();
                 while (readByte != -1)
                 {
                     readByte = tcpClient.ReadStream.ReadByte();
-                    Debug.WriteLine("TCP/ Rec: {0}", readByte);
-                    queue.Add((byte)readByte);
+                    //Debug.WriteLine("TCP/ Rec: {0}", readByte);
+                    answer.Add((byte)readByte);
                 }
                 await tcpClient.DisconnectAsync();
-                return queue.ToArray();
+                //isSending = false;
+                _semaphoreSlim.Release();
+                return answer.ToArray();
             }
             catch(Exception e)
             {
                 Debug.WriteLine("Exception in TCP/GetData {0}", e.Message);
-                return new byte[0];
-            }
-            
-        }
-
-        public async Task<byte[]> SendQueueData(byte[] data, string serverAddress)
-        {
-            if (isSending)
-            {
-                return null;
-            }
-            try
-            {
-                isSending = true;
-                Debug.WriteLine("Sending {0} to {1}!", Encoding.UTF8.GetString(data, 0, data.Length), serverAddress);
-                byte[] queueString = Encoding.UTF8.GetBytes("Queue: ");
-                byte[] message = new byte[queueString.Length + data.Length];
-                System.Buffer.BlockCopy(queueString, 0, message, 0, queueString.Length);
-                System.Buffer.BlockCopy(data, 0, message, queueString.Length, data.Length);
-                await tcpClient.ConnectAsync(serverAddress, 4444);
-                Debug.WriteLine("Connected!");
-                await tcpClient.WriteStream.WriteAsync(message, 0, message.Length);
-                //await tcpClient.WriteStream.WriteAsync(data, 0, data.Length);
-                await tcpClient.WriteStream.FlushAsync();
-                int readByte = 0;
-                List<byte> response = new List<byte>();
-                while (readByte != -1)
-                {
-                    readByte = tcpClient.ReadStream.ReadByte();
-                    Debug.WriteLine("TCP/ Rec: {0}", readByte);
-                    response.Add((byte)readByte);
-                }
-                isSending = false;
-                await tcpClient.DisconnectAsync();
-                return response.ToArray();
-            }
-            catch (Exception ex)
-            {
-                isSending = false;
-                Debug.WriteLine("Message:{0} Data:{1} Source:{2}", ex.Message, ex.Data, ex.Source);
-                return null;
+                throw e;
             }
         }
-
 
         public async Task stopWaitingForFirstConnection()
         {

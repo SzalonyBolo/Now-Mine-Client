@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
+using NowMineClient.Helpers;
 using NowMineClient.Models;
 using NowMineClient.OSSpecific;
+using NowMineCommon.Enums;
 using NowMineCommon.Models;
 using System;
 using System.Collections.Generic;
@@ -20,17 +22,18 @@ namespace NowMineClient.Network
         public delegate void ServerConnectedEventHandler(object s, EventArgs e);
         public event ServerConnectedEventHandler ServerConnected;
 
-        public delegate void UDPQueuedEventHandler(object s, PiecePosArgs e);
+        public delegate void UDPQueuedEventHandler(ClipData clip, int qPos);
         public event UDPQueuedEventHandler UDPQueued;
 
-        public delegate void DeletePieceEventHandler(object s, GenericEventArgs<int> e);
+        public delegate void DeletePieceEventHandler(uint queueID);
         public event DeletePieceEventHandler DeletePiece;
 
-        public delegate void PlayedNowEventHandler(object s, GenericEventArgs<int> e);
+        public delegate void PlayedNowEventHandler(int qPos);
         public event PlayedNowEventHandler PlayedNow;
 
-        //public event EventHandler PlayedNext;
+        public event EventHandler RenderQueue;
 
+        //public event EventHandler PlayedNext;        
         private UDPConnector _udpConnector;
         public UDPConnector udpConnector
         {
@@ -53,53 +56,34 @@ namespace NowMineClient.Network
                 {
                     _tcpConnector = new TCPConnector();
                 }
-                return _tcpConnector;
+               return _tcpConnector;
             }
         }
 
         internal async Task<bool> ChangeName(string newUserName)
         {
-            var messageString = "ChangeName " + newUserName;
 
-            byte[] bytes = await tcpConnector.getData(messageString, serverAddress);
-            bool answer = BitConverter.ToBoolean(bytes, 0);
-            if (answer)
-            {
-                Application.Current.Properties["UserName"] = newUserName;
-                await Application.Current.SavePropertiesAsync();
-            }
+            string request = JsonMessageBuilder.GetDataCommandRequest(CommandType.ChangeName, newUserName);
+            var response = await tcpConnector.getData(request, serverAddress);
 
-            return answer;
+            return JsonMessageBuilder.GetSuccess(response);
         }
 
-        internal async Task<bool> ChangeColor(byte[] NewColor)
+        internal async Task<bool> ChangeColor(byte[] newColor)
         {
-            //var messageString = "ChangeColor ";
-            var CommandString = Encoding.UTF8.GetBytes("ChangeColor ");
-            var Message = new byte[CommandString.Length + NewColor.Length];
+            string newColorString = System.Convert.ToBase64String(newColor);
+            string request = JsonMessageBuilder.GetDataCommandRequest(CommandType.ChangeColor, newColorString);
+            var response = await tcpConnector.getData(request, serverAddress);
 
-            System.Buffer.BlockCopy(CommandString, 0, Message, 0, CommandString.Length);
-            System.Buffer.BlockCopy(NewColor, 0, Message, CommandString.Length, NewColor.Length);
-
-            byte[] answer = await tcpConnector.getData(Message, serverAddress);
-            bool isColorChanged = BitConverter.ToBoolean(answer, 0);
-            if (isColorChanged)
-            {
-                User.DeviceUser.UserColor = NewColor;
-                Application.Current.Properties["UserColor"] = NewColor;
-                await Application.Current.SavePropertiesAsync();
-            }
-            return isColorChanged;
+            return JsonMessageBuilder.GetSuccess(response);
         }
 
-        internal async Task<bool> SendDeletePiece(MusicPiece musicPiece)
+        internal async Task<bool> SendDeletePiece(ClipData clipData)
         {
-            var messageString = "DeletePiece " + musicPiece.Info.ID;
+            string request = JsonMessageBuilder.GetDataCommandRequest(CommandType.DeleteClip, clipData.QueueID);
+            var response = await tcpConnector.getData(request, serverAddress);
 
-            byte[] bytes = await tcpConnector.getData(messageString, serverAddress);
-            bool answer = BitConverter.ToBoolean(bytes, 0);
-
-            return answer;
+            return JsonMessageBuilder.GetSuccess(response);
         }
 
         protected void OnServerConnected()
@@ -107,44 +91,181 @@ namespace NowMineClient.Network
             ServerConnected?.Invoke(this, EventArgs.Empty);
         }
 
-        protected void OnDeletepiece(int qPos)
+        protected void OnDeletepiece(uint queueIDToDelete)
         {
-            DeletePiece?.Invoke(this, new GenericEventArgs<int>(qPos));
+            DeletePiece?.Invoke(queueIDToDelete);
         }
 
         protected void OnPlayedNow(int qPos)
         {
-            PlayedNow?.Invoke(this, new GenericEventArgs<int>(qPos));
+            PlayedNow?.Invoke(qPos);
         }
 
-        //protected void OnPlayedNext()
-        //{
-        //    PlayedNext?.Invoke(this, EventArgs.Empty);
-        //}
 
-        protected virtual void OnUDPQueued(ClipQueued piece)
+        protected virtual void OnUDPQueued(ClipQueued piece, int qPos)
         {
-            MusicPiece mPiece = new MusicPiece(piece);
-            UDPQueued?.Invoke(this, new PiecePosArgs(mPiece, piece.QPos));
+            ClipData mPiece = new ClipData(piece);
+            UDPQueued?.Invoke(mPiece, qPos);
         }
 
         internal async Task<IList<User>> getUsers()
         {
             try
             {
-                byte[] bQueue = await tcpConnector.getData("GetUsers", serverAddress);
-                using (MemoryStream ms = new MemoryStream(bQueue))
-                using (BsonReader reader = new BsonReader(ms))
-                {
-                    reader.ReadRootValueAsArray = true;
-                    JsonSerializer serializer = new JsonSerializer();
-                    IList<User> users = serializer.Deserialize<IList<User>>(reader);
-                    Debug.WriteLine("Got User list with {0} items", users.Count);
-                    return users;
-                }
-                //await tcpConnector.receiveTCP();
+                var request = JsonMessageBuilder.GetStandardCommandRequest(CommandType.GetUsers);
+                var response = await tcpConnector.getData(request, serverAddress);
+                List<User> users = JsonMessageBuilder.GetStandardResponseData<List<User>>(response, CommandType.GetUsers);
+                Debug.WriteLine("Got User list with {0} items", users.Count);
+                return users;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Data: {0}; message: {1}", e.Data, e.Message);
+                return new List<User>();
+            }
+        }
 
+        internal void startListeningUDP()
+        {
+            udpConnector.serverAddress = serverAddress;
+            udpConnector.MessegeReceived += UDPMessageReceived;
+            udpConnector.receiveBroadcastUDP();
+        }
 
+        private async void UDPMessageReceived(object source, MessegeEventArgs args)
+        {
+            byte[] bytes = args.Messege;
+            string msg = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+            Debug.WriteLine("UDP Received: {0}", msg);
+
+            if(bytes.Length < sizeof(uint) + sizeof(int))  //Command + eventID
+            {
+                Debug.WriteLine("Message to short!");
+                return;
+            }
+
+            uint receivedEventID = BitConverter.ToUInt32(bytes, bytes.Length - sizeof(uint));
+            if (EventManager.CheckCurrentEventID(receivedEventID))
+            {
+                Console.WriteLine(string.Format("EventID further! GetEvents getting send!"));
+                var request = JsonMessageBuilder.GetDataCommandRequest<uint>(CommandType.GetEvents, EventManager.ActualEventID);
+                var response = await tcpConnector.getData(request, serverAddress);
+                var eventList = JsonMessageBuilder.GetStandardResponseData<List<EventItem>>(response, CommandType.GetEvents);
+                Debug.WriteLine("Got Event list with {0} items", eventList.Count);
+                EventManager.DoEvents(eventList);
+                return;
+            }
+
+            Array.Copy(bytes, 0, bytes, 0, bytes.Length - sizeof(uint));
+
+            //string command = msg.Substring(0, msg.IndexOf(':'));
+            int commandInt = BitConverter.ToInt32(bytes, 0);
+            CommandType command = (CommandType)commandInt;
+            int startIndex = sizeof(int);
+            switch (command)
+            {   
+                case CommandType.QueueClip:
+                    using (MemoryStream ms = new MemoryStream(bytes, startIndex, bytes.Length - startIndex))
+                    using (BsonReader reader = new BsonReader(ms))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        ClipQueued musidData = serializer.Deserialize<ClipQueued>(reader);
+                        if (musidData.UserID == User.DeviceUser.Id)
+                        {
+                            Debug.WriteLine("UDP/ Omiting mine queued piece");
+                            return;
+                        }
+                        Debug.WriteLine("UDP/ Adding to Queue {0}", musidData.Title);
+                        OnUDPQueued(musidData, musidData.QPos); 
+                    }
+                    break;
+
+                case CommandType.DeleteClip:
+                    //int qPosDelete = int.Parse(msg.Substring(msg.IndexOf(':') + 1));
+                    //to int
+                    uint queueIDToDelete = BitConverter.ToUInt32(bytes, startIndex);
+                    Debug.WriteLine("UDP/ Deleting Clip with QueueID: {0}", queueIDToDelete);
+                    OnDeletepiece(queueIDToDelete);
+                    break;
+
+                case CommandType.PlayNow:
+                    int qPos = BitConverter.ToInt32(bytes, startIndex);
+                    //int qPosPlayedNow = int.Parse(msg.Substring(msg.IndexOf(':') + 1));
+                    Debug.WriteLine("UDP/ Play Now with qPos: {0}", qPos);
+                    OnPlayedNow(qPos);
+                    break;
+
+                case CommandType.PlayNext:
+                    Debug.WriteLine("UDP/ Played Next");
+                    OnPlayedNow(0);
+                    break;
+
+                case CommandType.ChangeName:
+                    int userID = BitConverter.ToInt32(bytes, startIndex);
+                    string userName = BitConverter.ToString(bytes, sizeof(int));
+                    Debug.WriteLine("UDP/ Changing name userId: {0} to {1}", userID, userName);
+                    if (!string.IsNullOrEmpty(userName))
+                    {
+                        User.Users[userID].Name = userName;
+                        RenderQueue?.Invoke(this, new EventArgs());
+                    }
+                    break;
+
+                case CommandType.ChangeColor:
+                    byte[] colorBytes = new byte[3];
+                    int byteIndex = startIndex;
+                    Array.Copy(bytes, startIndex, colorBytes, 0, sizeof(byte) * 3);
+                    var userId = BitConverter.ToInt32(bytes, startIndex + (sizeof(byte) * 3));
+                    Debug.WriteLine("UDP/ Changing color userId: {0} to {1}", userId, colorBytes);
+                    User.Users[userId].UserColor = colorBytes;
+                    
+                    RenderQueue?.Invoke(this, new EventArgs());
+                    break;
+
+                case CommandType.ServerShutdown:
+                    Debug.WriteLine("UDP/ Server Shutdown");
+                    break;
+
+                case CommandType.QueueReshufle:
+                    Debug.WriteLine("UDP/ Queue Reshufle");
+                    break;
+
+                default:
+                    Debug.WriteLine("UDP/ Cannot interpret right...");
+                    break;
+            } 
+        }
+
+        internal async Task<int> SendToQueue(ClipData data)
+        {
+            var QueueRequest = JsonMessageBuilder.GetDataCommandRequest(CommandType.QueueClip, data.ClipInfo);
+            var response = await tcpConnector.getData(QueueRequest, serverAddress);
+
+            uint queueID;
+            int qPos;
+            bool success = JsonMessageBuilder.GetQueueClipResponseData(response, out queueID, out qPos);
+            data.QueueID = queueID;
+            return qPos;
+        }
+
+        internal async Task<bool> SendPlayNext()
+        {
+            var Request = JsonMessageBuilder.GetStandardCommandRequest(CommandType.PlayNext);
+            var answer = await tcpConnector.getData(Request, serverAddress);
+            Debug.WriteLine("TCP/ Sending Play Next");
+            return JsonMessageBuilder.GetSuccess(answer);
+            //return BitConverter.ToBoolean(answer, 0);
+        }
+
+        public async Task<IList<ClipQueued>> GetQueue()
+        {
+            try
+            {
+                var request = JsonMessageBuilder.GetStandardCommandRequest(CommandType.GetQueue);
+                var response = await tcpConnector.getData(request, serverAddress);
+                List<ClipQueued> clips = JsonMessageBuilder.GetStandardResponseData<List<ClipQueued>>(response, CommandType.GetQueue);
+                Debug.WriteLine("Got User list with {0} items", clips.Count);
+                return clips;
             }
             catch (Exception e)
             {
@@ -158,10 +279,10 @@ namespace NowMineClient.Network
             tcpConnector.MessegeReceived += OnServerFound;
 
             bool _serverFound = false;
-            while (!_serverFound)
-            {
+            //while (!_serverFound)
+            //{
                 _serverFound = await FindServer();
-            }
+            //}
             return false;
         }
 
@@ -171,118 +292,12 @@ namespace NowMineClient.Network
             Debug.WriteLine("Sending \"NowMine!\" to Broadcast UDP");
             await udpConnector.sendBroadcastUdp("NowMine!");
             Debug.WriteLine("Awaiting for Connection");
-            
-            if (string.IsNullOrEmpty(serverAddress))
+
+            if (!string.IsNullOrEmpty(serverAddress))
             {
                 return true;
             }
             return false;
-        }
-
-        internal void startListeningUDP()
-        {
-            udpConnector.serverAddress = serverAddress;
-            udpConnector.MessegeReceived += UDPMessageReceived;
-            udpConnector.receiveBroadcastUDP();
-        }
-
-        private void UDPMessageReceived(object source, MessegeEventArgs args)
-        {
-            byte[] bytes = args.Messege;
-            string msg = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-            Debug.WriteLine("UDP Received: {0}", msg);
-            string command = msg.Substring(0, msg.IndexOf(':'));
-            int startIndex = Encoding.UTF8.GetBytes(command + ": ").Length;
-            switch (command)
-            {   
-                case "Queue":
-                    using (MemoryStream ms = new MemoryStream(bytes, startIndex, bytes.Length - startIndex))
-                    using (BsonReader reader = new BsonReader(ms))
-                    {
-                        //reader.ReadRootValueAsArray = true;
-                        JsonSerializer serializer = new JsonSerializer();
-                        ClipQueued musidData = serializer.Deserialize<ClipQueued>(reader);
-                        if (musidData.UserID == User.DeviceUser.Id)
-                        {
-                            return;
-                        }
-                        Debug.WriteLine("UDP/ Adding to Queue {0}", musidData.Title);
-                        OnUDPQueued(musidData); 
-                    }
-                    break;
-
-                case "Delete":
-                    int qPosDelete = int.Parse(msg.Substring(msg.IndexOf(':') + 1));
-                    //to int
-                    OnDeletepiece(qPosDelete);
-                    break;
-
-                case "PlayedNow":
-                    int qPosPlayedNow = BitConverter.ToInt32(bytes, startIndex);
-                    //int qPosPlayedNow = int.Parse(msg.Substring(msg.IndexOf(':') + 1));
-                    OnPlayedNow(qPosPlayedNow);
-                    break;
-
-                //case "PlayedNext":
-                //    OnPlayedNext();
-                //    break;
-
-                default:
-                    Debug.WriteLine("UDP/ Cannot interpret right...");
-                    break;
-            }
-                
-        }
-
-        internal async Task<int> SendToQueue(ClipInfo info)
-        {
-            using (var ms = new MemoryStream())
-            using (var writer = new BsonWriter(ms))
-            {
-                var serializer = new JsonSerializer();
-                serializer.Serialize(writer, info, typeof(ClipInfo));
-                Debug.WriteLine("Sending to Queue: {0}", Convert.ToBase64String(ms.ToArray()));
-                byte[] response = await tcpConnector.SendQueueData(ms.ToArray(), serverAddress);
-
-                return BitConverter.ToInt32(response, 0);
-            }
-        }
-
-        internal async Task<bool> SendPlayNext()
-        {
-            byte[] answer = await tcpConnector.getData("PlayNext", serverAddress);
-            return BitConverter.ToBoolean(answer, 0);
-        }
-
-
-        public async Task<IList<ClipQueued>> getQueueTCP()
-        {
-            //tcpConnector.MessegeReceived += OnQueueReceived;
-            try
-            {
-                byte[] bQueue = await tcpConnector.getData("GetQueue", serverAddress);
-                if (0 != BitConverter.ToInt32(bQueue, 0))
-                {
-                    using (MemoryStream ms = new MemoryStream(bQueue))
-                    using (BsonReader reader = new BsonReader(ms))
-                    {
-                        reader.ReadRootValueAsArray = true;
-                        JsonSerializer serializer = new JsonSerializer();
-                        IList<ClipQueued> ytInfos = serializer.Deserialize<IList<ClipQueued>>(reader);
-                        Debug.WriteLine("Got Queue with {0} items", ytInfos.Count);
-                        return ytInfos;
-                    }
-                    //todo sending back if its work
-                    //await tcpConnector.receiveTCP();
-                }
-                else
-                    return new List<ClipQueued>();
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("Data: {0}; message: {1}", e.Data, e.Message);
-                return null;
-            }
         }
 
         private void OnServerFound(object source, MessegeEventArgs args)

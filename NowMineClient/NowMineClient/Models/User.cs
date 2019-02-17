@@ -8,7 +8,7 @@ using NowMineCommon;
 
 namespace NowMineClient.Models
 {
-    class User : NowMineCommon.Models.BaseUser
+    public class User : NowMineCommon.Models.BaseUser
     {
         public static User DeviceUser { get; set; } = null;
 

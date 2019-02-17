@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace NowMineClient
+namespace NowMineClient.ViewModels
 {
-    //[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class UserConfigPage : ContentPage
     {
         ServerConnection serverConnection;
@@ -30,7 +30,7 @@ namespace NowMineClient
             //BoxColorPicker.WidthRequest = this.Width - 40;
             var colorPickerImage = new CustomImage
             {
-                Source = "colorpicker.png",
+                Source = "Resources/colorpicker.png",
                 HorizontalOptions = LayoutOptions.StartAndExpand,
                 VerticalOptions = LayoutOptions.StartAndExpand
             };
@@ -87,11 +87,13 @@ namespace NowMineClient
             var response = await serverConnection.ChangeColor(ColorsBytes);
             if (response)
             {
-                DependencyService.Get<IMessage>().ShortAlert("Zmieniono kolor");
+                Application.Current.Properties["UserColor"] = ColorsBytes;
+                await Application.Current.SavePropertiesAsync();
+                DependencyService.Get<IMessage>().LongAlert("Zmieniono kolor");
             }
             else
             {
-                DependencyService.Get<IMessage>().ShortAlert("Nie udało sie zmienić koloru");
+                DependencyService.Get<IMessage>().LongAlert("Nie udało sie zmienić koloru");
             }
         }
 
@@ -105,13 +107,15 @@ namespace NowMineClient
             {
                 entry.TextColor = Xamarin.Forms.Color.Green;
                 User.DeviceUser.Name = newUserName;
-                DependencyService.Get<IMessage>().ShortAlert("Zmieniono nick");
+                Application.Current.Properties["UserName"] = newUserName;
+                await Application.Current.SavePropertiesAsync();
+                DependencyService.Get<IMessage>().LongAlert("Zmieniono nick");
             }
             else
             {
                 entry.Text = User.DeviceUser.Name;
                 entry.TextColor = Xamarin.Forms.Color.Red;
-                DependencyService.Get<IMessage>().ShortAlert("Nie udało się zmienić nick");
+                DependencyService.Get<IMessage>().LongAlert("Nie udało się zmienić nick");
             }
         }
 

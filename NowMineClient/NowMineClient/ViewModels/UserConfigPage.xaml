@@ -5,7 +5,7 @@
              xmlns:androidWidget="clr-namespace:Android.Widget;assembly=Mono.Android;targetPlatform=Android"
              xmlns:formsandroid="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.Platform.Android;targetPlatform=Android"
              xmlns:local="clr-namespace:NowMineClient"
-             x:Class="NowMineClient.UserConfigPage">
+             x:Class="NowMineClient.ViewModels.UserConfigPage">
     <StackLayout x:Name="sltConfigLayout" BackgroundColor="White" Margin="10">
         <ios:UILabel Text="Native Text" View.HorizontalOptions="Start"/>
         <!--<androidWidget:TextView Text="Native Text" x:Arguments="{x:Static formsandroid:Forms.Context}"/>-->

@@ -60,7 +60,6 @@ namespace NowMineClient.Network
             }
         }
 
-
         public void receiveBroadcastUDP(int port = 1234)
         {
             udpReceiver.MessageReceived += UdpReceiver_MessageReceived;

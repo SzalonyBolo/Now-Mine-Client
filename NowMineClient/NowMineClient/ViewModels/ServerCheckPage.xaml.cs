@@ -8,9 +8,13 @@ using System.Diagnostics;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Plugin.Connectivity;
+using Plugin.Connectivity.Abstractions;
+using NowMineClient.OSSpecific;
+using NowMineClient.Helpers;
 
-namespace NowMineClient
+namespace NowMineClient.ViewModels
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ServerCheckPage : ContentPage
     {
         private ServerConnection _serverConnection { set; get; }
@@ -23,14 +27,16 @@ namespace NowMineClient
                 return _serverConnection;
             }
         }
+        IEnumerable<ConnectionType> connectionTypes = CrossConnectivity.Current.ConnectionTypes;
 
 
         public ServerCheckPage()
         {
             InitializeComponent();
-            //if (serverConnection.isWifi())
-            var wifi = Plugin.Connectivity.Abstractions.ConnectionType.WiFi;
-            var connectionTypes = CrossConnectivity.Current.ConnectionTypes;
+            
+            //var coolLabel = new FontAwesomeIcon(FontAwesomeIcon.Icon.Gear);
+            //sltMain.Children.Add(coolLabel);
+            var wifi = ConnectionType.WiFi;
             if (connectionTypes.Contains(wifi))
             {
                 lblMain.Text = "Wyszukiwanie Serwera Now Mine!";
@@ -43,12 +49,12 @@ namespace NowMineClient
             }
         }
 
-        private void Current_ConnectivityChanged(object sender, Plugin.Connectivity.Abstractions.ConnectivityChangedEventArgs e)
+        private void Current_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
         {
             //todo
             //updejtować property i tyle kurwa
-            var wifi = Plugin.Connectivity.Abstractions.ConnectionType.WiFi;
-            var connectionTypes = CrossConnectivity.Current.ConnectionTypes;
+            var wifi = ConnectionType.WiFi;
+            connectionTypes = CrossConnectivity.Current.ConnectionTypes;
             if (connectionTypes.Contains(wifi))
             {
                 CrossConnectivity.Current.ConnectivityChanged -= Current_ConnectivityChanged;
@@ -61,8 +67,12 @@ namespace NowMineClient
         {
             try
             {
+                bool serverFound = false;
                 serverConnection.ServerConnected += ServerConnected;
-                await serverConnection.ConnectToServer();
+                //while (!serverFound)
+                //{
+                    await serverConnection.ConnectToServer();
+                //}
             }
             catch(Exception e)
             {
@@ -70,7 +80,7 @@ namespace NowMineClient
             }
         }
 
-        private async void ServerConnected(object s, EventArgs e)
+        public async void ServerConnected(object s, EventArgs e)
         {
             serverConnection.ServerConnected -= ServerConnected;
             Debug.WriteLine("GUI: Open Queue Page!");
@@ -80,13 +90,18 @@ namespace NowMineClient
             await queuePage.getUsers();
             await queuePage.getQueue();
             
-
             var ytSearchPage = new YoutubeSearchPage(serverConnection);
             ytSearchPage.SuccessfulQueued += queuePage.SuccessfulQueued;
 
             serverConnection.UDPQueued += queuePage.SuccessfulQueued;
             serverConnection.DeletePiece += queuePage.DeletePiece;
             serverConnection.PlayedNow += queuePage.PlayedNow;
+            serverConnection.RenderQueue += queuePage.OnRenderQueue;
+
+            EventManager.QueuedPiece += queuePage.SuccessfulQueued;
+            EventManager.DeletedPiece += queuePage.DeletePiece;
+            EventManager.PlayedNow += queuePage.PlayedNow;
+
             serverConnection.startListeningUDP();
 
             var userConfigPage = new UserConfigPage(serverConnection);

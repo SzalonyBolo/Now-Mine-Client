@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:font="clr-namespace:NowMineClient.OSSpecific"
+             x:Class="NowMineClient.Views.ClipControl"
+             Margin="1,1,0,0">
+  <ContentView.Content>
+        <Frame Padding="0,0,0,0" x:Name="MusicControlFrame" BorderColor="{Binding Path=FrameColor}">
+      <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="11*"/>
+            <ColumnDefinition Width="39*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+          <Image Source="{Binding Path=Image}" />
+        </Grid>
+
+                <Grid Grid.Column="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="0.1*" />
+                        </Grid.ColumnDefinitions>
+                        <StackLayout Grid.Column="0">
+                            <Label x:Name="lblTitle" Text="{Binding Path=Title}" />
+                            <Label x:Name="lblChannelName" Text="{Binding Path=ChannelName}" />
+                            <Label x:Name="lbluserName" Text="{Binding Path=UserName}" />
+                        </StackLayout>
+                        <!--<Button x:Name="btnDelete" Text="Usuń" IsVisible="{Binding Path=DeleteVisibility}" Grid.Column="1" Command="{Binding RemoveCommand}" />-->
+                        <font:FontAwesomeIcon Grid.Column="1" Text="{x:Static font:Icon.Trash}" IsVisible="{Binding Path=DeleteVisibility}" FontSize="Large" VerticalTextAlignment="End">
+                            <font:FontAwesomeIcon.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Tapped="OnDeleteClicked"/>
+                            </font:FontAwesomeIcon.GestureRecognizers>
+                        </font:FontAwesomeIcon>
+                        <!--Clicked="btnDelete_Clicked"-->
+                    </Grid>
+                </Grid>
+            </Grid>
+    </Frame>
+  </ContentView.Content>
+</ContentView>
