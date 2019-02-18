@@ -85,6 +85,7 @@ namespace NowMineClient.ViewModels
         private async void DeletePopupYesClicked(object o, EventArgs e)
         {
             var deletePopup = o as DeletePopup;
+            deletePopup.YesClickedEvent -= DeletePopupYesClicked;
             var clipData = deletePopup.ClipToDelete;
             var response = await serverConnection.SendDeletePiece(clipData);
             await Navigation.PopPopupAsync();
@@ -97,11 +98,11 @@ namespace NowMineClient.ViewModels
             else
             {
                 DependencyService.Get<IMessage>().LongAlert(String.Format("Nie udało się usunąć kawałka z kolejki"));
-                await getQueue();
+                await GetQueue();
             }
         }
 
-        public async Task getQueue()
+        public async Task GetQueue()
         {
             try
             {
@@ -129,10 +130,10 @@ namespace NowMineClient.ViewModels
             }
         }
 
-        internal async Task getUsers()
+        internal async Task GetUsers()
         {
             Debug.WriteLine("Get Users!");
-            User.Users = new List<User>(await serverConnection.getUsers());
+            User.Users = new List<User>(await serverConnection.GetUsers());
         }
 
         public async void SuccessfulQueued(ClipData clip, int qPos)
@@ -144,12 +145,12 @@ namespace NowMineClient.ViewModels
                 if (qPos <= Queue.Count)
                     Queue.Insert(qPos, clip);
                 else
-                    await getQueue();
+                    await GetQueue();
                 RenderQueue();
             }
             catch(Exception ex)
             {
-                Debug.WriteLine("Error on Successful Queue: ", ex.Message);
+                Debug.WriteLine(string.Format("Error on Successful Queue: {0}", ex.Message));
             }
         }
 
@@ -160,7 +161,7 @@ namespace NowMineClient.ViewModels
             if (Queue.Count > 0)
                 Queue.RemoveAt(0);
             else
-                await getQueue();
+                await GetQueue();
             if (Queue.Count > 0 && qPos != 0)
             {
                 var playingNow = Queue.ElementAt(qPos);
@@ -168,7 +169,7 @@ namespace NowMineClient.ViewModels
                 Queue.RemoveAt(qPos);
             }
             else
-                await getQueue();
+                await GetQueue();
             RenderQueue();
             
         }
@@ -178,7 +179,7 @@ namespace NowMineClient.ViewModels
             if (Queue.Count > 0)
                 Queue.RemoveAt(0);
             else
-                await getQueue();
+                await GetQueue();
             RenderQueue();            
         }
 

@@ -40,7 +40,7 @@ namespace NowMineClient.ViewModels
             if (connectionTypes.Contains(wifi))
             {
                 lblMain.Text = "Wyszukiwanie Serwera Now Mine!";
-                searchServer();
+                AwaitForServer();
             }
             else
             {
@@ -59,36 +59,32 @@ namespace NowMineClient.ViewModels
             {
                 CrossConnectivity.Current.ConnectivityChanged -= Current_ConnectivityChanged;
                 lblMain.Text = "Wyszukiwanie Serwera Now Mine!";
-                searchServer();
+                AwaitForServer();
             }
         }
 
-        private async void searchServer()
+        private async void AwaitForServer()
         {
             try
             {
-                bool serverFound = false;
-                serverConnection.ServerConnected += ServerConnected;
-                //while (!serverFound)
-                //{
-                    await serverConnection.ConnectToServer();
-                //}
+                serverConnection.ServerConnected += OnServerConnected;
+                await serverConnection.ListenAndCallServer();
             }
             catch(Exception e)
             {
-                
+                Debug.WriteLine("Error on SearchServer");
             }
         }
 
-        public async void ServerConnected(object s, EventArgs e)
+        public async void OnServerConnected(object s, EventArgs e)
         {
-            serverConnection.ServerConnected -= ServerConnected;
+            serverConnection.ServerConnected -= OnServerConnected;
             Debug.WriteLine("GUI: Open Queue Page!");
             //Device.BeginInvokeOnMainThread(() => { lblMain.Text = "Znaleziono Serwer!"; });
             var tabbedPage = new TabbedPage();
             var queuePage = new QueuePage(serverConnection);
-            await queuePage.getUsers();
-            await queuePage.getQueue();
+            await queuePage.GetUsers();
+            await queuePage.GetQueue();
             
             var ytSearchPage = new YoutubeSearchPage(serverConnection);
             ytSearchPage.SuccessfulQueued += queuePage.SuccessfulQueued;
@@ -102,7 +98,7 @@ namespace NowMineClient.ViewModels
             EventManager.DeletedPiece += queuePage.DeletePiece;
             EventManager.PlayedNow += queuePage.PlayedNow;
 
-            serverConnection.startListeningUDP();
+            serverConnection.StartListeningUDP();
 
             var userConfigPage = new UserConfigPage(serverConnection);
 

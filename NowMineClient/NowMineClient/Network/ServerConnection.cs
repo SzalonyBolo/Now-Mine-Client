@@ -48,7 +48,7 @@ namespace NowMineClient.Network
         }
 
         private TCPConnector _tcpConnector;
-        public TCPConnector tcpConnector
+        public TCPConnector TcpConnector
         {
             get
             {
@@ -64,16 +64,16 @@ namespace NowMineClient.Network
         {
 
             string request = JsonMessageBuilder.GetDataCommandRequest(CommandType.ChangeName, newUserName);
-            var response = await tcpConnector.getData(request, serverAddress);
+            var response = await TcpConnector.getData(request, serverAddress);
 
             return JsonMessageBuilder.GetSuccess(response);
         }
 
         internal async Task<bool> ChangeColor(byte[] newColor)
         {
-            string newColorString = System.Convert.ToBase64String(newColor);
+            string newColorString = Convert.ToBase64String(newColor);
             string request = JsonMessageBuilder.GetDataCommandRequest(CommandType.ChangeColor, newColorString);
-            var response = await tcpConnector.getData(request, serverAddress);
+            var response = await TcpConnector.getData(request, serverAddress);
 
             return JsonMessageBuilder.GetSuccess(response);
         }
@@ -81,7 +81,7 @@ namespace NowMineClient.Network
         internal async Task<bool> SendDeletePiece(ClipData clipData)
         {
             string request = JsonMessageBuilder.GetDataCommandRequest(CommandType.DeleteClip, clipData.QueueID);
-            var response = await tcpConnector.getData(request, serverAddress);
+            var response = await TcpConnector.getData(request, serverAddress);
 
             return JsonMessageBuilder.GetSuccess(response);
         }
@@ -101,19 +101,18 @@ namespace NowMineClient.Network
             PlayedNow?.Invoke(qPos);
         }
 
-
         protected virtual void OnUDPQueued(ClipQueued piece, int qPos)
         {
             ClipData mPiece = new ClipData(piece);
             UDPQueued?.Invoke(mPiece, qPos);
         }
 
-        internal async Task<IList<User>> getUsers()
+        internal async Task<IList<User>> GetUsers()
         {
             try
             {
                 var request = JsonMessageBuilder.GetStandardCommandRequest(CommandType.GetUsers);
-                var response = await tcpConnector.getData(request, serverAddress);
+                var response = await TcpConnector.getData(request, serverAddress);
                 List<User> users = JsonMessageBuilder.GetStandardResponseData<List<User>>(response, CommandType.GetUsers);
                 Debug.WriteLine("Got User list with {0} items", users.Count);
                 return users;
@@ -125,7 +124,7 @@ namespace NowMineClient.Network
             }
         }
 
-        internal void startListeningUDP()
+        internal void StartListeningUDP()
         {
             udpConnector.serverAddress = serverAddress;
             udpConnector.MessegeReceived += UDPMessageReceived;
@@ -136,7 +135,7 @@ namespace NowMineClient.Network
         {
             byte[] bytes = args.Messege;
             string msg = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-            Debug.WriteLine("UDP Received: {0}", msg);
+            Debug.WriteLine(string.Format("UDP Received: {0}", msg));
 
             if(bytes.Length < sizeof(uint) + sizeof(int))  //Command + eventID
             {
@@ -149,7 +148,7 @@ namespace NowMineClient.Network
             {
                 Console.WriteLine(string.Format("EventID further! GetEvents getting send!"));
                 var request = JsonMessageBuilder.GetDataCommandRequest<uint>(CommandType.GetEvents, EventManager.ActualEventID);
-                var response = await tcpConnector.getData(request, serverAddress);
+                var response = await TcpConnector.getData(request, serverAddress);
                 var eventList = JsonMessageBuilder.GetStandardResponseData<List<EventItem>>(response, CommandType.GetEvents);
                 Debug.WriteLine("Got Event list with {0} items", eventList.Count);
                 EventManager.DoEvents(eventList);
@@ -163,7 +162,7 @@ namespace NowMineClient.Network
             CommandType command = (CommandType)commandInt;
             int startIndex = sizeof(int);
             switch (command)
-            {   
+            {
                 case CommandType.QueueClip:
                     using (MemoryStream ms = new MemoryStream(bytes, startIndex, bytes.Length - startIndex))
                     using (BsonReader reader = new BsonReader(ms))
@@ -175,7 +174,7 @@ namespace NowMineClient.Network
                             Debug.WriteLine("UDP/ Omiting mine queued piece");
                             return;
                         }
-                        Debug.WriteLine("UDP/ Adding to Queue {0}", musidData.Title);
+                        Debug.WriteLine(string.Format("UDP/ Adding to Queue {0}", musidData.Title));
                         OnUDPQueued(musidData, musidData.QPos); 
                     }
                     break;
@@ -224,6 +223,7 @@ namespace NowMineClient.Network
 
                 case CommandType.ServerShutdown:
                     Debug.WriteLine("UDP/ Server Shutdown");
+                    Device.BeginInvokeOnMainThread(() => { App.Current.MainPage = new ViewModels.ServerCheckPage(); });
                     break;
 
                 case CommandType.QueueReshufle:
@@ -233,13 +233,13 @@ namespace NowMineClient.Network
                 default:
                     Debug.WriteLine("UDP/ Cannot interpret right...");
                     break;
-            } 
+            }
         }
 
         internal async Task<int> SendToQueue(ClipData data)
         {
             var QueueRequest = JsonMessageBuilder.GetDataCommandRequest(CommandType.QueueClip, data.ClipInfo);
-            var response = await tcpConnector.getData(QueueRequest, serverAddress);
+            var response = await TcpConnector.getData(QueueRequest, serverAddress);
 
             uint queueID;
             int qPos;
@@ -251,7 +251,7 @@ namespace NowMineClient.Network
         internal async Task<bool> SendPlayNext()
         {
             var Request = JsonMessageBuilder.GetStandardCommandRequest(CommandType.PlayNext);
-            var answer = await tcpConnector.getData(Request, serverAddress);
+            var answer = await TcpConnector.getData(Request, serverAddress);
             Debug.WriteLine("TCP/ Sending Play Next");
             return JsonMessageBuilder.GetSuccess(answer);
             //return BitConverter.ToBoolean(answer, 0);
@@ -262,7 +262,7 @@ namespace NowMineClient.Network
             try
             {
                 var request = JsonMessageBuilder.GetStandardCommandRequest(CommandType.GetQueue);
-                var response = await tcpConnector.getData(request, serverAddress);
+                var response = await TcpConnector.getData(request, serverAddress);
                 List<ClipQueued> clips = JsonMessageBuilder.GetStandardResponseData<List<ClipQueued>>(response, CommandType.GetQueue);
                 Debug.WriteLine("Got User list with {0} items", clips.Count);
                 return clips;
@@ -274,35 +274,33 @@ namespace NowMineClient.Network
             }
         }
 
-        public async Task<bool> ConnectToServer()
+        public async Task<bool> ListenAndCallServer()
         {
-            tcpConnector.MessegeReceived += OnServerFound;
-
-            bool _serverFound = false;
-            //while (!_serverFound)
-            //{
-                _serverFound = await FindServer();
-            //}
-            return false;
-        }
-
-        public async Task<bool> FindServer()
-        {
-            await tcpConnector.waitForFirstConnection();
-            Debug.WriteLine("Sending \"NowMine!\" to Broadcast UDP");
-            await udpConnector.sendBroadcastUdp("NowMine!");
-            Debug.WriteLine("Awaiting for Connection");
-
-            if (!string.IsNullOrEmpty(serverAddress))
+            TcpConnector.MessegeReceived += OnServerFound;
+            try
             {
+                await TcpConnector.WaitForFirstConnection();
+                Debug.WriteLine("Awaiting for Connection");
+                
+                while(string.IsNullOrEmpty(serverAddress))
+                {
+                    await udpConnector.SendBroadcastUDP("NowMine!");
+                    Debug.WriteLine("Sending \"NowMine!\" to Broadcast UDP");
+                    await Task.Delay(3000);
+                }
+
                 return true;
             }
-            return false;
+            catch(Exception e)
+            {
+                Debug.WriteLine(string.Format("Error in ListenAndCallServer: {0}", e.Message));
+                return false;
+            }
         }
 
         private void OnServerFound(object source, MessegeEventArgs args)
         {
-            string messege = System.Text.Encoding.UTF8.GetString(args.Messege, 0, args.Messege.Length);
+            string messege = Encoding.UTF8.GetString(args.Messege, 0, args.Messege.Length);
             var ipAddressBuilder = new StringBuilder();
             for (int i = 0; i < 4; i++)
             {
@@ -315,10 +313,10 @@ namespace NowMineClient.Network
             //int userID = BitConverter.ToInt32(args.Messege, 4);
             //User.InitializeDeviceUser(userID);
             OnServerConnected();
-            tcpConnector.MessegeReceived -= OnServerFound;
+            TcpConnector.MessegeReceived -= OnServerFound;
         }
 
-        public bool isWifi()
+        public bool IsWifi()
         {
             Debug.WriteLine("NET: Getting Wifi status");
             var networkConnection = DependencyService.Get<INetworkConnection>();

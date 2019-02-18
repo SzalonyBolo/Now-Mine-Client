@@ -43,7 +43,7 @@ namespace NowMineClient.Network
             }
         }
 
-        public async Task sendBroadcastUdp(string message, int port = 1234)
+        public async Task SendBroadcastUDP(string message, int port = 1234)
         {
             byte[] data = Encoding.UTF8.GetBytes(message);
             string address = "255.255.255.255";
@@ -56,7 +56,7 @@ namespace NowMineClient.Network
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.Message);
+                Debug.WriteLine(string.Format("UDP/ Errir in SendBroadcastUDP",e.Message));
             }
         }
 

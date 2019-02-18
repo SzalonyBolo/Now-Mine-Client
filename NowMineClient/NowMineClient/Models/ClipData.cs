@@ -22,7 +22,7 @@ namespace NowMineClient.Models
             this.User = user;
             ClipInfo = clipQueued;
             QueueID = clipQueued.QueueID;
-            OnPropertyChanged("RemoveCommand");
+            //OnPropertyChanged("RemoveCommand");
         }
 
         public ClipData(ClipInfo info, User user)
