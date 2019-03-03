@@ -38,7 +38,7 @@ namespace NowMineClient
             //var result = task.Result;
             //var task = Task.Run(async () => result = await serverConnection.ConnectToServer());
             //if (result)
-///            serverConnection.ConnectToServer().Start();
+            //serverConnection.ConnectToServer().Start();
 
             
             //MainPage = new Page1();

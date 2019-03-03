@@ -11,21 +11,22 @@ using Rg.Plugins.Popup.Extensions;
 using NowMineClient.OSSpecific;
 using NowMineClient.Views;
 using Xamarin.Forms.Xaml;
+using NowMineClient.Helpers;
+using System.Collections.ObjectModel;
 
 namespace NowMineClient.ViewModels
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class QueuePage : ContentPage
     {
-        //Network network;
         public ServerConnection serverConnection;
-        private List<ClipData> _queue;
-        public List<ClipData> Queue
+        private ObservableCollection<ClipData> _queue;
+        public ObservableCollection<ClipData> Queue
         {
             get
             {
                 if (_queue == null)
-                    _queue = new List<ClipData>();
+                    _queue = new ObservableCollection<ClipData>();
                 return _queue;
             }
             set
@@ -43,7 +44,7 @@ namespace NowMineClient.ViewModels
         private void RenderQueue()
         {
             Device.BeginInvokeOnMainThread(() => { sltQueue.Children.Clear(); }); 
-            if (Queue.Count > 0 && Queue.First().UserID == User.DeviceUser.Id)
+            if (Queue.Count > 0 && Queue.First().UserID == UserStore.DeviceUser.Id)
             {
                 Device.BeginInvokeOnMainThread(() => { BtnPlayNext.IsVisible = true; BtnPlayNext.IsEnabled = true; });
             }
@@ -51,20 +52,24 @@ namespace NowMineClient.ViewModels
             {
                 Device.BeginInvokeOnMainThread(() => { BtnPlayNext.IsVisible = false; BtnPlayNext.IsEnabled = false; });
             }
+            if (Queue.Count == 0)
+            {
+                var emptyInformation = new Label();
+                emptyInformation.Text = "Kolejka jest pusta";
+                emptyInformation.FontAttributes = FontAttributes.Bold;
+                emptyInformation.FontSize = 26;
+                emptyInformation.HorizontalOptions = LayoutOptions.Center;
+                emptyInformation.TextColor = Color.Accent;
+                sltQueue.Children.Add(emptyInformation);
+            }
             foreach (var musicData in Queue.ToList())
             {
-                //var musicPieceUser= User.Users.Where(u => u.Id == musicData.UserID).First();
-                //musicData.FrameColor = musicPieceUser.GetColor();
-                //Device.BeginInvokeOnMainThread(() => { sltQueue.Children.Add(musicPiece.copy()); });
-                
-                if (musicData.UserID== User.DeviceUser.Id)
+                if (musicData.UserID == UserStore.DeviceUser.Id)
                 {
                     musicData.DeleteVisibility = true;
-                    //musicData.DeleteClicked += ShowDeleteComfromtation;
                 }
                 ClipControl musicControl = new ClipControl();
                 musicControl.BindingContext = musicData;
-                //musicData.ClearSubscriptions();
                 musicControl.DeleteClicked += ShowDeletePopup;
                 Device.BeginInvokeOnMainThread(() => { sltQueue.Children.Add(musicControl); });
             }
@@ -118,7 +123,7 @@ namespace NowMineClient.ViewModels
                     foreach (ClipQueued info in infos)
                     {
                         var musicPiece = new ClipData(info);
-                        //musicPiece.FrameColor = User.Users.Where(u => u.Id == info.userId).First().getColor();
+                        //musicPiece.FrameColor = UserStore.Users.Where(u => u.Id == info.userId).First().getColor();
                         Queue.Add(musicPiece);
                     }
                     RenderQueue();
@@ -133,7 +138,7 @@ namespace NowMineClient.ViewModels
         internal async Task GetUsers()
         {
             Debug.WriteLine("Get Users!");
-            User.Users = new List<User>(await serverConnection.GetUsers());
+            UserStore.Users = new ObservableCollection<User>(await serverConnection.GetUsers());
         }
 
         public async void SuccessfulQueued(ClipData clip, int qPos)

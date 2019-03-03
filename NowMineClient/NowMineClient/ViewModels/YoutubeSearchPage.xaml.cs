@@ -7,6 +7,8 @@ using NowMineClient.Models;
 using NowMineClient.OSSpecific;
 using NowMine.APIProviders;
 using NowMineClient.Views;
+using NowMineClient.Helpers;
+using System.Linq;
 
 namespace NowMineClient.ViewModels
 {
@@ -26,11 +28,10 @@ namespace NowMineClient.ViewModels
             this.serverConnection = serverConnection;
             //searchButton.Clicked += searchButton_Click;
             this.Title = "Kolejkuj";
-            //this.BackgroundColor = Color.Purple;
             this.BackgroundColor = Color.White;
         }
 
-        public async void entSearch_Completed(object s, EventArgs e)
+        public async void EntSearch_Completed(object s, EventArgs e)
         {
             var entSearch = (Entry)s;
             string searchString = entSearch.Text;
@@ -44,13 +45,11 @@ namespace NowMineClient.ViewModels
             loadingLogo.IsVisible = false;
             foreach (var yi in infos)
             {
-                //new ClipQueued(yi, 0, User.DeviceUser.Id);
-                var musicData = new ClipData(yi, User.DeviceUser);
+                var musicData = new ClipData(yi, UserStore.DeviceUser);
                 ClipControl musicPiece = new ClipControl();
-                //musicPiece.FrameColor = User.DeviceUser.GetColor();
                 musicPiece.BindingContext = musicData;
                 musicPiece.GestureRecognizers.Add(tapGestureRecognizer);
-                searchBoard.Children.Add(musicPiece);
+                Device.BeginInvokeOnMainThread(() => { searchBoard.Children.Add(musicPiece); });
             }
         }
 

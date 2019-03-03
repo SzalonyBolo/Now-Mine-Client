@@ -10,14 +10,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Threading;
+using NowMineClient.Helpers;
 
 namespace NowMineClient.Network
 {
-    public class MessegeEventArgs : EventArgs
-    {
-        public byte[] Messege { get; set; }
-    }
-
     public class TCPConnector
     {
         public delegate void MessegeTCPventHandler(object source, MessegeEventArgs args);
@@ -49,9 +45,6 @@ namespace NowMineClient.Network
 
         private SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1);
 
-        //private object _lock = new object();
-        //private bool isSending = false;
-
         private async void FirstConnection(object sender, Sockets.Plugin.Abstractions.TcpSocketListenerConnectEventArgs socket)
         {
             Debug.WriteLine("TCP/ Host connected!");
@@ -65,19 +58,18 @@ namespace NowMineClient.Network
                 {
                     Debug.WriteLine("TCP/ Connected Someone else then server. Disconnecting!");
                     await socket.SocketClient.DisconnectAsync();
-                    //await _tcpListener.StopListeningAsync();
                     return;
                 }
             }
             int deviceUserID = BitConverter.ToInt32(messageBuffer, 4);
 
-            User.InitializeDeviceUser(deviceUserID);
+            UserStore.InitializeDeviceUser(deviceUserID);
             Debug.WriteLine("TCP/ Received first Connection from: {0}:{1}", socket.SocketClient.RemoteAddress, socket.SocketClient.RemotePort);
             using (var ms = new MemoryStream())
             using (var writer = new BsonWriter(ms))
             {
                 var serializer = new JsonSerializer();
-                serializer.Serialize(writer, User.DeviceUser, typeof(User));
+                serializer.Serialize(writer, UserStore.DeviceUser, typeof(User));
 
                 int dvcusSize = ms.ToArray().Length;
                 await socket.SocketClient.WriteStream.WriteAsync(BitConverter.GetBytes(dvcusSize), 0, 4);
@@ -91,7 +83,7 @@ namespace NowMineClient.Network
 
             int intOk = (byte)socket.SocketClient.ReadStream.ReadByte();
             //bool okCheck = BitConverter.ToBoolean(okByte, 0);
-            //if ok check....
+            //todo if ok check....
 
             OnMessegeTCP(messageBuffer);
             try
@@ -107,7 +99,7 @@ namespace NowMineClient.Network
 
         protected virtual void OnMessegeTCP(byte[] bytes)
         {
-            MessegeReceived?.Invoke(this, new MessegeEventArgs() { Messege = bytes });
+            MessegeReceived?.Invoke(this, new MessegeEventArgs() { Message = bytes });
         }
 
         public async Task WaitForFirstConnection()
@@ -117,14 +109,15 @@ namespace NowMineClient.Network
             await TcpListener.StartListeningAsync(4444);
         }
 
-        public async Task<string> getData(string message, string serverAddress)
+        public async Task<string> GetData(string message, string serverAddress)
         {
             try
             {
                 byte[] request = Encoding.UTF8.GetBytes(message);
                 Debug.WriteLine(string.Format("Sending {0}", message));
-                var response = await getData(request, serverAddress);
+                var response = await GetData(request, serverAddress);
                 var data = Encoding.UTF8.GetString(response);
+                Debug.WriteLine(string.Format("Got response: {0}", response));
                 return Regex.Replace(data, @"[^\u0020-\u007E]", string.Empty);
             }
             catch (Exception e)
@@ -134,13 +127,12 @@ namespace NowMineClient.Network
             }
         }
 
-        public async Task<byte[]> getData(byte[] message, string serverAddress)
+        public async Task<byte[]> GetData(byte[] message, string serverAddress)
         {
             try
             {
                 await _semaphoreSlim.WaitAsync();
-                //isSending = true;
-                Debug.WriteLine("Sending {0} to {1}!", Convert.ToBase64String(message), serverAddress);
+                //Debug.WriteLine("Sending {0} to {1}!", Convert.ToBase64String(message), serverAddress);
                 await TcpClient.ConnectAsync(serverAddress, 4444);
                 await TcpClient.WriteStream.WriteAsync(message, 0, message.Length);
 
@@ -153,7 +145,6 @@ namespace NowMineClient.Network
                     answer.Add((byte)readByte);
                 }
                 await TcpClient.DisconnectAsync();
-                //isSending = false;
                 _semaphoreSlim.Release();
                 return answer.ToArray();
             }
@@ -163,12 +154,10 @@ namespace NowMineClient.Network
                 throw e;
             }
         }
+    }
 
-        //public async Task stopWaitingForFirstConnection()
-        //{
-        //    tcpListener.ConnectionReceived -= FirstConnection;
-        //    Debug.WriteLine("TCP: Stopping Listening!");
-        //    await tcpListener.StopListeningAsync();
-        //}
+    public class MessegeEventArgs : EventArgs
+    {
+        public byte[] Message { get; set; }
     }
 }

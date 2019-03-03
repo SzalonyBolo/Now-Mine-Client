@@ -6,14 +6,24 @@
              xmlns:formsandroid="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.Platform.Android;targetPlatform=Android"
              xmlns:local="clr-namespace:NowMineClient"
              x:Class="NowMineClient.ViewModels.UserConfigPage">
-    <StackLayout x:Name="sltConfigLayout" BackgroundColor="White" Margin="10">
-        <ios:UILabel Text="Native Text" View.HorizontalOptions="Start"/>
-        <!--<androidWidget:TextView Text="Native Text" x:Arguments="{x:Static formsandroid:Forms.Context}"/>-->
-        <!--<win:TextBlock Text="Native Text"/>-->
-        <Entry x:Name="ChangeNameEntry" Placeholder="Nickname" TextColor="Orange" Completed="Entry_Completed"/>
-        <!--<androidWidget:Button Text="Asdf" x:Arguments="{x:Static formsandroid:Forms.Context}"/>-->
-        <!--<androidWidget:CheckBox x:Arguments="{x:Static formsandroid:Forms.Context}"/>-->
-        <!--<androidWidget:Button Text="Asdf" x:Arguments="{x:Static formsandroid:Forms.Context}"/>-->
-        <BoxView x:Name="BoxColorPicker" HeightRequest="60" WidthRequest="80" BackgroundColor="Blue"/>
-    </StackLayout>
+    <ScrollView HorizontalOptions="FillAndExpand">
+        <Grid Margin="15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Entry x:Name="ChangeNameEntry" Placeholder="Nick" Completed="Entry_Completed"/>
+            </Grid>
+            <Grid Grid.Row="1" x:Name="ColorPickerRow"/>
+            <Grid Grid.Row="2">
+                <BoxView x:Name="BoxColorPicker" />
+            </Grid>
+            <Grid Grid.Row="3">
+                <Button Text="ZMIEŃ KOLOR" TextColor="Black" BackgroundColor="#fe6363" HeightRequest="60" Clicked="ColorChange_BtnClicked"/>
+            </Grid>
+        </Grid>
+    </ScrollView>
 </ContentPage>

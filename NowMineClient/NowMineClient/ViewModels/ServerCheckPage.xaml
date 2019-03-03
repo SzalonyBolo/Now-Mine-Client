@@ -4,14 +4,13 @@
              x:Class="NowMineClient.ViewModels.ServerCheckPage">
 
     <ContentPage.Content>
-        <StackLayout BackgroundColor="White" Margin="10" x:Name="sltMain">
-            <Label x:Name="lblMain" Text="" TextColor="Purple" Font="HelvericaNeue-Light, 36" VerticalTextAlignment="Center"/>
-            <!--<font:FontAwesomeIcon Text="{x:Static font:Icon.Trash}">
-                <font:FontAwesomeIcon.GestureRecognizers>
-                    <TapGestureRecognizer 
-                                    Tapped="DeleteOnTap"/>
-                </font:FontAwesomeIcon.GestureRecognizers>
-            </font:FontAwesomeIcon>-->
-        </StackLayout>
+        <Grid Margin="15">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Image x:Name="loadingLogo" Source="Resources/Logo.png" Grid.Row="0"/>
+            <Label x:Name="lblMain" Text="" TextColor="#c2185b" FontSize="28" VerticalTextAlignment="Center" HorizontalOptions="Center" Grid.Row="1"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

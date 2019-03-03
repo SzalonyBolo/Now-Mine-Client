@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using NowMineClient.Models;
+using NowMineClient.Views;
 using Rg.Plugins.Popup.Extensions;
 using Rg.Plugins.Popup.Pages;
 using Xamarin.Forms;
@@ -28,7 +29,11 @@ namespace NowMineClient.ViewModels
             DeleteYesCommand = new Command(OnYesClickedEvevent);
             OnPropertyChanged("DeleteNoCommand");
             OnPropertyChanged("DeleteYesCommand");
-            OnPropertyChanged("ClipToDelete");
+            //OnPropertyChanged("ClipToDelete");
+            var clipView = new ClipControl();
+            ClipToDelete.DeleteVisibility = false;
+            clipView.BindingContext = ClipToDelete;
+            ClipGridRow.Children.Add(clipView);
         }
 
         protected void OnYesClickedEvevent()

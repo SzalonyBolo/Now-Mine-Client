@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NowMineClient.Network;
 using System.Diagnostics;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Plugin.Connectivity;
 using Plugin.Connectivity.Abstractions;
-using NowMineClient.OSSpecific;
 using NowMineClient.Helpers;
 
 namespace NowMineClient.ViewModels
@@ -33,13 +30,10 @@ namespace NowMineClient.ViewModels
         public ServerCheckPage()
         {
             InitializeComponent();
-            
-            //var coolLabel = new FontAwesomeIcon(FontAwesomeIcon.Icon.Gear);
-            //sltMain.Children.Add(coolLabel);
             var wifi = ConnectionType.WiFi;
             if (connectionTypes.Contains(wifi))
             {
-                lblMain.Text = "Wyszukiwanie Serwera Now Mine!";
+                lblMain.Text = "Szukam Serwera";
                 AwaitForServer();
             }
             else
@@ -58,7 +52,7 @@ namespace NowMineClient.ViewModels
             if (connectionTypes.Contains(wifi))
             {
                 CrossConnectivity.Current.ConnectivityChanged -= Current_ConnectivityChanged;
-                lblMain.Text = "Wyszukiwanie Serwera Now Mine!";
+                lblMain.Text = "Szukam Serwera";
                 AwaitForServer();
             }
         }
@@ -72,7 +66,7 @@ namespace NowMineClient.ViewModels
             }
             catch(Exception e)
             {
-                Debug.WriteLine("Error on SearchServer");
+                Debug.WriteLine(string.Format("Error on SearchServer: {0}", e.Message));
             }
         }
 
@@ -85,7 +79,9 @@ namespace NowMineClient.ViewModels
             var queuePage = new QueuePage(serverConnection);
             await queuePage.GetUsers();
             await queuePage.GetQueue();
-            
+
+            //var primaryColor = Android.Resource.Attribute.ColorPrimary;
+
             var ytSearchPage = new YoutubeSearchPage(serverConnection);
             ytSearchPage.SuccessfulQueued += queuePage.SuccessfulQueued;
 
@@ -101,14 +97,15 @@ namespace NowMineClient.ViewModels
             serverConnection.StartListeningUDP();
 
             var userConfigPage = new UserConfigPage(serverConnection);
+            //userConfigPage.UserConfigChanged += queuePage.OnRenderQueue;
 
             tabbedPage.Children.Add(userConfigPage);
             tabbedPage.Children.Add(queuePage);
             tabbedPage.Children.Add(ytSearchPage);
             //tabbedPage.Height;
 
-            tabbedPage.BarBackgroundColor = Color.Purple;
-            tabbedPage.BarTextColor = Color.White;
+            //tabbedPage.BarBackgroundColor = Color.Purple;
+            //tabbedPage.BarTextColor = Color.White;
             
             Device.BeginInvokeOnMainThread(() => { App.Current.MainPage = tabbedPage; });
         }

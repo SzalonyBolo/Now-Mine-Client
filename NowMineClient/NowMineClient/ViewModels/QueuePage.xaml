@@ -3,16 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NowMineClient.ViewModels.QueuePage">
     <ScrollView Orientation="Vertical" VerticalOptions="FillAndExpand">
-        <Grid>
+        <Grid Margin="15">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
-                <RowDefinition Height="0.2*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <StackLayout x:Name="sltQueue" Orientation="Vertical" VerticalOptions="FillAndExpand" Grid.Row="0" BackgroundColor="White" Margin="10"/>
-            <!--<ListView x:Name="sltQueue" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Row="0" BackgroundColor="White" Margin="10"
-                      IsPullToRefreshEnabled="True" RefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}"/>-->
-            <Button Text="Dawaj Dalej" x:Name="BtnPlayNext" Grid.Row="1" HeightRequest="75" IsVisible="False" Clicked="BtnPlayNext_Clicked"/>
-            
+            <StackLayout x:Name="sltQueue" Orientation="Vertical" VerticalOptions="FillAndExpand" Grid.Row="0" Margin="10"/>
+            <Button Text="Dawaj Dalej" x:Name="BtnPlayNext" Grid.Row="1" HeightRequest="60" IsVisible="False" Clicked="BtnPlayNext_Clicked"/>
         </Grid>
     </ScrollView>
 </ContentPage>

@@ -2,24 +2,18 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NowMineClient.ViewModels.YoutubeSearchPage">
-  <!--<Label Text="{Binding MainText}" VerticalOptions="Center" HorizontalOptions="Center" />-->
-    <Grid>
+    <Grid  Margin="15">
         <Grid.RowDefinitions>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" BackgroundColor="White" Margin="10">
-          <!--<Grid.ColumnDefinitions>
-            <ColumnDefinition> <ColumnDefinition Width="85*" /> </ColumnDefinition> 
-            <ColumnDefinition> <ColumnDefinition Width="25*" /> </ColumnDefinition> 
-          </Grid.ColumnDefinitions>-->
-            <Entry x:Name="entSearch" Completed="entSearch_Completed" Placeholder="Search on YouTube!"/> <!--Grid.Column="0" Placeholder="Search" PlaceholderColor="#FFA500"-->
-          <!--<Button x:Name="searchButton" Text="Szukaj!" Grid.Column="1" />-->
+        <Grid Grid.Row="0">
+            <Entry x:Name="entSearch" Completed="EntSearch_Completed" Placeholder="Szukaj!" /> <!--Grid.Column="0" Placeholder="Search" PlaceholderColor="#FFA500"-->
          </Grid>
       
          <Grid Grid.Row="1">
-            <Image x:Name="loadingLogo" IsVisible="False" Source="Resources/Logo.png" HeightRequest="100" WidthRequest="100"/>
+            <Image x:Name="loadingLogo" IsVisible="False" Source="Resources/Logo.png"/>
             <ScrollView Orientation="Vertical" VerticalOptions="FillAndExpand">
                 <StackLayout x:Name="searchBoard" Orientation="Vertical" VerticalOptions="FillAndExpand"/>
             </ScrollView>

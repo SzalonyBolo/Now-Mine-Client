@@ -15,7 +15,7 @@ namespace NowMineClient.Network
 
         protected virtual void OnMessageUDP(byte[] bytes)
         {
-            MessegeReceived?.Invoke(this, new MessegeEventArgs() { Messege = bytes });
+            MessegeReceived?.Invoke(this, new MessegeEventArgs() { Message = bytes });
         }
 
         public string serverAddress { get; set; }

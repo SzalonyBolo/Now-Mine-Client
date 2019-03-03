@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Linq;
 
 namespace NowMineClient.Helpers
 {
@@ -45,7 +46,7 @@ namespace NowMineClient.Helpers
                 {
                     case CommandType.QueueClip:
                         ClipQueued clip = e.Data as ClipQueued;
-                        var user = User.Users.Find(u => u.Id == clip.UserID);
+                        var user = UserStore.Users.Where(u => u.Id == clip.UserID).First();
                         QueuedPiece?.Invoke(new ClipData(clip, user), clip.QPos);
                         break;
 

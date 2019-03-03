@@ -1,7 +1,6 @@
 ﻿using Android.Views;
 using Android.Widget;
 using Xamarin.Forms;
-using NowMineClient;
 using NowMineClient.Droid;
 using Xamarin.Forms.Platform.Android;
 using Android.Graphics;
@@ -14,7 +13,7 @@ namespace NowMineClient.Droid
 #pragma warning disable 0618
     public class CustomImageRenderer : ImageRenderer
     {
-        protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Image> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<Image> e)
         {
             base.OnElementChanged(e);
 
@@ -36,44 +35,45 @@ namespace NowMineClient.Droid
                         bitmap = ((BitmapDrawable)sender).Bitmap;
                     }
                 }
-
+                float rawX = args.Event.RawX;
+                float rawY = args.Event.RawY;
+                //System.Diagnostics.Debug.WriteLine(string.Format("RawX: {0} RawY: {1}", rawX, rawY));
                 if (args.Event.Action == MotionEventActions.Down)
                 {
-                    customImage.OnPressed(getHexValue((int)args.Event.RawX, (int)args.Event.RawY, bitmap, customImage));
+                    customImage.OnPressed(GetHexValue(rawX, rawY, bitmap, customImage));
                 }
                 else if (args.Event.Action == MotionEventActions.Move)
                 {
-                    customImage.OnPressed(getHexValue((int)args.Event.RawX, (int)args.Event.RawY, bitmap, customImage));
+                    customImage.OnPressed(GetHexValue(rawX, rawY, bitmap, customImage));
                 }
                 else if (args.Event.Action == MotionEventActions.Up)
                 {
-                    customImage.OnPressed(getHexValue((int)args.Event.RawX, (int)args.Event.RawY, bitmap, customImage));
+                    customImage.OnPressed(GetHexValue(rawX, rawY, bitmap, customImage));
                 }
             };
         }
 
-        public string getHexValue(int rX, int rY, Bitmap bitmap, CustomImage customImage)
+        public string GetHexValue(float rX, float rY, Bitmap bitmap, CustomImage customImage)
         {
-            string hex = "#000000";
-            int VisualObjectX = (int)this.GetX();
-            int VisualObjectY = (int)this.GetY();
-            //var scalex = this.ScaleX;
-            //var scaley = this.ScaleY;
-            //var top = this.Top;
-            //var mheight = this.MeasuredHeightAndState;
-            VisualObjectY += 80;
-            //if (rX < (bitmap.Width + VisualObjectX) && rY < (bitmap.Height + VisualObjectY))
-            if (rX - VisualObjectX < bitmap.Width && rY - VisualObjectY < bitmap.Height)
+            string hex = string.Empty;
+            int[] locationScreen = new int[2];
+            this.GetLocationOnScreen(locationScreen);
+            try
             {
-                
-                int color = bitmap.GetPixel(rX - VisualObjectX, rY - VisualObjectY);
-                hex = $"#{Android.Graphics.Color.GetRedComponent(color):X2}{Android.Graphics.Color.GetGreenComponent(color):X2}{Android.Graphics.Color.GetBlueComponent(color):X2}";
+                if ((rX - locationScreen[0]) < bitmap.Width && (rY - locationScreen[1])< bitmap.Height)
+                {
+                    int color = bitmap.GetPixel((int)(rX - locationScreen[0]), (int)(rY - locationScreen[1]));
+                    hex = $"#{Android.Graphics.Color.GetRedComponent(color):X2}{Android.Graphics.Color.GetGreenComponent(color):X2}{Android.Graphics.Color.GetBlueComponent(color):X2}";
+                }
+                else
+                {
+                    hex = customImage.HEXValue;
+                }
             }
-            else
+            catch(System.Exception e)
             {
-                hex = customImage.HEXValue;
+                System.Diagnostics.Debug.WriteLine(string.Format("Error in GetHexValue: {0}", e.Message));
             }
-
             return hex;
         }
     }
