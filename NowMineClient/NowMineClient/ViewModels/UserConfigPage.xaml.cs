@@ -12,12 +12,11 @@ namespace NowMineClient.ViewModels
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class UserConfigPage : ContentPage
     {
-        ServerConnection serverConnection;
+        private readonly IServerConnection serverConnection = DependencyService.Get<IServerConnection>();
 
-        public UserConfigPage(ServerConnection serverConnection)
+        public UserConfigPage()
         {
             InitializeComponent();
-            this.serverConnection = serverConnection;
             this.Title = "Kolejkujący";
             var colorPickerImage = new CustomImage
             {

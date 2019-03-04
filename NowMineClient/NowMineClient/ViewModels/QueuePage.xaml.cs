@@ -19,7 +19,8 @@ namespace NowMineClient.ViewModels
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class QueuePage : ContentPage
     {
-        public ServerConnection serverConnection;
+        private readonly IServerConnection serverConnection = DependencyService.Get<IServerConnection>();
+
         private ObservableCollection<ClipData> _queue;
         public ObservableCollection<ClipData> Queue
         {
@@ -34,10 +35,9 @@ namespace NowMineClient.ViewModels
                 _queue = value;
             }
         }
-        public QueuePage(ServerConnection serverConnection)
+        public QueuePage()
         {
             InitializeComponent();
-            this.serverConnection = serverConnection;
             this.Title = "Kolejka";
         }
 
@@ -59,6 +59,7 @@ namespace NowMineClient.ViewModels
                 emptyInformation.FontAttributes = FontAttributes.Bold;
                 emptyInformation.FontSize = 26;
                 emptyInformation.HorizontalOptions = LayoutOptions.Center;
+                emptyInformation.VerticalOptions = LayoutOptions.Center;
                 emptyInformation.TextColor = Color.Accent;
                 sltQueue.Children.Add(emptyInformation);
             }
@@ -145,8 +146,6 @@ namespace NowMineClient.ViewModels
         {
             try
             {
-                //await getQueue();
-                //int qPos = e.QPos == -1 ? Queue.Count : qPos
                 if (qPos <= Queue.Count)
                     Queue.Insert(qPos, clip);
                 else

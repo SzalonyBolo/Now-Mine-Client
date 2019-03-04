@@ -11,37 +11,11 @@ namespace NowMineClient
 {
     public partial class App : Application
     {
-
-        //private ServerConnection _serverConnection { set; get; }
-        //internal ServerConnection serverConnection
-        //{
-        //    get
-        //    {
-        //        if (_serverConnection == null)
-        //            _serverConnection = new ServerConnection();
-        //        return _serverConnection;
-        //    }
-        //}
-
         public App()
         {
             InitializeComponent();
-
-            //MainPage = new NowMineClient.MainPage();
-            var serverCheckPage = new ServerCheckPage();
-            //serverConnection.ServerConnected += serverCheckPage.ServerConnected;
-
-            MainPage = serverCheckPage;
-
-            //var task = serverConnection.ConnectToServer();
-            //task.RunSynchronously();
-            //var result = task.Result;
-            //var task = Task.Run(async () => result = await serverConnection.ConnectToServer());
-            //if (result)
-            //serverConnection.ConnectToServer().Start();
-
             
-            //MainPage = new Page1();
+            MainPage = new ServerCheckPage();
         }
 
         protected override void OnStart()

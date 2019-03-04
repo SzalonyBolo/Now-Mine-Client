@@ -16,10 +16,9 @@ namespace NowMineClient.ViewModels
     {
         ICommand DeleteYesCommand;
         ICommand DeleteNoCommand;
-        public delegate void YesClicked(object o, EventArgs e);
-        public event YesClicked YesClickedEvent;
-        //public bool YesClicked { get; set; } = false;
-        public ClipData ClipToDelete { get; private set;}
+
+        public event EventHandler YesClickedEvent;
+        public ClipData ClipToDelete { get; set;}
 
         public DeletePopup(ClipData clipData)
 		{

@@ -8,24 +8,22 @@ using NowMineClient.OSSpecific;
 using NowMine.APIProviders;
 using NowMineClient.Views;
 using NowMineClient.Helpers;
-using System.Linq;
 
 namespace NowMineClient.ViewModels
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class YoutubeSearchPage : ContentPage
     {
-        private readonly YouTubeProvider youtubeProvider;
-        private readonly ServerConnection serverConnection;
+        private readonly IAPIProvider youtubeProvider;
+        private readonly IServerConnection serverConnection = DependencyService.Get<IServerConnection>();
 
         public delegate void SuccessfulQueuedEventHandler(ClipData clip, int qPos);
         public event SuccessfulQueuedEventHandler SuccessfulQueued;
 
-        public YoutubeSearchPage(ServerConnection serverConnection)
+        public YoutubeSearchPage()
         {
             InitializeComponent();
             youtubeProvider = new YouTubeProvider();
-            this.serverConnection = serverConnection;
             //searchButton.Clicked += searchButton_Click;
             this.Title = "Kolejkuj";
             this.BackgroundColor = Color.White;
@@ -77,7 +75,7 @@ namespace NowMineClient.ViewModels
             }
         }
 
-        protected virtual void OnSuccessfulQueued(ClipData clipData, int qPos)
+        private void OnSuccessfulQueued(ClipData clipData, int qPos)
         {
             SuccessfulQueued?.Invoke(clipData, qPos);
         }

@@ -14,16 +14,8 @@ namespace NowMineClient.ViewModels
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ServerCheckPage : ContentPage
     {
-        private ServerConnection _serverConnection { set; get; }
-        internal ServerConnection serverConnection
-        {
-            get
-            {
-                if (_serverConnection == null)
-                    _serverConnection = new ServerConnection();
-                return _serverConnection;
-            }
-        }
+        private readonly IServerConnection serverConnection = DependencyService.Get<IServerConnection>();
+
         IEnumerable<ConnectionType> connectionTypes = CrossConnectivity.Current.ConnectionTypes;
 
 
@@ -76,13 +68,13 @@ namespace NowMineClient.ViewModels
             Debug.WriteLine("GUI: Open Queue Page!");
             //Device.BeginInvokeOnMainThread(() => { lblMain.Text = "Znaleziono Serwer!"; });
             var tabbedPage = new TabbedPage();
-            var queuePage = new QueuePage(serverConnection);
+            var queuePage = new QueuePage();
             await queuePage.GetUsers();
             await queuePage.GetQueue();
 
             //var primaryColor = Android.Resource.Attribute.ColorPrimary;
 
-            var ytSearchPage = new YoutubeSearchPage(serverConnection);
+            var ytSearchPage = new YoutubeSearchPage();
             ytSearchPage.SuccessfulQueued += queuePage.SuccessfulQueued;
 
             serverConnection.UDPQueued += queuePage.SuccessfulQueued;
@@ -96,7 +88,7 @@ namespace NowMineClient.ViewModels
 
             serverConnection.StartListeningUDP();
 
-            var userConfigPage = new UserConfigPage(serverConnection);
+            var userConfigPage = new UserConfigPage();
             //userConfigPage.UserConfigChanged += queuePage.OnRenderQueue;
 
             tabbedPage.Children.Add(userConfigPage);

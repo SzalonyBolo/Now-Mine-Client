@@ -20,7 +20,7 @@ namespace NowMineClient.Network
         public event MessegeTCPventHandler MessegeReceived;
 
         private TcpSocketClient _tcpClient;
-        public TcpSocketClient TcpClient
+        private TcpSocketClient TcpClient
         {
             get
             {
@@ -31,7 +31,7 @@ namespace NowMineClient.Network
         }
 
         private TcpSocketListener _tcpListener;
-        public TcpSocketListener TcpListener
+        private TcpSocketListener TcpListener
         {
             get
             {
