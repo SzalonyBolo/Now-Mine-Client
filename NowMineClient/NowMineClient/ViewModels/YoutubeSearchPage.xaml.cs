@@ -61,7 +61,7 @@ namespace NowMineClient.ViewModels
                 Debug.WriteLine("Sended to server {0}; Position on queue {1}", clipData.Title, qPos);
                 if (qPos != -2)
                 {
-                    OnSuccessfulQueued(clipData, qPos);
+                    SuccessfulQueued?.Invoke(clipData, qPos);
                     DependencyService.Get<IMessage>().LongAlert(String.Format("Zakolejkowano {0}", clipData.Title));
                 }
                 else
@@ -73,11 +73,6 @@ namespace NowMineClient.ViewModels
             {
                 Debug.WriteLine("Exception in AddToQueue_Tapped {0}", ex.Message);
             }
-        }
-
-        private void OnSuccessfulQueued(ClipData clipData, int qPos)
-        {
-            SuccessfulQueued?.Invoke(clipData, qPos);
         }
     }
 }

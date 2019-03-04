@@ -1,8 +1,6 @@
 ﻿using Sockets.Plugin;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,18 +8,12 @@ namespace NowMineClient.Network
 {
     public class UDPConnector
     {
-        public delegate void MessageUDPEventHandler(object source, MessegeEventArgs args);
-        public event MessageUDPEventHandler MessegeReceived;
+        public event Action<byte[]> MessegeReceived;
 
-        protected virtual void OnMessageUDP(byte[] bytes)
-        {
-            MessegeReceived?.Invoke(this, new MessegeEventArgs() { Message = bytes });
-        }
-
-        public string serverAddress { get; set; }
+        public string ServerAddress { get; set; }
 
         private UdpSocketClient _udpClient;
-        public UdpSocketClient udpClient
+        public UdpSocketClient UdpClient
         {
             get
             {
@@ -33,7 +25,7 @@ namespace NowMineClient.Network
         }
 
         private UdpSocketReceiver _udpReceiver;
-        public UdpSocketReceiver udpReceiver
+        public UdpSocketReceiver UdpReceiver
         {
             get
             {
@@ -60,16 +52,16 @@ namespace NowMineClient.Network
             }
         }
 
-        public void receiveBroadcastUDP(int port = 1234)
+        public void ReceiveBroadcastUDP(int port = 1234)
         {
-            udpReceiver.MessageReceived += UdpReceiver_MessageReceived;
-            udpReceiver.StartListeningAsync(port);
+            UdpReceiver.MessageReceived += UdpReceiver_MessageReceived;
+            UdpReceiver.StartListeningAsync(port);
         }
 
         private void UdpReceiver_MessageReceived(object sender, Sockets.Plugin.Abstractions.UdpSocketMessageReceivedEventArgs e)
         {
-            if (e.RemoteAddress == serverAddress)
-                OnMessageUDP(e.ByteData);
+            if (e.RemoteAddress == ServerAddress)
+                MessegeReceived?.Invoke(e.ByteData);
         }
     }
 }

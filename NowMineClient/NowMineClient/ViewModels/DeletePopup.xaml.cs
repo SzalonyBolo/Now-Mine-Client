@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using NowMineClient.Models;
@@ -19,15 +20,17 @@ namespace NowMineClient.ViewModels
 
         public event EventHandler YesClickedEvent;
         public ClipData ClipToDelete { get; set;}
+        SemaphoreSlim _semaphore;
 
-        public DeletePopup(ClipData clipData)
+        public DeletePopup(ClipData clipData, SemaphoreSlim _semaphorePopup)
 		{
             InitializeComponent();
             ClipToDelete = clipData;
+            _semaphore = _semaphorePopup;
             DeleteNoCommand = new Command(ClosePopup);
             DeleteYesCommand = new Command(OnYesClickedEvevent);
-            OnPropertyChanged("DeleteNoCommand");
-            OnPropertyChanged("DeleteYesCommand");
+            //OnPropertyChanged("DeleteNoCommand");
+            //OnPropertyChanged("DeleteYesCommand");
             //OnPropertyChanged("ClipToDelete");
             var clipView = new ClipControl();
             ClipToDelete.DeleteVisibility = false;
@@ -52,6 +55,7 @@ namespace NowMineClient.ViewModels
 
         protected override void OnDisappearing()
         {
+            _semaphore.Release();
             base.OnDisappearing();
         }
 
@@ -107,6 +111,7 @@ namespace NowMineClient.ViewModels
         protected override bool OnBackButtonPressed()
         {
             // Return true if you don't want to close this popup page when a back button is pressed
+            _semaphore.Release();
             return base.OnBackButtonPressed();
         }
 

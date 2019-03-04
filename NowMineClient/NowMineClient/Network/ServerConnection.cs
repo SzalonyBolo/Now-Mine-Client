@@ -102,9 +102,9 @@ namespace NowMineClient.Network
 
         public void StartListeningUDP()
         {
-            UdpConnector.serverAddress = _serverAddress;
+            UdpConnector.ServerAddress = _serverAddress;
             UdpConnector.MessegeReceived += UDPMessageReceived;
-            UdpConnector.receiveBroadcastUDP();
+            UdpConnector.ReceiveBroadcastUDP();
         }
 
         public async Task<int> SendToQueue(ClipData data)
@@ -154,7 +154,7 @@ namespace NowMineClient.Network
                 {
                     await UdpConnector.SendBroadcastUDP("NowMine!");
                     Debug.WriteLine("Sending \"NowMine!\" to Broadcast UDP");
-                    await Task.Delay(3000);
+                    await Task.Delay(5000);
                 }
 
                 return true;
@@ -167,13 +167,13 @@ namespace NowMineClient.Network
         }
 
         //private
-        private void OnServerFound(object source, MessegeEventArgs args)
+        private void OnServerFound(byte[] _message)
         {
-            string messege = Encoding.UTF8.GetString(args.Message, 0, args.Message.Length);
+            string messege = Encoding.UTF8.GetString(_message, 0, _message.Length);
             var ipAddressBuilder = new StringBuilder();
             for (int i = 0; i < 4; i++)
             {
-                ipAddressBuilder.Append(args.Message[i]);
+                ipAddressBuilder.Append(_message[i]);
                 if (i != 3)
                     ipAddressBuilder.Append('.');
             }
@@ -181,23 +181,22 @@ namespace NowMineClient.Network
             //todo tutaj sprawdzanie czy to ip itd
             //int userID = BitConverter.ToInt32(args.Messege, 4);
             //UserStore.InitializeDeviceUser(userID);
-            OnServerConnected();
+            ServerConnected?.Invoke(this, EventArgs.Empty);
             TcpConnector.MessegeReceived -= OnServerFound;
         }
 
-        private async void UDPMessageReceived(object source, MessegeEventArgs args)
+        private async void UDPMessageReceived(byte[] _message)
         {
-            byte[] bytes = args.Message;
-            string msg = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+            string msg = Encoding.UTF8.GetString(_message, 0, _message.Length);
             Debug.WriteLine(string.Format("UDP Received: {0}", msg));
 
-            if (bytes.Length < sizeof(uint) + sizeof(int))  //Command + eventID
+            if (_message.Length < sizeof(uint) + sizeof(int))  //Command + eventID
             {
                 Debug.WriteLine("Message to short!");
                 return;
             }
 
-            uint receivedEventID = BitConverter.ToUInt32(bytes, bytes.Length - sizeof(uint));
+            uint receivedEventID = BitConverter.ToUInt32(_message, _message.Length - sizeof(uint));
             if (EventManager.CheckCurrentEventID(receivedEventID))
             {
                 Console.WriteLine(string.Format("EventID further! GetEvents getting send!"));
@@ -209,16 +208,16 @@ namespace NowMineClient.Network
                 return;
             }
 
-            Array.Copy(bytes, 0, bytes, 0, bytes.Length - sizeof(uint));
+            Array.Copy(_message, 0, _message, 0, _message.Length - sizeof(uint));
 
             //string command = msg.Substring(0, msg.IndexOf(':'));
-            int commandInt = BitConverter.ToInt32(bytes, 0);
+            int commandInt = BitConverter.ToInt32(_message, 0);
             CommandType command = (CommandType)commandInt;
             int startIndex = sizeof(int);
             switch (command)
             {
                 case CommandType.QueueClip:
-                    using (MemoryStream ms = new MemoryStream(bytes, startIndex, bytes.Length - startIndex))
+                    using (MemoryStream ms = new MemoryStream(_message, startIndex, _message.Length - startIndex))
                     using (BsonReader reader = new BsonReader(ms))
                     {
                         JsonSerializer serializer = new JsonSerializer();
@@ -236,13 +235,13 @@ namespace NowMineClient.Network
                 case CommandType.DeleteClip:
                     //int qPosDelete = int.Parse(msg.Substring(msg.IndexOf(':') + 1));
                     //to int
-                    uint queueIDToDelete = BitConverter.ToUInt32(bytes, startIndex);
+                    uint queueIDToDelete = BitConverter.ToUInt32(_message, startIndex);
                     Debug.WriteLine("UDP/ Deleting Clip with QueueID: {0}", queueIDToDelete);
-                    OnDeletepiece(queueIDToDelete);
+                    DeletePiece?.Invoke(queueIDToDelete);
                     break;
 
                 case CommandType.PlayNow:
-                    int qPos = BitConverter.ToInt32(bytes, startIndex);
+                    int qPos = BitConverter.ToInt32(_message, startIndex);
                     //int qPosPlayedNow = int.Parse(msg.Substring(msg.IndexOf(':') + 1));
                     Debug.WriteLine("UDP/ Play Now with qPos: {0}", qPos);
                     OnPlayedNow(qPos);
@@ -254,8 +253,8 @@ namespace NowMineClient.Network
                     break;
 
                 case CommandType.ChangeName:
-                    int userID = BitConverter.ToInt32(bytes, startIndex);
-                    string userName = BitConverter.ToString(bytes, sizeof(int));
+                    int userID = BitConverter.ToInt32(_message, startIndex);
+                    string userName = BitConverter.ToString(_message, sizeof(int));
                     Debug.WriteLine("UDP/ Changing name userId: {0} to {1}", userID, userName);
                     if (!string.IsNullOrEmpty(userName))
                     {
@@ -267,8 +266,8 @@ namespace NowMineClient.Network
                 case CommandType.ChangeColor:
                     byte[] colorBytes = new byte[3];
                     int byteIndex = startIndex;
-                    Array.Copy(bytes, startIndex, colorBytes, 0, sizeof(byte) * 3);
-                    var userId = BitConverter.ToInt32(bytes, startIndex + (sizeof(byte) * 3));
+                    Array.Copy(_message, startIndex, colorBytes, 0, sizeof(byte) * 3);
+                    var userId = BitConverter.ToInt32(_message, startIndex + (sizeof(byte) * 3));
                     Debug.WriteLine("UDP/ Changing color userId: {0} to {1}", userId, colorBytes);
                     UserStore.Users[userId].ColorBytes = colorBytes;
 
@@ -288,16 +287,6 @@ namespace NowMineClient.Network
                     Debug.WriteLine("UDP/ Cannot interpret right...");
                     break;
             }
-        }
-
-        private void OnServerConnected()
-        {
-            ServerConnected?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void OnDeletepiece(uint queueIDToDelete)
-        {
-            DeletePiece?.Invoke(queueIDToDelete);
         }
 
         private void OnPlayedNow(int qPos)

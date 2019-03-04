@@ -16,8 +16,7 @@ namespace NowMineClient.Network
 {
     public class TCPConnector
     {
-        public delegate void MessegeTCPventHandler(object source, MessegeEventArgs args);
-        public event MessegeTCPventHandler MessegeReceived;
+        public event Action<byte[]> MessegeReceived;
 
         private TcpSocketClient _tcpClient;
         private TcpSocketClient TcpClient
@@ -99,7 +98,7 @@ namespace NowMineClient.Network
 
         protected virtual void OnMessegeTCP(byte[] bytes)
         {
-            MessegeReceived?.Invoke(this, new MessegeEventArgs() { Message = bytes });
+            MessegeReceived?.Invoke(bytes);
         }
 
         public async Task WaitForFirstConnection()
@@ -154,10 +153,5 @@ namespace NowMineClient.Network
                 throw e;
             }
         }
-    }
-
-    public class MessegeEventArgs : EventArgs
-    {
-        public byte[] Message { get; set; }
     }
 }

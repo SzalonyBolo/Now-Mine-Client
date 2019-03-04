@@ -17,7 +17,7 @@ namespace NowMineClient.ViewModels
         public UserConfigPage()
         {
             InitializeComponent();
-            this.Title = "Kolejkujący";
+            Title = "Kolejkujący";
             var colorPickerImage = new CustomImage
             {
                 Source = "Resources/colorpicker.png",

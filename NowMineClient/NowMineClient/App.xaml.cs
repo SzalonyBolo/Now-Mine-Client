@@ -1,10 +1,4 @@
-﻿using NowMineClient.Network;
-using NowMineClient.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NowMineClient.ViewModels;
 using Xamarin.Forms;
 
 namespace NowMineClient
@@ -14,7 +8,6 @@ namespace NowMineClient
         public App()
         {
             InitializeComponent();
-            
             MainPage = new ServerCheckPage();
         }
 

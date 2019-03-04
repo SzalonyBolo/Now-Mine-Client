@@ -13,6 +13,7 @@ using NowMineClient.Views;
 using Xamarin.Forms.Xaml;
 using NowMineClient.Helpers;
 using System.Collections.ObjectModel;
+using System.Threading;
 
 namespace NowMineClient.ViewModels
 {
@@ -35,6 +36,9 @@ namespace NowMineClient.ViewModels
                 _queue = value;
             }
         }
+
+        private SemaphoreSlim _semaphorePopup = new SemaphoreSlim(1);
+
         public QueuePage()
         {
             InitializeComponent();
@@ -78,11 +82,10 @@ namespace NowMineClient.ViewModels
 
         private async void ShowDeletePopup(object o, EventArgs e)
         {
-            //var clipData = o as ClipData;
+            await _semaphorePopup.WaitAsync();
             var clipView = o as ClipControl;
             var clipData = clipView.BindingContext as ClipData;
-            var deletePopup = new DeletePopup(clipData);
-            //await Navigation.PushModalAsync(new DeletePopup());
+            var deletePopup = new DeletePopup(clipData, _semaphorePopup);
             deletePopup.YesClickedEvent += DeletePopupYesClicked;
             
             await Navigation.PushPopupAsync(deletePopup);
@@ -91,7 +94,7 @@ namespace NowMineClient.ViewModels
         private async void DeletePopupYesClicked(object o, EventArgs e)
         {
             var deletePopup = o as DeletePopup;
-            deletePopup.YesClickedEvent -= DeletePopupYesClicked;
+            //deletePopup.YesClickedEvent -= DeletePopupYesClicked;
             var clipData = deletePopup.ClipToDelete;
             var response = await serverConnection.SendDeletePiece(clipData);
             await Navigation.PopPopupAsync();
