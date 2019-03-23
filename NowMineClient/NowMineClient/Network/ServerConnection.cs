@@ -29,7 +29,7 @@ namespace NowMineClient.Network
 
         public event Action<int> PlayedNow;
 
-        public event EventHandler RenderQueue;
+        //public event EventHandler RenderQueue;
 
         private UDPConnector _udpConnector;
         private UDPConnector UdpConnector
@@ -259,7 +259,7 @@ namespace NowMineClient.Network
                     if (!string.IsNullOrEmpty(userName))
                     {
                         UserStore.Users[userID].Name = userName;
-                        RenderQueue?.Invoke(this, new EventArgs());
+                        //RenderQueue?.Invoke(this, new EventArgs());
                     }
                     break;
 
@@ -277,6 +277,7 @@ namespace NowMineClient.Network
                 case CommandType.ServerShutdown:
                     Debug.WriteLine("UDP/ Server Shutdown");
                     Device.BeginInvokeOnMainThread(() => { App.Current.MainPage = new ViewModels.ServerCheckPage(); });
+                    DependencyService.Get<IMessage>().LongAlert("Serwer został wyłączony");
                     break;
 
                 case CommandType.QueueReshufle:

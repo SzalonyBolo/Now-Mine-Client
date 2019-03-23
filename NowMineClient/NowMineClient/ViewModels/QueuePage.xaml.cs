@@ -9,11 +9,11 @@ using NowMineCommon.Models;
 using NowMineClient.Models;
 using Rg.Plugins.Popup.Extensions;
 using NowMineClient.OSSpecific;
-using NowMineClient.Views;
 using Xamarin.Forms.Xaml;
 using NowMineClient.Helpers;
 using System.Collections.ObjectModel;
 using System.Threading;
+using System.Windows.Input;
 
 namespace NowMineClient.ViewModels
 {
@@ -21,7 +21,7 @@ namespace NowMineClient.ViewModels
     public partial class QueuePage : ContentPage
     {
         private readonly IServerConnection serverConnection = DependencyService.Get<IServerConnection>();
-
+        
         private ObservableCollection<ClipData> _queue;
         public ObservableCollection<ClipData> Queue
         {
@@ -39,52 +39,46 @@ namespace NowMineClient.ViewModels
 
         private SemaphoreSlim _semaphorePopup = new SemaphoreSlim(1);
 
+        private ICommand _refreshCommand;
+        public ICommand RefreshCommand
+        {
+            get { return _refreshCommand ?? (_refreshCommand = new Command(async () => await ExecuteRefreshCommand())); }
+        }
+
+        private ICommand _deleteClipCommand;
+        public ICommand DeleteClipCommand
+        {
+            get { return _deleteClipCommand ?? (_deleteClipCommand = new Command<ClipData>(async (o) => await ShowDeletePopup(o))); }
+        }
+
+        bool _isRefreshing = false;
+        public bool IsRefreshing
+        {
+            get { return _isRefreshing; }
+            set
+            {
+                if (_isRefreshing == value)
+                    return;
+
+                _isRefreshing = value;
+                OnPropertyChanged(nameof(IsRefreshing));
+            }
+        }
+
         public QueuePage()
         {
             InitializeComponent();
-            this.Title = "Kolejka";
+            BindingContext = this;
         }
 
-        private void RenderQueue()
+        protected override void OnAppearing()
         {
-            Device.BeginInvokeOnMainThread(() => { sltQueue.Children.Clear(); }); 
-            if (Queue.Count > 0 && Queue.First().UserID == UserStore.DeviceUser.Id)
-            {
-                Device.BeginInvokeOnMainThread(() => { BtnPlayNext.IsVisible = true; BtnPlayNext.IsEnabled = true; });
-            }
-            else
-            {
-                Device.BeginInvokeOnMainThread(() => { BtnPlayNext.IsVisible = false; BtnPlayNext.IsEnabled = false; });
-            }
-            if (Queue.Count == 0)
-            {
-                var emptyInformation = new Label();
-                emptyInformation.Text = "Kolejka jest pusta";
-                emptyInformation.FontAttributes = FontAttributes.Bold;
-                emptyInformation.FontSize = 26;
-                emptyInformation.HorizontalOptions = LayoutOptions.Center;
-                emptyInformation.VerticalOptions = LayoutOptions.Center;
-                emptyInformation.TextColor = Color.Accent;
-                sltQueue.Children.Add(emptyInformation);
-            }
-            foreach (var musicData in Queue.ToList())
-            {
-                if (musicData.UserID == UserStore.DeviceUser.Id)
-                {
-                    musicData.DeleteVisibility = true;
-                }
-                ClipControl musicControl = new ClipControl();
-                musicControl.BindingContext = musicData;
-                musicControl.DeleteClicked += ShowDeletePopup;
-                Device.BeginInvokeOnMainThread(() => { sltQueue.Children.Add(musicControl); });
-            }
+            base.OnAppearing();
         }
 
-        private async void ShowDeletePopup(object o, EventArgs e)
+        private async Task ShowDeletePopup(ClipData clipData)
         {
             await _semaphorePopup.WaitAsync();
-            var clipView = o as ClipControl;
-            var clipData = clipView.BindingContext as ClipData;
             var deletePopup = new DeletePopup(clipData, _semaphorePopup);
             deletePopup.YesClickedEvent += DeletePopupYesClicked;
             
@@ -94,7 +88,7 @@ namespace NowMineClient.ViewModels
         private async void DeletePopupYesClicked(object o, EventArgs e)
         {
             var deletePopup = o as DeletePopup;
-            //deletePopup.YesClickedEvent -= DeletePopupYesClicked;
+            deletePopup.YesClickedEvent -= DeletePopupYesClicked;
             var clipData = deletePopup.ClipToDelete;
             var response = await serverConnection.SendDeletePiece(clipData);
             await Navigation.PopPopupAsync();
@@ -102,7 +96,6 @@ namespace NowMineClient.ViewModels
             {
                 DependencyService.Get<IMessage>().LongAlert(String.Format("Usunięto {0}", clipData.Title));
                 //Queue.Remove(clipData); - UDP recived
-                //RenderQueue();
             }
             else
             {
@@ -117,27 +110,26 @@ namespace NowMineClient.ViewModels
             {
                 Debug.WriteLine("Get Queue!");
                 IList<ClipQueued> infos = await serverConnection.GetQueue();
+                Queue.Clear();
                 if (infos == null)
                 {
-                    sltQueue.Children.Add(new Label() { Text = "Nie dogadałem się z serwerem :/" });
+                    //Queue.Children.Add(new Label() { Text = "Nie dogadałem się z serwerem :/" });
                 }
                 else
                 {
-                    Queue.Clear();
                     foreach (ClipQueued info in infos)
                     {
                         var musicPiece = new ClipData(info);
                         //musicPiece.FrameColor = UserStore.Users.Where(u => u.Id == info.userId).First().getColor();
                         Queue.Add(musicPiece);
                     }
-                    RenderQueue();
                 }
             }
             catch(Exception e)
             {
                 Debug.WriteLine(String.Format("Exception in GetQueue {0}", e.Message));
             }
-        }
+        } 
 
         internal async Task GetUsers()
         {
@@ -153,7 +145,6 @@ namespace NowMineClient.ViewModels
                     Queue.Insert(qPos, clip);
                 else
                     await GetQueue();
-                RenderQueue();
             }
             catch(Exception ex)
             {
@@ -176,9 +167,7 @@ namespace NowMineClient.ViewModels
                 Queue.RemoveAt(qPos);
             }
             else
-                await GetQueue();
-            RenderQueue();
-            
+                await GetQueue();            
         }
 
         internal async void PlayedNext()
@@ -187,7 +176,6 @@ namespace NowMineClient.ViewModels
                 Queue.RemoveAt(0);
             else
                 await GetQueue();
-            RenderQueue();            
         }
 
         internal void DeletePiece(uint queueID)
@@ -201,14 +189,13 @@ namespace NowMineClient.ViewModels
                     break;
                 }
             }
-            Device.BeginInvokeOnMainThread(() => { RenderQueue(); });
+            //Device.BeginInvokeOnMainThread(() => { RenderQueue(); });
         }
 
         internal void QueueReveiced(ClipData clip, int qPos)
         {
             //int qPos = e.QPos == -1 ? Queue.Count : e.QPos;
             Queue.Insert(qPos, clip);
-            RenderQueue();
         }
 
         private async void BtnPlayNext_Clicked(object sender, EventArgs e)
@@ -216,9 +203,11 @@ namespace NowMineClient.ViewModels
             bool answer = await serverConnection.SendPlayNext();
         }
 
-        public void OnRenderQueue(object s, EventArgs e)
+        private async Task ExecuteRefreshCommand()
         {
-            RenderQueue();
+            await serverConnection.GetUsers();
+            await serverConnection.GetQueue();
+            IsRefreshing = false;
         }
     }
 }

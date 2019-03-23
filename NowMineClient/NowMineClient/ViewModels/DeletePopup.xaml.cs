@@ -2,12 +2,10 @@
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using NowMineClient.Models;
 using NowMineClient.Views;
 using Rg.Plugins.Popup.Extensions;
 using Rg.Plugins.Popup.Pages;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace NowMineClient.ViewModels
@@ -15,9 +13,6 @@ namespace NowMineClient.ViewModels
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DeletePopup : PopupPage, INotifyPropertyChanged
     {
-        ICommand DeleteYesCommand;
-        ICommand DeleteNoCommand;
-
         public event EventHandler YesClickedEvent;
         public ClipData ClipToDelete { get; set;}
         SemaphoreSlim _semaphore;
@@ -27,25 +22,20 @@ namespace NowMineClient.ViewModels
             InitializeComponent();
             ClipToDelete = clipData;
             _semaphore = _semaphorePopup;
-            DeleteNoCommand = new Command(ClosePopup);
-            DeleteYesCommand = new Command(OnYesClickedEvevent);
-            //OnPropertyChanged("DeleteNoCommand");
-            //OnPropertyChanged("DeleteYesCommand");
-            //OnPropertyChanged("ClipToDelete");
             var clipView = new ClipControl();
-            ClipToDelete.DeleteVisibility = false;
             clipView.BindingContext = ClipToDelete;
+            clipView.IconPanelVisibility = false;
             ClipGridRow.Children.Add(clipView);
         }
 
-        protected void OnYesClickedEvevent()
-        {
-            YesClickedEvent?.Invoke(this, EventArgs.Empty);
-        }
-
-        protected void ClosePopup()
+        protected void ClosePopup(object sender, EventArgs e)
         {
             Navigation.PopPopupAsync();
+        }
+
+        private void YesButtonClicked(object sender, EventArgs e)
+        {
+            YesClickedEvent?.Invoke(this, EventArgs.Empty);
         }
 
         protected override void OnAppearing()
@@ -111,7 +101,6 @@ namespace NowMineClient.ViewModels
         protected override bool OnBackButtonPressed()
         {
             // Return true if you don't want to close this popup page when a back button is pressed
-            _semaphore.Release();
             return base.OnBackButtonPressed();
         }
 
@@ -120,16 +109,6 @@ namespace NowMineClient.ViewModels
         {
             // Return false if you don't want to close this popup page when a background of the popup page is clicked
             return base.OnBackgroundClicked();
-        }
-
-        private void YesButtonClicked(object sender, EventArgs e)
-        {
-            OnYesClickedEvevent();
-        }
-
-        private void NoButtonClicked(object sender, EventArgs e)
-        {
-            ClosePopup();
         }
     }
 }

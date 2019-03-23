@@ -1,21 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ios="clr-namespace:UIKit;assembly=Xamarin.iOS;targetPlatform=iOS"
-             xmlns:androidWidget="clr-namespace:Android.Widget;assembly=Mono.Android;targetPlatform=Android"
-             xmlns:formsandroid="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.Platform.Android;targetPlatform=Android"
-             xmlns:local="clr-namespace:NowMineClient"
              x:Class="NowMineClient.ViewModels.UserConfigPage">
     <ScrollView HorizontalOptions="FillAndExpand">
         <Grid Margin="15">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <Entry x:Name="ChangeNameEntry" Placeholder="Nick" Completed="Entry_Completed"/>
+                <Entry x:Name="ChangeNameEntry" Placeholder="Nick" Completed="Entry_Completed" HorizontalOptions="StartAndExpand"/>
             </Grid>
             <Grid Grid.Row="1" x:Name="ColorPickerRow"/>
             <Grid Grid.Row="2">
@@ -26,4 +22,14 @@
             </Grid>
         </Grid>
     </ScrollView>
+    <!--<TableView Intent="Settings">
+        <TableRoot>
+            <TableSection>
+                <EntryCell Text="Nick" Completed="Entry_Completed"/>
+                <ViewCell x:Name="ColorPickerRow"/>
+                <ViewCell x:Name="BoxColorPicker"/>
+                
+            </TableSection>
+        </TableRoot>
+    </TableView>-->
 </ContentPage>

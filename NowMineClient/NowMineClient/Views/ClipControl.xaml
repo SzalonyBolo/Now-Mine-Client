@@ -1,40 +1,54 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:font="clr-namespace:NowMineClient.OSSpecific"
+             xmlns:conv="clr-namespace:NowMineClient.Helpers"
              x:Class="NowMineClient.Views.ClipControl"
-             Margin="1,1,0,0">
-  <ContentView.Content>
+             x:Name="ClipControlView">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <conv:DebugConverter x:Key="debugConverter" />
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ContentView.Content>
         <Frame Padding="0,0,0,0" x:Name="MusicControlFrame" BorderColor="{Binding Path=User.UserColor}">
-      <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="11*"/>
-            <ColumnDefinition Width="39*"/>
-        </Grid.ColumnDefinitions>
-
-        <Grid Grid.Column="0">
-          <Image Source="{Binding Path=Image}" Margin="2,0,0,0"/>
-        </Grid>
-        <Grid Grid.Column="1">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="0.1*" />
+                    <ColumnDefinition Width="11*"/>
+                    <ColumnDefinition Width="39*"/>
                 </Grid.ColumnDefinitions>
-                <StackLayout Grid.Column="0" Margin="0" Padding="0">
-                    <Label x:Name="lblTitle" Text="{Binding Path=Title}" FontAttributes="Bold" VerticalOptions="StartAndExpand" LineBreakMode="NoWrap"/>
-                    <Label x:Name="lblChannelName" Text="{Binding Path=ChannelName}" FontSize="Small" VerticalOptions="Start"/>
-                    <Label x:Name="lbluserName" Text="{Binding Path=UserName}" VerticalOptions="Start"/>
-                </StackLayout>
-                <font:FontAwesomeIcon Grid.Column="1" Text="{x:Static font:Icon.Trash}" IsVisible="{Binding Path=DeleteVisibility}" FontSize="Large" VerticalTextAlignment="End">
-                    <font:FontAwesomeIcon.GestureRecognizers>
-                        <TapGestureRecognizer 
-                            Tapped="OnDeleteClicked"/>
-                    </font:FontAwesomeIcon.GestureRecognizers>
-                </font:FontAwesomeIcon>
+
+                <Grid Grid.Column="0">
+                    <Image Source="{Binding Path=Image}" Margin="2,0,0,0"/>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="0.1*" />
+                        </Grid.ColumnDefinitions>
+                        <StackLayout Grid.Column="0" Margin="0" Padding="0">
+                            <Label Text="{Binding Path=Title}" FontAttributes="Bold" VerticalOptions="StartAndExpand" LineBreakMode="NoWrap"/>
+                            <Label Text="{Binding Path=ChannelName}" FontSize="Small" VerticalOptions="Start"/>
+                            <Label Text="{Binding Path=UserName}" VerticalOptions="Start"/>
+                        </StackLayout>
+                        <StackLayout IsVisible="{Binding Path=IconPanelVisibility, Source={x:Reference ClipControlView}}"
+                                     Orientation="Horizontal"
+                                     Grid.Column="1">
+                            <font:FontAwesomeIcon Text="{x:Static font:Icon.Trash}"
+                                                  FontSize="Large"
+                                                  IsVisible="{Binding Path=DeleteVisibility}"
+                                                  HorizontalTextAlignment="End"
+                                                  VerticalOptions="End">
+                                <font:FontAwesomeIcon.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Path=IconDeleteCommand, Source={x:Reference ClipControlView}}"
+                                                          CommandParameter="{Binding .}" />
+                                </font:FontAwesomeIcon.GestureRecognizers>
+                            </font:FontAwesomeIcon>
+                        </StackLayout>
+                    </Grid>
+                </Grid>
             </Grid>
-        </Grid>
-        </Grid>
-    </Frame>
-  </ContentView.Content>
+        </Frame>
+    </ContentView.Content>
 </ContentView>

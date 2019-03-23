@@ -1,14 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="NowMineClient.ViewModels.QueuePage">
+             xmlns:nowmine="clr-namespace:NowMineClient.Views"
+             xmlns:conv="clr-namespace:NowMineClient.Helpers"
+             x:Class="NowMineClient.ViewModels.QueuePage"
+             x:Name="QueuePageView">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:DebugConverter x:Key="debugConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ScrollView Orientation="Vertical" VerticalOptions="FillAndExpand">
         <Grid Margin="15">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <StackLayout x:Name="sltQueue" Orientation="Vertical" VerticalOptions="FillAndExpand" Grid.Row="0" Margin="10"/>
+            <ListView ItemsSource="{Binding Path=Queue}" 
+                      RowHeight="75" 
+                      IsPullToRefreshEnabled="True"
+                      RefreshCommand="{Binding Path=RefreshCommand}"
+                      IsRefreshing="{Binding Path=IsRefreshing}"
+                      RefreshControlColor="Accent">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <nowmine:ClipControl IconDeleteCommand="{Binding Path=DeleteClipCommand, Source={x:Reference QueuePageView}}"
+                                                 IconPanelVisibility="True"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
             <Button Text="Dawaj Dalej" x:Name="BtnPlayNext" Grid.Row="1" HeightRequest="60" IsVisible="False" Clicked="BtnPlayNext_Clicked"/>
         </Grid>
     </ScrollView>

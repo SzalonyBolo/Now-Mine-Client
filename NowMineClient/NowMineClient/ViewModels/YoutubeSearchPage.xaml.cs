@@ -14,7 +14,7 @@ namespace NowMineClient.ViewModels
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class YoutubeSearchPage : ContentPage
     {
-        private readonly IAPIProvider youtubeProvider;
+        private readonly IAPIProvider _apiProvider;
         private readonly IServerConnection serverConnection = DependencyService.Get<IServerConnection>();
 
         public delegate void SuccessfulQueuedEventHandler(ClipData clip, int qPos);
@@ -23,10 +23,12 @@ namespace NowMineClient.ViewModels
         public YoutubeSearchPage()
         {
             InitializeComponent();
-            youtubeProvider = new YouTubeProvider();
-            //searchButton.Clicked += searchButton_Click;
-            this.Title = "Kolejkuj";
-            this.BackgroundColor = Color.White;
+            _apiProvider = new YouTubeProvider();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
         }
 
         public async void EntSearch_Completed(object s, EventArgs e)
@@ -37,7 +39,7 @@ namespace NowMineClient.ViewModels
                 return;
             searchBoard.Children.Clear();
             loadingLogo.IsVisible = true;
-            var infos = await youtubeProvider.GetSearchClipInfos(searchString);
+            var infos = await _apiProvider.GetSearchClipInfos(searchString);
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += AddToQueue_Tapped;
             loadingLogo.IsVisible = false;

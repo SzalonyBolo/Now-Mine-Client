@@ -42,7 +42,7 @@
                     <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" Text="Tak" Clicked="YesButtonClicked"/>
-                <Button Grid.Column="1" Text="Nie" Clicked="NoButtonClicked"/>
+                <Button Grid.Column="1" Text="Nie" Clicked="ClosePopup"/>
             </Grid>
         </Grid>
     </Frame>

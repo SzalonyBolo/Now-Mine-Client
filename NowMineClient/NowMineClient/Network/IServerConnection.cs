@@ -12,7 +12,7 @@ namespace NowMineClient.Network
         event Action<ClipData, int> UDPQueued;
         event Action<uint> DeletePiece;
         event Action<int> PlayedNow;
-        event EventHandler RenderQueue;
+        //event EventHandler RenderQueue;
         Task<bool> ListenAndCallServer();
         void StartListeningUDP();
         Task<bool> ChangeName(string newUserName);

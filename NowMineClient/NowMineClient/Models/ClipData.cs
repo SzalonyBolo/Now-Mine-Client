@@ -41,7 +41,12 @@ namespace NowMineClient.Models
 
         public Color FrameColor { get => User.UserColor; }
 
-        public bool DeleteVisibility { get; set; } = false;
+        public bool DeleteVisibility {
+            get
+            {
+                return UserID == UserStore.DeviceUser.Id;
+            }
+        }
 
         public uint QueueID { get; set; }
 

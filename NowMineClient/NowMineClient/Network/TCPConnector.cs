@@ -116,7 +116,7 @@ namespace NowMineClient.Network
                 Debug.WriteLine(string.Format("Sending {0}", message));
                 var response = await GetData(request, serverAddress);
                 var data = Encoding.UTF8.GetString(response);
-                Debug.WriteLine(string.Format("Got response: {0}", response));
+                Debug.WriteLine(string.Format("Got response: {0}", data));
                 return Regex.Replace(data, @"[^\u0020-\u007E]", string.Empty);
             }
             catch (Exception e)

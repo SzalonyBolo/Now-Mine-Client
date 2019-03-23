@@ -14,7 +14,7 @@ namespace NowMineClient.ViewModels
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ServerCheckPage : ContentPage
     {
-        private readonly IServerConnection serverConnection = DependencyService.Get<IServerConnection>();
+        readonly IServerConnection serverConnection = DependencyService.Get<IServerConnection>();
 
         IEnumerable<ConnectionType> connectionTypes = CrossConnectivity.Current.ConnectionTypes;
 
@@ -22,6 +22,11 @@ namespace NowMineClient.ViewModels
         public ServerCheckPage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
             var wifi = ConnectionType.WiFi;
             if (connectionTypes.Contains(wifi))
             {
@@ -69,6 +74,7 @@ namespace NowMineClient.ViewModels
             //Device.BeginInvokeOnMainThread(() => { lblMain.Text = "Znaleziono Serwer!"; });
             var tabbedPage = new TabbedPage();
             var queuePage = new QueuePage();
+            queuePage.Title = "Kolejka";
             await queuePage.GetUsers();
             await queuePage.GetQueue();
 
@@ -76,11 +82,12 @@ namespace NowMineClient.ViewModels
 
             var ytSearchPage = new YoutubeSearchPage();
             ytSearchPage.SuccessfulQueued += queuePage.SuccessfulQueued;
+            ytSearchPage.Title = "Kolejkuj";
 
             serverConnection.UDPQueued += queuePage.SuccessfulQueued;
             serverConnection.DeletePiece += queuePage.DeletePiece;
             serverConnection.PlayedNow += queuePage.PlayedNow;
-            serverConnection.RenderQueue += queuePage.OnRenderQueue;
+            //serverConnection.RenderQueue += queuePage.OnRenderQueue;
 
             EventManager.QueuedPiece += queuePage.SuccessfulQueued;
             EventManager.DeletedPiece += queuePage.DeletePiece;
@@ -89,6 +96,7 @@ namespace NowMineClient.ViewModels
             serverConnection.StartListeningUDP();
 
             var userConfigPage = new UserConfigPage();
+            userConfigPage.Title = "Kolejkujący";
             //userConfigPage.UserConfigChanged += queuePage.OnRenderQueue;
 
             tabbedPage.Children.Add(userConfigPage);

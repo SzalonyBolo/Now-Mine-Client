@@ -17,7 +17,15 @@ namespace NowMineClient.ViewModels
         public UserConfigPage()
         {
             InitializeComponent();
-            Title = "Kolejkujący";
+        }
+
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            BoxColorPicker.Color = UserStore.DeviceUser.UserColor;
+            ChangeNameEntry.Text = UserStore.DeviceUser.Name;
+
             var colorPickerImage = new CustomImage
             {
                 Source = "Resources/colorpicker.png",
@@ -33,7 +41,6 @@ namespace NowMineClient.ViewModels
 
             BoxColorPicker.Color = UserStore.DeviceUser.UserColor;
         }
-
         private void BoxColorPickerColorChange(object sender, EventArgs args)
         {
             CustomImage ci = (CustomImage)sender;
@@ -88,13 +95,6 @@ namespace NowMineClient.ViewModels
                 entry.TextColor = Color.Red;
                 DependencyService.Get<IMessage>().LongAlert("Nie udało się zmienić nick");
             }
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            BoxColorPicker.Color = UserStore.DeviceUser.UserColor;
-            ChangeNameEntry.Text = UserStore.DeviceUser.Name;
         }
     }
 }
