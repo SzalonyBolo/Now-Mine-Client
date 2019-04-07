@@ -8,6 +8,7 @@ using Xamarin.Forms.Xaml;
 using Plugin.Connectivity;
 using Plugin.Connectivity.Abstractions;
 using NowMineClient.Helpers;
+using System.Threading.Tasks;
 
 namespace NowMineClient.ViewModels
 {
@@ -24,9 +25,15 @@ namespace NowMineClient.ViewModels
             InitializeComponent();
         }
 
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
             base.OnAppearing();
+
+            lblMain.FadeTo(1, 1650);
+            await loadingLogo.FadeTo(1, 1650);
+
+            AnimateLogo();
+
             var wifi = ConnectionType.WiFi;
             if (connectionTypes.Contains(wifi))
             {
@@ -43,7 +50,6 @@ namespace NowMineClient.ViewModels
         private void Current_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
         {
             //todo
-            //updejtować property i tyle kurwa
             var wifi = ConnectionType.WiFi;
             connectionTypes = CrossConnectivity.Current.ConnectionTypes;
             if (connectionTypes.Contains(wifi))
@@ -108,6 +114,15 @@ namespace NowMineClient.ViewModels
             //tabbedPage.BarTextColor = Color.White;
             
             Device.BeginInvokeOnMainThread(() => { App.Current.MainPage = tabbedPage; });
+        }
+
+        private void AnimateLogo()
+        {
+            var rotatingAnimation = new Animation(r => loadingLogo.Rotation = r, 0, 360, Easing.Linear);
+
+            rotatingAnimation.Commit(this, "RotatingAnimation", 16, 2000, Easing.Linear, (v, c) => loadingLogo.Rotation = 360, () => true);
+
+
         }
     }
 }

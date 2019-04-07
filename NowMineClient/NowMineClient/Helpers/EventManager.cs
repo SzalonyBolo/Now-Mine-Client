@@ -22,9 +22,9 @@ namespace NowMineClient.Helpers
         public delegate void PlayedNowEventHandler(int qPos);
         public static event PlayedNowEventHandler PlayedNow;
 
-        public static bool CheckCurrentEventID(uint eventID)
+        public static bool IsEventCurrent(uint eventID)
         {
-            if (eventID == ActualEventID -1)
+            if (eventID == ActualEventID + 1)
             {
                 ActualEventID++;
                 return true;
@@ -46,6 +46,7 @@ namespace NowMineClient.Helpers
                 {
                     case CommandType.QueueClip:
                         ClipQueued clip = e.Data as ClipQueued;
+                        //var clip = JsonMessageBuilder.GetStandardResponseData<ClipQueued>((Newtonsoft.Json.Linq.JObject)e.Data);
                         var user = UserStore.Users.Where(u => u.Id == clip.UserID).First();
                         QueuedPiece?.Invoke(new ClipData(clip, user), clip.QPos);
                         break;

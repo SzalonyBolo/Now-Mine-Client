@@ -197,15 +197,15 @@ namespace NowMineClient.Network
             }
 
             uint receivedEventID = BitConverter.ToUInt32(_message, _message.Length - sizeof(uint));
-            if (EventManager.CheckCurrentEventID(receivedEventID))
+            if (!EventManager.IsEventCurrent(receivedEventID))
             {
                 Console.WriteLine(string.Format("EventID further! GetEvents getting send!"));
                 var request = JsonMessageBuilder.GetDataCommandRequest<uint>(CommandType.GetEvents, EventManager.ActualEventID);
                 var response = await TcpConnector.GetData(request, _serverAddress);
                 var eventList = JsonMessageBuilder.GetStandardResponseData<List<EventItem>>(response, CommandType.GetEvents);
+                eventList = JsonMessageBuilder.UnpackEventList(eventList);
                 Debug.WriteLine("Got Event list with {0} items", eventList.Count);
                 EventManager.DoEvents(eventList);
-                return;
             }
 
             Array.Copy(_message, 0, _message, 0, _message.Length - sizeof(uint));

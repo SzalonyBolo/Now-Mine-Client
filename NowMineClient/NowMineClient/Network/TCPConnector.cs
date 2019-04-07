@@ -47,8 +47,8 @@ namespace NowMineClient.Network
         private async void FirstConnection(object sender, Sockets.Plugin.Abstractions.TcpSocketListenerConnectEventArgs socket)
         {
             Debug.WriteLine("TCP/ Host connected!");
-            var messageBuffer = new byte[8];
-            await socket.SocketClient.ReadStream.ReadAsync(messageBuffer, 0, 8);
+            var messageBuffer = new byte[12];
+            await socket.SocketClient.ReadStream.ReadAsync(messageBuffer, 0, 12);
             //Checking if te first 4 bytes are the host address
             var connectedAddress = socket.SocketClient.RemoteAddress.Split('.');
             for (int i = 0; i < 4; i++)
@@ -60,9 +60,12 @@ namespace NowMineClient.Network
                     return;
                 }
             }
-            int deviceUserID = BitConverter.ToInt32(messageBuffer, 4);
-
+            int deviceUserID = BitConverter.ToInt32(messageBuffer, 4);            
             UserStore.InitializeDeviceUser(deviceUserID);
+
+            uint actualEventID = BitConverter.ToUInt32(messageBuffer, 8);
+            EventManager.ActualEventID = actualEventID;
+
             Debug.WriteLine("TCP/ Received first Connection from: {0}:{1}", socket.SocketClient.RemoteAddress, socket.SocketClient.RemotePort);
             using (var ms = new MemoryStream())
             using (var writer = new BsonWriter(ms))

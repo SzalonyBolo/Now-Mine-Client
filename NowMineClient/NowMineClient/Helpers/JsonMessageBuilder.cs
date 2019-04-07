@@ -1,8 +1,11 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NowMineCommon.Enums;
+using NowMineCommon.Models;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace NowMineClient.Helpers
 {
@@ -90,9 +93,40 @@ namespace NowMineClient.Helpers
             }
         }
 
+        internal static T GetStandardResponseData<T>(JObject response)
+        {
+            return response.ToObject<T>();
+        }
+
         internal static T GetStandardResponseData<T>(string response, CommandType dataNode)
         {
             return GetStandardResponseData<T>(response, dataNode.ToString());
+        }
+
+        internal static List<EventItem> UnpackEventList(List<EventItem> eventList)
+        {
+            var returnList = new List<EventItem>();
+            foreach(var e in eventList)
+            {
+                object realData = null;
+                var jobj = e.Data as JObject;
+
+                switch(e.commandType)
+                {
+                    case CommandType.QueueClip:
+                        realData = jobj.ToObject<ClipQueued>();
+                        break;
+                    case CommandType.PlayNow:
+                        realData = jobj.ToObject<int>();
+                        break;
+                    case CommandType.DeleteClip:
+                        realData = jobj.ToObject<uint>();
+                        break;
+                }
+                var unpackedEvent = new EventItem(e.commandType, realData, e.EventID);
+                returnList.Add(unpackedEvent);
+            }
+            return returnList;
         }
 
         private static JProperty JCommandProperty(CommandType commandType)
